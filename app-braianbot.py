@@ -3,9 +3,9 @@ import os.path
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
-import tornado.web
+import tornado.websocket
 from tornado.options import define,options
-from tornado import template
+from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
 
 
@@ -16,7 +16,7 @@ class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('index.jade')
 		
-class SocketHandler(tornado.socket.WebSocketHandler):
+class SocketHandler(tornado.websocket.WebSocketHandler):
 	"""
 	this class represent the basic socket operation to move the wheels
 	"""
