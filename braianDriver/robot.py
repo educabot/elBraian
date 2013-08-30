@@ -28,25 +28,22 @@
 #pwm = gpio.PWM(12, 1500)
 
 class Robot(object):
-	SPEED_HIGH = 20  
-	SPEED_MEDIUM = 60
-	SPEED_LOW = 100
+	SPEED_HIGH = 100  
+	SPEED_MEDIUM = 70
+	SPEED_LOW = 40
+
+	##Define the arc of the turn process by a tuple wheels speed (left, right)
+	LEFT_ARC_CLOSE = 40,100
+	LEFT_ARC_OPEN = 60,100
+
+	RIGHT_ARC_CLOSE = 100,40
+	RIGHT_ARC_OPEN = 100,60
 
 	def set_forward(self):
 		print "Moving forward " 
-		pass
 
 	def set_backward(self):
 		print "Moving backward " 
-		pass
-
-	def set_turn_left(self, degrees):
-		print "turnin left " + str(unit) 
-		pass
-
-	def set_turn_right(self, degrees):
-		print "Turning right " + str(unit) 	
-		pass
 
 	def set_rotate_left(self):
 		pass
@@ -58,6 +55,13 @@ class Robot(object):
 		print "stopping.."
 		pass
 
-	def move(self, speed):
-		print ("and moving on " + str(speed) + " cycles")
-		pass
+	def move(self, speed=None, arc=None):
+		if (speed and arc):
+			print "Error: speed and arc could not be setted up at the same time"
+		
+		if (speed):
+			print ("and moving on " + str(speed) + " cycles")
+
+		if (arc):
+			print "left wheel on: " + str(arc[0]) + " and right wheel on: " + str(arc[1])
+			print "turning to the right" if arc[0] > arc[1] else "turning to the left" 
