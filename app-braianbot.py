@@ -7,6 +7,7 @@ import tornado.websocket
 from tornado.options import define,options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
+from braianDriver.robot import Robot
 
 
 patch_tornado()
@@ -16,7 +17,9 @@ class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('index.jade')
 		
-class SocketHandler(tornado.websocket.WebSocketHandler):
+class RobotHandler(tornado.websocket.WebSocketHandler):
+
+	ROBOT = Robot()
 	"""
 	this class represent the basic socket operation to move the wheels
 	"""
@@ -25,11 +28,15 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
 		
 	def on_close(self):
 		pass
+	def on_message(self,message):
+		self.ROBOT.set_forward()
+		self.ROBOT.move(speed=Robot.SPEED_LOW)
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
-		handlers=[(r"/",IndexHandler),(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'})],
+		handlers=[(r"/",IndexHandler),(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
+		(r"/robot",RobotHandler)],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
 		debug=True	

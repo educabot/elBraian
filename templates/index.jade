@@ -3,6 +3,29 @@ block content
 	div.container-fluid
 		div.row-fluid
 			div.span12
-				div.hero-unit(style="background-color: #1D1AB2")
-					div.page-header 
-						h2 welcome to #elBraian
+				div.page-header 
+					h2 welcome to #elBraian
+				.row-fluid
+					.span6
+						.page-header
+							h3 what i see
+						.hero-unit(style="background-color: #99CCCC")
+					.span6
+						.page-header
+							h3 command me
+						.hero-unit(style="background-color: #99CCCC")
+							.row-fluid
+								.span12
+									button.btn.btn-warning turning left
+									button.btn.btn-success#forward forward
+									button.btn.btn-warning turning right
+							.row-fluid
+								.span6
+									button.btn.btn-info left
+								.span6
+									button.btn.btn-info(style="margin-left:10px") right
+							.row-fluid
+								span12
+									button.btn.btn-warning turning left
+									button.btn.btn-danger backward
+									button.btn.btn-warning turning left
