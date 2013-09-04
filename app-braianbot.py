@@ -28,9 +28,17 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		
 	def on_close(self):
 		pass
+
 	def on_message(self,message):
 		self.ROBOT.set_forward()
 		self.ROBOT.move(speed=Robot.SPEED_LOW)
+
+class CameraHandler(tornado.websocket.WebSocketHandler):
+	def on_open(self):
+		self.write_message("connected!!")
+
+	def start_transmitVideo(self):
+		pass
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
