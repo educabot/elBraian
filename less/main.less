@@ -1,0 +1,287 @@
+// FONT
+@import url(http://fonts.googleapis.com/css?family=News+Cycle:400,700|Prosto+One);
+
+/**
+ QUICK AND DIRTY RESET
+*/
+
+*{
+    margin: 0;
+    padding: 0;    
+}
+
+
+/**
+ CLEARFIX
+*/
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+/*
+ FONTS
+*/
+@font-face {
+    font-family: 'icomoon';
+    src:url('static/fonts/icomoon.eot');
+}
+@font-face {
+    font-family: 'icomoon';
+    src: url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAASQAAsAAAAABqwAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAABCAAAAWEAAAHaW8rhNEZGVE0AAAJsAAAAGgAAABxmJFDUR0RFRgAAAogAAAAdAAAAIAA4AARPUy8yAAACqAAAAEwAAABgU1zfm2NtYXAAAAL0AAAASQAAAVIKSADfaGVhZAAAA0AAAAAvAAAANv66JF9oaGVhAAADcAAAAB4AAAAkBif/5GhtdHgAAAOQAAAAEAAAABwGAABgbWF4cAAAA6AAAAAGAAAABgALUABuYW1lAAADqAAAANwAAAGDdlTN+XBvc3QAAASEAAAADAAAACAAAwAAeJw9jz1Ow0AQhd/6JzbBMn9rRGGQ6EFKQQ1WCi6Ab0BDFJE0AVFEIhKWKKZ1wz1SJzkDSs0FaCPtWk6yzFrArjRavZ353hsBz4MQIuzdDx+HwwGEA4FrnTr61NUnHkUuRd5ZG0dOaIj+H1FA/aqsRn6K570U2E9BBynCVHwewrWMEHs4fhr0bjudzi/8zwMQ73DgwoOPFgI8YAdt7NoxBxEucIcXfGCGL+GIc3EZUzXyNmVVBrG68vTSODdmERiTIatzLdeyzut8LbX0YyMm6FajxIhXM+OPgojr1LBplxqRJT9WOfcwaLNA1qpzg7nttiCVNwjLqkq1SqxKquBiGW9qaiFjYsk26GmybihFYBlznt6yh5aKQTaZH2vZT2w2xVG4Tg2fMZntBIWyUfSybxm80rjF47wUmzcZVLOVZaiVpxlBdcHFAha8EhMyYsmPvyvJCM034EySEoraP4/3yp4AAAB4nGNgYGBkAIKTnfmGIPqcb8FFGA0AQ6MGrAAAeJxjYGRgYOADYgkGEGBiYARCLiBmAfMYAAS4AD0AAAB4nGNgZmZgnMDAysDB+JlJkoGBIRtCMxYwqDEcY2BgYmBlZoABRgEGBAhIc01hcGBQ/MDA9OD/AwZXpgcMCg1ANXAFCkDICAAxJQwgeJxjYGBgZoBgGQZGBhDwAfIYwXwWBgMgzQGETGAZzQ8M//+DWYoQ1v+HAoxQXWDAyMaAzMUOmJhZWNnYOTi5CCkcmgAAMQQJLAAAAHicY2BkYGAAYnGdRsV4fpuvDNzMDCBwzrfgIoL+/4CZgekBkMvBwAQSBQAFlwobAHicY2BkYGB68P8BgyszAwPDXwYgCRRBAcwAcIwEDwAAeJxjZoAAZgYMkAAAAQwAZwAAUAAACwAAeJx1jkFqAkEQRd/oaAiR4EqybFxlM8PMBBe6Fg+QhXuRZhhQG1rNUQIewaXHyAFyhNwj37E2Lmwo+tXvX/UbGPBNwvUkPDE07ojfjbuM+TJOpZ+Ne7zwY9yX/idnkj5LeW2nrtwRvxl3mVMYp9JPxj1GXIz70n9pWBPYqgI7aNZhG4LgE0/NkQ0rolpfHzcrwaL1Hdo7yuFxVORKc8xU9/tu2oSMqaqSq+RDS8LusAix9q7KCzdzliqaZNOsKkp5Hn1sqcjIXu+3gLINZ+njvtGKMi8ezv4DY5k5ZnicY2BmwAsAAH0ABA==) format('woff'),
+         url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+    font-family: 'icomoon';
+    content: attr(data-icon);
+    speak: none;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-arrow-up-left, .icon-arrow-up, .icon-arrow-up-right, .icon-arrow-right, .icon-arrow-down-right, .icon-arrow-down, .icon-arrow-down-left, .icon-arrow-left, .icon-stop {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+.icon-arrow-up-left:before {
+    content: "\21";
+}
+.icon-arrow-up:before {
+    content: "\22";
+}
+.icon-arrow-up-right:before {
+    content: "\23";
+}
+.icon-arrow-right:before {
+    content: "\24";
+}
+.icon-arrow-down-right:before {
+    content: "\25";
+}
+.icon-arrow-down:before {
+    content: "\26";
+}
+.icon-arrow-down-left:before {
+    content: "\27";
+}
+.icon-arrow-left:before {
+    content: "\28";
+}
+.icon-stop:before {
+    content: "\29";
+}
+
+/*
+ BUTTONS
+*/
+
+@red:   #933235;
+@dark:  #111;
+@light: #999999;
+@blue:  #333333;
+@green: #929947;
+@white: #FFFFFF;
+
+.button {
+  border: 0 none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial,sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  margin-bottom: 0;
+  padding: 7px 10px;
+  text-transform: none;
+  transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  width: 16.795%; /* auto */
+  text-align: center;
+  &.red {
+    background: none repeat scroll 0 0 @red;
+    color: @white;
+    &:hover {
+      background: none repeat scroll 0 0 @light;
+      color: @white;
+    }
+  }
+  &.blue {
+    background: none repeat scroll 0 0 @blue;
+    color: @white;
+    &:hover {
+      background: none repeat scroll 0 0 @light;
+      color: @white;
+    }
+  }
+
+  &.green {
+    background: none repeat scroll 0 0 @green;
+    color: @white;
+    &:hover {
+      background: none repeat scroll 0 0 @light;
+      color: @white;
+    }
+  }
+
+  &.dark {
+    background: none repeat scroll 0 0 @dark;
+    color: @white;
+    &:hover {
+      background: none repeat scroll 0 0 @light;
+      color: @white;
+    }
+  }
+}
+
+
+/*
+OK, LETS GO
+*/
+html, body {height: 100%}
+
+body {
+    background: url("/static/img/bg-repeat.png") repeat;
+}
+.wrapper{
+    height: 100%;
+    //background-color: #67786E;
+    background: url("/static/img/bg-main.jpg");
+    width: 1024px;
+    margin: 0 auto;
+    padding: 10px 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+.wrapper-in{
+    width: 900px;
+    margin: 0 auto;
+}
+
+header {
+    h1 {
+        font: 48px 'Prosto One', sans-serif;
+        color: #DDDDDD;
+        text-shadow: 1px 3px 3px #000;
+    }
+}
+
+div.panel {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+div.row {
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+div.left {
+    width: 640px;
+    float: left;
+}
+
+div.right {
+    width: 239px;
+    float: right;
+}
+
+div.video {
+    font-size: 0; //fuckin hack
+    img { border: none;}
+}
+
+div.profile {
+    font-family: 'News Cycle', sans-serif;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #202932;
+    color: #BBB;
+    
+    h3 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 30px;
+        letter-spacing: 0.1em;
+        text-align: center;
+    }
+    
+    h4 {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 30px;
+        letter-spacing: 0.2em;
+        text-align: center;
+    }
+
+    p { 
+        font-size: 14px;
+        padding: 3px 10px;
+    }
+
+}
+
+div.console {
+    border: 8px solid #DDD;
+    padding: 10px;
+    background-color: black;
+    font: 16px "Courier New";
+    color: #BBB;
+    overflow: scroll;
+    height: 115px;
+}
+
+div.remote {
+    border-radius: 5px;
+    table td {
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        height: 50px;
+        i { font-size: 24px;}
+        &#up-left{
+            border-top-left-radius: 5px;
+        }
+        &#up-right{
+            border-top-right-radius: 5px;
+        }
+        &#down-left{
+            border-bottom-left-radius: 5px;
+        }
+        &#down-right{
+            border-bottom-right-radius: 5px;
+        }
+    }
+}
