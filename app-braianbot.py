@@ -30,6 +30,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		pass
 
 	def on_message(self,message):
+		print message
 		self.ROBOT.set_forward()
 		self.ROBOT.move(speed=Robot.SPEED_LOW)
 
