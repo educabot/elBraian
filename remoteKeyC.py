@@ -7,7 +7,7 @@ import time
 import pygame
 
 # Settings for the RemoteKeyBorg client
-broadcastIP = '192.168.10.108'           # IP address to send to, 255 in one or more positions is a broadcast / wild-card
+broadcastIP = '192.168.10.104'           # IP address to send to, 255 in one or more positions is a broadcast / wild-card
 broadcastPort = 9038                    # What message number to send with (LEDB on an LCD)
 leftDrive = 1                           # Drive number for left motor
 rightDrive = 4                          # Drive number for right motor
