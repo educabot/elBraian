@@ -17,7 +17,7 @@ $(document).ready(function(){
 		checkCountOrRemove();
 
 		$('.console').append($("<p> > Stop</p>"));
-		websocket.send("command to stop");		
+		websocket.send("STOP");		
 	}
 
 	websocket.onopen = function(evt){
@@ -38,7 +38,7 @@ $(document).ready(function(){
 	$('#up').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Moving forward ..</p>"));
-		websocket.send("command to move forward");
+		websocket.send("FORWARD");
 	});
 
 	$('#up').mouseup(function(){
@@ -71,7 +71,7 @@ $(document).ready(function(){
 	$('#rotate-left').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Rotating left ..</p>"));
-		websocket.send("command to Rotating Left");
+		websocket.send("ROTATE-LEFT");
 	});
 
 	$('#rotate-left').mouseup(function(){
@@ -82,7 +82,7 @@ $(document).ready(function(){
 	$('#rotate-right').mousedown(function(){		
 		checkCountOrRemove();
 		$('.console').append($("<p> > Rotating right ..</p>"));
-		websocket.send("command to Turning Left");
+		websocket.send("ROTATE-RIGHT");
 	});
 
 	$('#rotate-right').mouseup(function(){
@@ -93,7 +93,7 @@ $(document).ready(function(){
 	$('#down').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Moving backward ..</p>"));
-		websocket.send("command to moving backward");
+		websocket.send("BACKWARD");
 	});
 
 	$('#down').mouseup(function(){

@@ -31,8 +31,21 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self,message):
 		print message
-		self.ROBOT.set_forward()
-		self.ROBOT.move(speed=Robot.SPEED_LOW)
+		if (message == "FORWARD"):
+			self.ROBOT.set_forward()
+			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+		elif (message == "BACKWARD"):
+			self.ROBOT.set_backward()
+			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+		elif (message == "ROTATE-LEFT"):
+			self.ROBOT.set_rotate_left()
+			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+		elif (message == "ROTATE-RIGHT"):
+			self.ROBOT.set_rotate_right()
+			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+		elif (message == "STOP"):
+			self.ROBOT.stop()
+
 
 class CameraHandler(tornado.websocket.WebSocketHandler):
 	def on_open(self):
