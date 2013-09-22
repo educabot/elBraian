@@ -11,7 +11,7 @@ from braianDriver.robot import Robot
 
 
 patch_tornado()
-define("port", default=8000, help="run on the given port",type=int)
+define("port", default=8090, help="run on the given port",type=int)
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
