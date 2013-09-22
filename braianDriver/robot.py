@@ -96,23 +96,23 @@ class Robot(object):
 
 
 	def set_forward(self):
-		print "Moving forward"
+		print "seeting forward"
 		self._set_left_forward()
 		self._set_right_forward()
 		
 
 	def set_backward(self):
-		print "Moving backward "
+		print "setting backward "
 		self._set_left_backward()
 		self._set_right_backward() 
 
 	def set_rotate_left(self):
-		print "Rotate to left"
+		print "setting Rotate to left"
 		self._set_left_backward()
 		self._set_right_forward()
 
 	def set_rotate_right(self):
-		print "rotate to the right"
+		print "setting rotate to the right"
 		self._set_right_backward()
 		self._set_left_forward()
 
@@ -124,10 +124,11 @@ class Robot(object):
 		self.pwm_right.stop()
 
 	def move(self, speed=None, arc=None):
+		
 		if (speed and arc):
 			print "Error: speed and arc could not be setted up at the same time"
 			return
-
+		print "moving.."
 		self.pwm_left.start(0)
 		self.pwm_right.start(0)
 
