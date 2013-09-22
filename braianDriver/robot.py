@@ -95,7 +95,7 @@ class Robot(object):
 		gpio.output(BACKWARD_RIGHT_PIN, True)
 
 
-	def set_forward(self):(
+	def set_forward(self):
 		print "Moving forward"
 		_set_left_forward()
 		_set_right_forward()
