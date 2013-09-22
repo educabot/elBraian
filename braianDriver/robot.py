@@ -55,7 +55,7 @@ class Robot(object):
 		gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
 		## Setting both to True to force stopping wheels
 		gpio.output(self.FORWARD_RIGHT_PIN,True)
-		gpio.output(self.BACKWARD_RiGHT_PIN,True)
+		gpio.output(self.BACKWARD_RIGHT_PIN,True)
 
 		#PWM
 		gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
@@ -97,29 +97,29 @@ class Robot(object):
 
 	def set_forward(self):
 		print "Moving forward"
-		_set_left_forward()
-		_set_right_forward()
+		self._set_left_forward()
+		self._set_right_forward()
 		
 
 	def set_backward(self):
 		print "Moving backward "
-		_set_left_backward()
-		_set_right_backward() 
+		self._set_left_backward()
+		self._set_right_backward() 
 
 	def set_rotate_left(self):
 		print "Rotate to left"
-		_set_left_backward()
-		_set_right_forward()
+		self._set_left_backward()
+		self._set_right_forward()
 
 	def set_rotate_right(self):
 		print "rotate to the right"
-		_set_right_backward()
-		_set_left_forward()
+		self._set_right_backward()
+		self._set_left_forward()
 
 	def stop(self):
 		print "stopping.."
-		_set_right_stop()
-		_set_left_stop()
+		self._set_right_stop()
+		self._set_left_stop()
 		self.pwm_left.stop()
 		self.pwm_right.stop()
 
@@ -132,10 +132,10 @@ class Robot(object):
 		self.pwm_right.start(0)
 
 		if (speed):
-			pwm_left.ChangeDutyCycle(speed)
-			pwm_right.ChangeDutyCycle(speed)
+			self.pwm_left.ChangeDutyCycle(speed)
+			self.pwm_right.ChangeDutyCycle(speed)
 
 		if (arc):
 			cycle_left, cycle_right = arc
-			pwm_left.ChangeDutyCycle(cycle_left)
-			pwm_right.ChangeDutyCycle(cycle_right)
+			self.pwm_left.ChangeDutyCycle(cycle_left)
+			self.pwm_right.ChangeDutyCycle(cycle_right)
