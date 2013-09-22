@@ -1,4 +1,4 @@
-#import RPi.GPIO as gpio
+import RPi.GPIO as gpio
 #import wirinpi
 
 ##Speed expressed on duty cycles
@@ -37,7 +37,7 @@ class Robot(object):
 	#Frecuency by hertz
 	FRECUENCY = 1500
 
-	def __init__():
+	def __init__(self):
 		gpio.cleanup()
 
 		gpio.setmode(gpio.BOARD)
