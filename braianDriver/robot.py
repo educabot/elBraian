@@ -44,55 +44,55 @@ class Robot(object):
 
 
 		##Left Side
-		gpio.setup(FORWARD_LEFT_PIN,gpio.OUT)
-		gpio.setup(BACKWARD_LEFT_PIN,gpio.OUT)
+		gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
+		gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
 		## Setting both to True to force stopping wheels
-		gpio.output(FORWARD_LEFT_PIN,True)
-		gpio.output(BACKWARD_LEFT_PIN,True)
+		gpio.output(self.FORWARD_LEFT_PIN,True)
+		gpio.output(self.BACKWARD_LEFT_PIN,True)
 
 		##Right Side
-		gpio.setup(FORWARD_RIGHT_PIN,gpio.OUT)
-		gpio.setup(BACKWARD_RIGHT_PIN,gpio.OUT)
+		gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
+		gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
 		## Setting both to True to force stopping wheels
-		gpio.output(FORWARD_RIGHT_PIN,True)
-		gpio.output(BACKWARD_RiGHT_PIN,True)
+		gpio.output(self.FORWARD_RIGHT_PIN,True)
+		gpio.output(self.BACKWARD_RiGHT_PIN,True)
 
 		#PWM
-		gpio.setup(PWM_LEFT_PIN,gpio.OUT)
-		gpio.setup(PWM_RIGHT_PIN,gpio.OUT)
+		gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
+		gpio.setup(self.PWM_RIGHT_PIN,gpio.OUT)
 
-		self.pwm_left = gpio.PWM(PWM_LEFT_PIN, FRECUENCY)
-		self.pwm_right = gpio.PWM(PWM_RIGHT_PIN, FRECUENCY)
+		self.pwm_left = gpio.PWM(self.PWM_LEFT_PIN, self.FRECUENCY)
+		self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 	
 
 	def _set_left_forward(self):
-		gpio.output(FORWARD_LEFT_PIN, True)
-		gpio.output(BACKWARD_LEFT_PIN, False)
+		gpio.output(self.FORWARD_LEFT_PIN, True)
+		gpio.output(self.BACKWARD_LEFT_PIN, False)
 
 
 	def _set_left_backward(self):
-		gpio.output(FORWARD_LEFT_PIN, False)
-		gpio.output(BACKWARD_LEFT_PIN, True)
+		gpio.output(self.FORWARD_LEFT_PIN, False)
+		gpio.output(self.BACKWARD_LEFT_PIN, True)
 
 
 	def _set_left_stop(self):
-		gpio.output(FORWARD_LEFT_PIN, True)
-		gpio.output(BACKWARD_LEFT_PIN, True)
+		gpio.output(self.FORWARD_LEFT_PIN, True)
+		gpio.output(self.BACKWARD_LEFT_PIN, True)
 
 
 	def _set_right_forward(self):
-		gpio.output(FORWARD_RIGHT_PIN, True)
-		gpio.output(BACKWARD_RIGHT_PIN, False)
+		gpio.output(self.FORWARD_RIGHT_PIN, True)
+		gpio.output(self.BACKWARD_RIGHT_PIN, False)
 
 
 	def _set_right_backward(self):
-		gpio.output(FORWARD_RIGHT_PIN, False)
-		gpio.output(BACKWARD_RIGHT_PIN, True)
+		gpio.output(self.FORWARD_RIGHT_PIN, False)
+		gpio.output(self.BACKWARD_RIGHT_PIN, True)
 
 
 	def _set_right_stop(self):
-		gpio.output(FORWARD_RIGHT_PIN, True)
-		gpio.output(BACKWARD_RIGHT_PIN, True)
+		gpio.output(self.FORWARD_RIGHT_PIN, True)
+		gpio.output(self.BACKWARD_RIGHT_PIN, True)
 
 
 	def set_forward(self):
