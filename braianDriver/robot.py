@@ -23,8 +23,8 @@ class Robot(object):
 	RIGHT_ARC_OPEN = 100,60
 
 	#Pin pair left
-	FORWARD_LEFT_PIN = 21
-	BACKWARD_LEFT_PIN = 19
+	FORWARD_LEFT_PIN = 19
+	BACKWARD_LEFT_PIN = 21
 
 	#Pin pair right
 	FORWARD_RIGHT_PIN = 24
