@@ -49,7 +49,7 @@ $(document).ready(function(){
 	$('#up-left').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning left ..</p>"));
-		websocket.send("command to Turning Left");
+		websocket.send("FORWARD-TURNING-LEFT");
 	});
 
 	$('#up-left').mouseup(function(){
@@ -60,7 +60,7 @@ $(document).ready(function(){
 	$('#up-right').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning right ..</p>"));
-		websocket.send("command to Turning Right");
+		websocket.send("FORWARD-TURNING-RIGHT");
 	});
 
 	$('#up-right').mouseup(function(){
@@ -106,7 +106,7 @@ $(document).ready(function(){
 		
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning backward left..</p>"));
-		websocket.send("command to Turning backward left ");
+		websocket.send("BACKWARD-TURNING-LEFT");
 	});
 
 	$('#down-left').mouseup(function(){
@@ -118,7 +118,7 @@ $(document).ready(function(){
 		
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning backward right..</p>"));
-		websocket.send("command to turning backward right");
+		websocket.send("BACKWARD-TURNING-RIGHT");
 	});
 
 	$('#down-right').mouseup(function(){

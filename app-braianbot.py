@@ -26,10 +26,10 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 	this class represent the basic socket operation to move the wheels
 	"""
 	def on_open(self):
-		self.write_message("connected!!")
+		log.debug("client connected..")
 		
 	def on_close(self):
-		pass
+		log.debug("get the hell out of here!")
 
 	def on_message(self,message):
 		log.debug(message)
@@ -38,13 +38,25 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
 		elif (message == "BACKWARD"):
 			self.ROBOT.set_backward()
-			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+			self.ROBOT.move(speed=Robot.SPEED_HIGH)
 		elif (message == "ROTATE-LEFT"):
 			self.ROBOT.set_rotate_left()
-			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+			self.ROBOT.move(speed=Robot.SPEED_LOW)
 		elif (message == "ROTATE-RIGHT"):
 			self.ROBOT.set_rotate_right()
-			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
+			self.ROBOT.move(speed=Robot.SPEED_LOW)
+		elif (message == "FORWARD-TURNING-LEFT"):
+			self.ROBOT.set_forward()
+			self.ROBOT.move(arc=(Robot.SPEED_LOW,Robot.SPEED_MEDIUM))
+		elif (message == "FORWARD-TURNING-RIGHT"):
+			self.ROBOT.set_forward()
+			self.ROBOT.move(arc=(Robot.SPEED_MEDIUM,Robot.SPEED_LOW))
+		elif (message == "BACKWARD-TURNING-LEFT"):
+			self.ROBOT.set_backward()
+			self.ROBOT.move(arc=(Robot.SPEED_LOW,Robot.SPEED_MEDIUM))
+		elif (message == "BACKWARD-TURNING-RIGHT"):
+			self.ROBOT.set_backward()
+			self.ROBOT.move(arc=(Robot.SPEED_LOW,Robot.SPEED_MEDIUM))
 		elif (message == "STOP"):
 			self.ROBOT.stop()
 

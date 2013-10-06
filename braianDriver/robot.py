@@ -38,9 +38,9 @@ if env == "prod":
 #wiringpi.pinMode(wiring_pin,2) #PWM mode
 
 class Robot(object):
-	SPEED_HIGH = 100  
-	SPEED_MEDIUM = 70
-	SPEED_LOW = 40
+	SPEED_HIGH = config.get("robot.gpio","speed_high")  
+	SPEED_MEDIUM = config.get("robot.gpio","speed_medium")
+	SPEED_LOW = config.get("robot.gpio","speed_low")
 
 	##Define the arc of the turn process by a tuple wheels speed (left, right)
 	LEFT_ARC_CLOSE = 40,100
@@ -162,17 +162,22 @@ class Robot(object):
 		if (speed and arc):
 			print "Error: speed and arc could not be setted up at the same time"
 			return
+
 		if env == "prod":
 			self.pwm_left.start(0)
 			self.pwm_right.start(0)
 
-			if (speed):
-				log.debug("moving on " + str(speed))
+		if (speed):
+			log.debug("moving on " + str(speed))
+			if env == "prod":
 				self.pwm_left.ChangeDutyCycle(speed)
 				self.pwm_right.ChangeDutyCycle(speed)
 
-			if (arc):
-				log.debug("turning -> left wheel: " + str(cycle_left)) + " right wheel: " + str(cycle_right)
-				cycle_left, cycle_right = arc
+		if (arc):
+			cycle_left, cycle_right = arc
+			log.debug("turning -> left wheel: " + str(cycle_left) + " right wheel: " + str(cycle_right))
+			if env == "prod":
 				self.pwm_left.ChangeDutyCycle(cycle_left)
 				self.pwm_right.ChangeDutyCycle(cycle_right)
+
+		
