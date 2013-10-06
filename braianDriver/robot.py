@@ -1,4 +1,31 @@
-import RPi.GPIO as gpio
+import ConfigParser, os
+import logging
+
+config = ConfigParser.ConfigParser()
+config.read('config/application.cfg')
+env = config.get("system","env")
+
+log = logging.getLogger("Robot")
+logger_level = config.get("system","logging.level")
+
+if logger_level == "DEBUG":
+	log.setLevel(logging.DEBUG)
+elif logger_level == "INFO":
+	log.setLevel(logging.INFO)
+elif logger_level == "WARNING":
+	log.setLevel(logging.WARNING)
+
+handler = logging.StreamHandler()
+formatter = logging.Formatter("%(levelname)s %(asctime)s %(module)s %(funcName)s %(lineno)d %(message)s") 
+handler.setFormatter(formatter)
+log.addHandler(handler)
+
+
+log.info("using "+ env +" configuration ")
+
+if env == "prod":
+	import RPi.GPIO as gpio
+
 #import wirinpi
 
 ##Speed expressed on duty cycles
@@ -38,31 +65,32 @@ class Robot(object):
 	FRECUENCY = 1500
 
 	def __init__(self):
-		gpio.cleanup()
+		if env == "prod":
+			gpio.cleanup()
 
-		gpio.setmode(gpio.BOARD)
+			gpio.setmode(gpio.BOARD)
 
 
-		##Left Side
-		gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
-		gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
-		## Setting both to True to force stopping wheels
-		gpio.output(self.FORWARD_LEFT_PIN,True)
-		gpio.output(self.BACKWARD_LEFT_PIN,True)
+			##Left Side
+			gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
+			gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
+			## Setting both to True to force stopping wheels
+			gpio.output(self.FORWARD_LEFT_PIN,True)
+			gpio.output(self.BACKWARD_LEFT_PIN,True)
 
-		##Right Side
-		gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
-		gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
-		## Setting both to True to force stopping wheels
-		gpio.output(self.FORWARD_RIGHT_PIN,True)
-		gpio.output(self.BACKWARD_RIGHT_PIN,True)
+			##Right Side
+			gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
+			gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
+			## Setting both to True to force stopping wheels
+			gpio.output(self.FORWARD_RIGHT_PIN,True)
+			gpio.output(self.BACKWARD_RIGHT_PIN,True)
 
-		#PWM
-		gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
-		gpio.setup(self.PWM_RIGHT_PIN,gpio.OUT)
+			#PWM
+			gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
+			gpio.setup(self.PWM_RIGHT_PIN,gpio.OUT)
 
-		self.pwm_left = gpio.PWM(self.PWM_LEFT_PIN, self.FRECUENCY)
-		self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
+			self.pwm_left = gpio.PWM(self.PWM_LEFT_PIN, self.FRECUENCY)
+			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 	
 
 	def _set_left_forward(self):
@@ -96,47 +124,55 @@ class Robot(object):
 
 
 	def set_forward(self):
-		print "seeting forward"
-		self._set_left_forward()
-		self._set_right_forward()
+		log.debug("setting movement to forward")
+		if env == "prod":
+			self._set_left_forward()
+			self._set_right_forward()
 		
 
 	def set_backward(self):
-		print "setting backward "
-		self._set_left_backward()
-		self._set_right_backward() 
+		log.debug("setting movement to backward")
+		if env == "prod":
+			self._set_left_backward()
+			self._set_right_backward() 
+
 
 	def set_rotate_left(self):
-		print "setting Rotate to left"
-		self._set_left_backward()
-		self._set_right_forward()
+		log.debug("setting movement to rotate left")
+		if env == "prod":
+			self._set_left_backward()
+			self._set_right_forward()
 
 	def set_rotate_right(self):
-		print "setting rotate to the right"
-		self._set_right_backward()
-		self._set_left_forward()
+		log.debug("setting movement to rotate right")
+		if env == "prod":
+			self._set_right_backward()
+			self._set_left_forward()
 
 	def stop(self):
-		print "stopping.."
-		self._set_right_stop()
-		self._set_left_stop()
-		self.pwm_left.stop()
-		self.pwm_right.stop()
+		log.debug("stopping")
+		if env == "prod":
+			self._set_right_stop()
+			self._set_left_stop()
+			self.pwm_left.stop()
+			self.pwm_right.stop()
 
 	def move(self, speed=None, arc=None):
 		
 		if (speed and arc):
 			print "Error: speed and arc could not be setted up at the same time"
 			return
-		print "moving.."
-		self.pwm_left.start(0)
-		self.pwm_right.start(0)
+		if env == "prod":
+			self.pwm_left.start(0)
+			self.pwm_right.start(0)
 
-		if (speed):
-			self.pwm_left.ChangeDutyCycle(speed)
-			self.pwm_right.ChangeDutyCycle(speed)
+			if (speed):
+				log.debug("moving on " + str(speed))
+				self.pwm_left.ChangeDutyCycle(speed)
+				self.pwm_right.ChangeDutyCycle(speed)
 
-		if (arc):
-			cycle_left, cycle_right = arc
-			self.pwm_left.ChangeDutyCycle(cycle_left)
-			self.pwm_right.ChangeDutyCycle(cycle_right)
+			if (arc):
+				log.debug("turning -> left wheel: " + str(cycle_left)) + " right wheel: " + str(cycle_right)
+				cycle_left, cycle_right = arc
+				self.pwm_left.ChangeDutyCycle(cycle_left)
+				self.pwm_right.ChangeDutyCycle(cycle_right)

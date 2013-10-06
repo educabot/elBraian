@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	var host = "ws://10.5.5.1:8090/robot";
+	var host = "ws://"+ document.domain +":8090/robot";
 
 	var websocket = new WebSocket(host);
 	

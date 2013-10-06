@@ -8,10 +8,12 @@ from tornado.options import define,options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
-
+import logging
 
 patch_tornado()
 define("port", default=8090, help="run on the given port",type=int)
+log = logging.getLogger("webserver")
+log.setLevel(logging.DEBUG)
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -30,7 +32,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		pass
 
 	def on_message(self,message):
-		print message
+		log.debug(message)
 		if (message == "FORWARD"):
 			self.ROBOT.set_forward()
 			self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
