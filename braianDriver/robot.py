@@ -38,31 +38,31 @@ if env == "prod":
 #wiringpi.pinMode(wiring_pin,2) #PWM mode
 
 class Robot(object):
-	SPEED_HIGH = config.get("robot.gpio","speed_high")  
-	SPEED_MEDIUM = config.get("robot.gpio","speed_medium")
-	SPEED_LOW = config.get("robot.gpio","speed_low")
+	SPEED_HIGH = config.get("robot.speed","speed_high")  
+	SPEED_MEDIUM = config.get("robot.speed","speed_medium")
+	SPEED_LOW = config.get("robot.speed","speed_low")
 
 	##Define the arc of the turn process by a tuple wheels speed (left, right)
-	LEFT_ARC_CLOSE = 40,100
-	LEFT_ARC_OPEN = 60,100
+	LEFT_ARC_CLOSE = eval(config.get("robot.speed","left_arc_close"))
+	LEFT_ARC_OPEN = eval(config.get("robot.speed","left_arc_open"))
 
-	RIGHT_ARC_CLOSE = 100,40
-	RIGHT_ARC_OPEN = 100,60
+	RIGHT_ARC_CLOSE = eval(config.get("robot.speed","right_arc_close"))
+	RIGHT_ARC_OPEN = eval(config.get("robot.speed","right_arc_open"))
 
 	#Pin pair left
-	FORWARD_LEFT_PIN = 19
-	BACKWARD_LEFT_PIN = 21
+	FORWARD_LEFT_PIN = config.get("robot.gpio","forward_left_pin")
+	BACKWARD_LEFT_PIN = config.get("robot.gpio","backward_left_pin")
 
 	#Pin pair right
-	FORWARD_RIGHT_PIN = 24
-	BACKWARD_RIGHT_PIN = 22
+	FORWARD_RIGHT_PIN = config.get("robot.gpio","forward_right_pin")
+	BACKWARD_RIGHT_PIN = config.get("robot.gpio","backward_right_pin")
 
 	#PWM PINS
-	PWM_LEFT_PIN = 12
-	PWM_RIGHT_PIN = 18
+	PWM_LEFT_PIN = config.get("robot.gpio","pwm_left_pin")
+	PWM_RIGHT_PIN = config.get("robot.gpio","pwm_right_pin")
 
 	#Frecuency by hertz
-	FRECUENCY = 1500
+	FRECUENCY = config.get("robot.gpio","frecuency")
 
 	def __init__(self):
 		if env == "prod":
