@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+	var lastkey;
 	var host = "ws://"+ document.domain +":8090/robot";
 
 	var websocket = new WebSocket(host);
@@ -124,5 +124,49 @@ $(document).ready(function(){
 	$('#down-right').mouseup(function(){
 		stop();
 	});
+
+	//Arrow Control
+	$(document).keydown(function(event){
+		checkCountOrRemove();
+		switch(event.which){
+			//up
+			case 38:
+				if(lastkey!=38){
+					$('.console').append($("<p> > Moving forward ..</p>"));
+					websocket.send("FORWARD");
+					lastkey = 38;
+				}
+				break;
+			//down
+			case 40:
+				if(lastkey!=40){
+					$('.console').append($("<p> > Moving BACKWARD ..</p>"));
+					websocket.send("BACKWARD");
+					lastkey = 40;
+				}
+				break;
+			case 37:
+				if(lastkey!=37){
+					$('.console').append($("<p> > Rotating Left ..</p>"));
+					websocket.send("ROTATE-LEFT");
+					lastkey = 37;
+				}
+				break;
+			case 39:
+				if(lastkey!=39){
+					$('.console').append($("<p> > Rotating right ..</p>"));
+					websocket.send("ROTATE-RIGHT");
+					lastkey = 39;
+				}
+				break;
+
+		}
+	});
+
+	$(document).keyup(function(event){
+		lastkey = 0;
+		stop();
+	});
+
 
 });
