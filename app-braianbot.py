@@ -60,7 +60,6 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		elif (message == "STOP"):
 			self.ROBOT.stop()
 
-
 class CameraHandler(tornado.websocket.WebSocketHandler):
 	def on_open(self):
 		self.write_message("connected!!")
@@ -68,11 +67,24 @@ class CameraHandler(tornado.websocket.WebSocketHandler):
 	def start_transmitVideo(self):
 		pass
 
+class ConsoleHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.render('console.jade')
+	def post(self):
+		code = self.get_argument("code", default=None, strip=False)
+		#print(self.request.body)
+		exec(code)
+		self.render('console.jade')
+
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
-		handlers=[(r"/",IndexHandler),(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
-		(r"/robot",RobotHandler)],
+		handlers=[
+			(r"/",IndexHandler),
+			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
+			(r"/robot",RobotHandler),
+			(r"/console",ConsoleHandler),
+		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
 		debug=True	
