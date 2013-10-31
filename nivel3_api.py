@@ -3,26 +3,26 @@ from braianDriver.robot import Robot
 
 robot = Robot()
 
-def adelante():
+def adelante(cuanto):
 	robot.set_forward()
 	robot.move(speed=Robot.SPEED_MEDIUM)
-	sleep(1)
+	sleep(cuanto)
 	robot.stop()
 
-def atras():
+def atras(cuanto):
 	robot.set_backward()
-	robot.move(speed=Robot.SPEED_HIGH)
-	sleep(1)
+	robot.move(speed=Robot.SPEED_MEDIUM)
+	sleep(cuanto)
 	robot.stop()
 
-def girar_izquierda():
+def girar_izquierda(cuanto):
 	robot.set_rotate_left()
 	robot.move(speed=Robot.SPEED_LOW)
-	sleep(1)
+	sleep(cuanto)
 	robot.stop()
 
-def girar_derecha():
+def girar_derecha(cuanto):
 	robot.set_rotate_right()
 	robot.move(speed=Robot.SPEED_LOW)
-	sleep(1)
+	sleep(cuanto)
 	robot.stop()
