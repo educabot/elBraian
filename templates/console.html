@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="ElBraian MVP">
+    <meta name="author" content="Diego Ramirez">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link type="text/css" rel="stylesheet" href="/static/syntaxhighlighter/styles/shCoreDefault.css"/>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script src="/static/syntaxhighlighter/scripts/shCore.js"></script>
+    <script src="/static/syntaxhighlighter/scripts/shBrushPython.js"></script>
+    <script src="/static/js/console.js"></script>
+  </head>
+  <body>
+    <div id="main" class="wrapper">
+      <div class="wrapper-in">
+        <header>
+          <h1>elBraian in concert</h1>
+        </header>
+        <div class="main cf">
+          <div class="row cf">
+            <div class="left">
+              <form method="post">
+                <textarea id="code" name="code" cols="70" rows="20" class="brush: python;">
+                  {{code}}
+                </textarea><br>
+                <input type="submit" value="ejecutar" class="button green">
+              </form>
+            </div>
+            <div class="right">
+              <div class="panel profile"><img src="/static/img/profile.png">
+                <h3>ELBRAIAN</h3>
+                <h4>RODADUS ROBOTUS</h4>
+                <p><b>elBraian</b> (born Brian Claudio Estevez) is one of the new generation of home-made robots. He cames to life to help his creator with some daily simple tasks: laundry, cleanup, washing the dishes and sometimes he pays the bills.</p>
+                <p>His favourite soccer team is Laferrere, and you can meet him at the stadium every saturday evening, singing and "agitando los trapos".</p>
+              </div>
+            </div>
+          </div>
+          <div id="1" class="row cf nivel">
+            <div class="left">
+              <div class="panel profile">
+                <h4>adelante.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  robot.set_forward()
+                  robot.move(speed=Robot.SPEED_MEDIUM)
+                  sleep(1)
+                  robot.stop()
+                </pre>
+                <hr/>
+                <h4>atras.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  robot.set_backward()
+                  robot.move(speed=Robot.SPEED_MEDIUM)
+                  sleep(1)
+                  robot.stop()
+                </pre>
+                <hr/>
+                <h4>girar_izquierda.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  robot.set_rotate_left()
+                  robot.move(speed=Robot.SPEED_LOW)
+                  sleep(1)
+                  robot.stop()
+                </pre>
+                <hr/>
+                <h4>girar_derecha.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  robot.set_rotate_right()
+                  robot.move(speed=Robot.SPEED_LOW)
+                  sleep(1)
+                  robot.stop()
+                </pre>                
+              </div>
+            </div>
+            <div class="right">
+              <div class="panel profile">
+                <h3>Nivel 1</h3>
+                <p>Hablando el idioma del Braian</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="2" class="row cf nivel">
+            <div class="left">
+              <div class="panel profile">
+                <h4>ejemplo.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from nivel2_api import *
+
+                  adelante()
+                  adelante()
+                  girar_izquierda()
+                  atras()
+                  girar_derecha()
+                  adelante()
+                </pre>              
+                <hr/>
+                <h4>api.py</h4>
+                <pre class="brush: python; toolbar: false; smart-tabs: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  def adelante():
+                  &#09;robot.set_forward()
+                  &#09;robot.move(speed=Robot.SPEED_MEDIUM)
+                  &#09;sleep(1)
+                  &#09;robot.stop()
+
+                  def atras():
+                  &#09;robot.set_backward()
+                  &#09;robot.move(speed=Robot.SPEED_MEDIUM)
+                  &#09;sleep(1)
+                  &#09;robot.stop()
+
+                  def girar_izquierda():
+                  &#09;robot.set_rotate_left()
+                  &#09;robot.move(speed=Robot.SPEED_LOW)
+                  &#09;sleep(1)
+                  &#09;robot.stop()
+
+                  def girar_derecha():
+                  &#09;robot.set_rotate_right()
+                  &#09;robot.move(speed=Robot.SPEED_LOW)
+                  &#09;sleep(1)
+                  &#09;robot.stop()
+                </pre>
+              </div>
+            </div>
+            <div class="right">
+              <div class="panel profile">
+                <h3>Nivel 2</h3>
+                <p>Hablando un idioma un poco más fácil</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="3" class="row cf nivel">
+            <div class="left">
+              <div class="panel profile">
+                <h4>ejemplo.py</h4>
+                <pre class="brush: python; toolbar: false;">
+                  from nivel3_api import *
+
+                  for numero in range(1,5):
+                  &#09;adelante(numero)
+                  &#09;girar_izquierda(numero/5)
+                </pre>              
+                <hr/>
+                <h4>api.py</h4>
+                <pre class="brush: python; toolbar: false; smart-tabs: false;">
+                  from time import sleep
+                  from braianDriver.robot import Robot
+
+                  robot = Robot()
+
+                  def adelante(cuanto):
+                  &#09;robot.set_forward()
+                  &#09;robot.move(speed=Robot.SPEED_MEDIUM)
+                  &#09;sleep(cuanto)
+                  &#09;robot.stop()
+
+                  def atras(cuanto):
+                  &#09;robot.set_backward()
+                  &#09;robot.move(speed=Robot.SPEED_MEDIUM)
+                  &#09;sleep(cuanto)
+                  &#09;robot.stop()
+
+                  def girar_izquierda(cuanto):
+                  &#09;robot.set_rotate_left()
+                  &#09;robot.move(speed=Robot.SPEED_LOW)
+                  &#09;sleep(cuanto)
+                  &#09;robot.stop()
+
+                  def girar_derecha(cuanto):
+                  &#09;robot.set_rotate_right()
+                  &#09;robot.move(speed=Robot.SPEED_LOW)
+                  &#09;sleep(cuanto)
+                  &#09;robot.stop()
+                </pre>
+              </div>
+            </div>
+            <div class="right">
+              <div class="panel profile">
+                <h3>Nivel 3</h3>
+                <p>Sobre parámetros y repeticiones</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

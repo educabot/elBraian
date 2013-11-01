@@ -69,12 +69,11 @@ class CameraHandler(tornado.websocket.WebSocketHandler):
 
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('console.jade')
+		self.render('console.html', code='')
 	def post(self):
 		code = self.get_argument("code", default=None, strip=False)
-		#print(self.request.body)
 		exec(code)
-		self.render('console.jade')
+		self.render('console.html', code=code)
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
