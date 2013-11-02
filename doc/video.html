@@ -1,1 +1,38 @@
-<img id="streamimage" class="xform" src="http://192.168.10.104:8080/?action=stream" />
+<html>
+  <head>
+    <title>Wow! This is video</title>
+    <script src="flowplayer-3.2.12.min.js"></script>
+  </head>
+  <body>
+    <a class="player"
+       style="display:block;width:640px;height:480px;"
+       id="streams">
+    </a>
+ 
+    <script language="JavaScript">
+	flowplayer("streams", "flowplayer-3.2.16.swf", {
+	 
+	clip: {
+		streams: [
+            { url: 'flv:mystream', duration: 10 }],
+             provider: 'hddn'
+	    },
+	 
+	    // streaming plugins are configured under the plugins node
+	    plugins: {
+	 
+	        // here is our rtmp plugin configuration
+	        hddn: {
+	            url: "flowplayer.rtmp-3.2.12.swf",
+	 
+	            // netConnectionUrl defines where the streams are found
+	            netConnectionUrl: 'rtmp://192.168.1.105/myapp'
+	        }
+	    },
+	    canvas: {
+	        backgroundGradient: 'none'
+	    }
+		});
+	</script>
+  </body>
+</html>
