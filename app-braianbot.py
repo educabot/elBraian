@@ -23,7 +23,7 @@ log.setLevel(logging.DEBUG)
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
-		pic_url = "http://educabot.org:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
+		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('index.jade', pic_url=pic_url)
 		
 class RobotHandler(tornado.websocket.WebSocketHandler):
