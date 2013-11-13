@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ document.domain +":8090/robot";
+	var host = "ws://"+ document.domain +"/robot";
 
 	var websocket = new WebSocket(host);
 	

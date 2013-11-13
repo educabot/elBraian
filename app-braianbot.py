@@ -4,20 +4,26 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.websocket
+import ConfigParser, os
 from tornado.options import define,options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
 import logging
 
+config = ConfigParser.ConfigParser()
+config.read('config/application.cfg')
+env = config.get("system","env")
+
 patch_tornado()
-define("port", default=8090, help="run on the given port",type=int)
+define("port", default=80, help="run on the given port",type=int)
 log = logging.getLogger("webserver")
 log.setLevel(logging.DEBUG)
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('index.jade')
+		pic_url = "http://educabot.org:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
+		self.render('index.jade', pic_url=pic_url)
 		
 class RobotHandler(tornado.websocket.WebSocketHandler):
 
