@@ -29,4 +29,26 @@ $(document).ready(function() {
     $('html,body').animate({ scrollTop: 0 }, 'slow', function () {
     });
   }
+
+  $('#execute').click(function(){
+    var code = $('#code').val();
+    var jsonData = {
+      code: code
+    }
+    var encoded = $.toJSON(jsonData);
+    $.ajax({
+        url:"/console",
+        type:"POST",
+        data: encoded,
+        contentType:"application/json; charset=utf-8",
+        dataType:"json",
+        success: function(data){
+          alert("Codigo Ejecutado")
+        },
+        error: function(){
+          alert("Fallo la ejecucion")
+        }
+    });
+
+  });
 });

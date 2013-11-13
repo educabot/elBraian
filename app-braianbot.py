@@ -10,6 +10,7 @@ from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
 import logging
+import json
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -75,11 +76,12 @@ class CameraHandler(tornado.websocket.WebSocketHandler):
 
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('console.html', code='')
+		self.render('consola.jade', code='')
 	def post(self):
-		code = self.get_argument("code", default=None, strip=False)
-		exec(code)
-		self.render('console.html', code=code)
+		code = json.loads(self.request.body)
+		exec(code["code"])
+		self.set_status(200)
+		self.finish()
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
