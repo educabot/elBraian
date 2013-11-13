@@ -45,4 +45,24 @@ and make
 
 update.rc-d mjpg-streamer defaults
 
+11/12/2013
+
+It was the same for the braianserver. The symtom was that during a large script execution from console mode, tha application hangs and responde code error happens. 
+So, i did the same workaround:
+
+#!/bin/bash
+cd /home/pi/elBraian
+/home/pi/virtualenvs/elBraian/bin/python /home/pi/elBraian/app-braianbot.py
+
+on 
+
+/etc/init.d/braianserver
+
+and make
+
+update-rc.d braianserver defaults
+
+
+Note: Strongly need to check the Supervisor documentation properly
+
 
