@@ -11,5 +11,5 @@ raspistill -w 640 -h 480 -q 50 -br 50 -vf -o /home/pi/tmp/mjpg/pic.jpg -tl 50 -t
 ./mjpg_streamer -i "input_file.so -f /home/pi/tmp/mjpg -r" -o "output_http.so -p 8095 -w ./www"
 
 
-LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/stream" -o "output_http.so -p 8095 -w ./www" &
+LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/stream -i 1" -o "output_http.so -p 8095 -w ./www" &
 

@@ -30,3 +30,19 @@ This approach is quite easy because we can use the "python" command shell define
 
 Finally, i decided to use the "still" video approach regarding get the app upp and running. To address that, i used raspistill and mpjpg-streamer, but i've been watchong another projects like [Raspberry Tank](http://raspberrytank.ianrenton.com/) which achieve great performance though. I think i should try to improve this one. But will give a chance to use real live stream
 
+
+
+11/12/2013
+
+Al last i figured out that supervisor process decrease the mjpeg-streamer speed and dont know why, so i removed it from there and add a nre service
+
+/etc/init.d/mjpg-streamer
+
+#!/bin/bash
+LD_LIBRARY_PATH="/home/pi/mjpg-streamer/mjpg-streamer" /home/pi/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/stream" -o "output_http.so -p 8095 -w ./www"
+
+and make
+
+update.rc-d mjpg-streamer defaults
+
+
