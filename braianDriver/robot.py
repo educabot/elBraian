@@ -215,8 +215,8 @@ class Robot(object):
 
 	def center_head(self):
 		log.debug("turning my head to the center")
-		self.current_horizontal_head_pos = 7.5
-		self.current_vertical_head_pos = 6
+		self.current_horizontal_head_pos = (self.MAX_HORIZONTAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
+		self.current_vertical_head_pos = (self.MAX_VERTICAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
 		if env == "prod":
 			self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
 			self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
@@ -225,7 +225,7 @@ class Robot(object):
 
 	def head_move_left(self):
 		log.debug("moving head to the left ")
-		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) > self.MAX_HORIZONTAL_CYLES):
+		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_HORIZONTAL_CYLES):
 			self.current_horizontal_head_pos += self.SERVO_UNITY_MOVEMENT
 			if env == "prod":
 				self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
@@ -234,7 +234,7 @@ class Robot(object):
 
 	def head_move_right(self):
 		log.debug("moving head to the right ")
-		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) < self.MIN_HORIZONTAL_CYLES):
+		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_HORIZONTAL_CYLES):
 			self.current_horizontal_head_pos -= self.SERVO_UNITY_MOVEMENT
 			if env == "prod":
 				self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
@@ -242,16 +242,16 @@ class Robot(object):
 
 	def head_move_up(self):
 		log.debug("moving head to the up ")
-		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) > self.MAX_VERTICAL_CYLES):
-			self.current_vertical_head_pos += self.SERVO_UNITY_MOVEMENT
+		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_VERTICAL_CYLES):
+			self.current_vertical_head_pos -= self.SERVO_UNITY_MOVEMENT
 			if env == "prod":
 				self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
 
 
 	def head_move_down(self):
 		log.debug("moving head to the down ")
-		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) > self.MIN_VERTICAL_CYLES):
-			self.current_vertical_head_pos -= self.SERVO_UNITY_MOVEMENT
+		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_VERTICAL_CYLES):
+			self.current_vertical_head_pos += self.SERVO_UNITY_MOVEMENT
 			if env == "prod":
 				self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
 
