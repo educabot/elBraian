@@ -64,6 +64,16 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		elif (message == "BACKWARD-TURNING-RIGHT"):
 			self.ROBOT.set_backward()
 			self.ROBOT.move(arc=Robot.RIGHT_ARC_CLOSE)
+
+		elif (message == "HEAD-RIGHT"):
+			self.ROBOT.head_move_right()
+		elif (message == "HEAD-LEFT"):
+			self.ROBOT.head_move_left()
+		elif (message == "HEAD-UP"):
+			self.ROBOT.head_move_up()
+		elif (message == "HEAD-DOWN"):
+			self.ROBOT.head_move_down()
+
 		elif (message == "STOP"):
 			self.ROBOT.stop()
 

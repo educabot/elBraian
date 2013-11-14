@@ -68,6 +68,12 @@ class Robot(object):
 	LEFT_CYCLES_FIT = int(config.get("robot.gpio","left_cycles_fit"))
 	RIGHT_CYCLES_FIT = int(config.get("robot.gpio","right_cycles_fit"))
 
+	#Pin settings for head control
+	HEAD_HORIZONTAL_PIN = int(config.get("robot.gpio","head_pwm_pin_horizontal_axis"))
+	HEAD_VERTICAL_PIN = int(config.get("robot.gpio","head_pwm_pin_vertical_axis"))
+
+	SERVO_FREQUENCY = int(config.get("robot.gpio","servo_frequency"))
+
 	def __init__(self):
 		if env == "prod":
 			gpio.cleanup()
@@ -95,7 +101,15 @@ class Robot(object):
 
 			self.pwm_left = gpio.PWM(self.PWM_LEFT_PIN, self.FRECUENCY)
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
-	
+
+			# head
+			gpio.setup(self.HEAD_HORIZONTAL_PIN,gpio.OUT)
+			gpio.setup(self.HEAD_VERTICAL_PIN,gpio.OUT)
+
+			self.head_horizontal_port = gpio.PWM(self.HEAD_HORIZONTAL_PIN, self.SERVO_FRECUENCY)
+			self.head_vertical_port = gpio.PWM(self.HEAD_VERTICAL_PIN, self.SERVO_FRECUENCY)
+		self.current_horizontal_head_pos = 0
+		self.current_vertical_head_pos = 0
 
 	def _set_left_forward(self):
 		gpio.output(self.FORWARD_LEFT_PIN, True)
@@ -187,5 +201,29 @@ class Robot(object):
 			if env == "prod":
 				self.pwm_left.ChangeDutyCycle(cycle_left)
 				self.pwm_right.ChangeDutyCycle(cycle_right)
+
+
+	def center_head(self):
+		log.debug("turning my head to the center")
+
+
+	def head_move_left(self):
+		self.current_horizontal_head_pos += 0.05
+		log.debug("moving head to the left ")
+
+
+	def head_move_right(self):
+		self.current_horizontal_head_pos -= 0.05
+		log.debug("moving head to the right ")
+
+
+	def head_move_up(self):
+		self.current_vertical_head_pos += 0.05
+		log.debug("moving head to the up ")
+
+
+	def head_move_down(self):
+		self.current_vertical_head_pos -= 0.05
+		log.debug("moving head to the down ")
 
 		

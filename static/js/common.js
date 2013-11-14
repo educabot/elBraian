@@ -129,6 +129,24 @@ $(document).ready(function(){
 	$(document).keydown(function(event){
 		checkCountOrRemove();
 		switch(event.which){
+			
+			//head
+			//a
+			case 65:
+				websocket.send("HEAD-LEFT");
+				break;
+			//d
+			case 68:
+				websocket.send("HEAD-RIGHT");
+				break;
+			//w
+			case 87:
+				websocket.send("HEAD-UP");
+				break;
+			//s
+			case 83:
+				websocket.send("HEAD-DOWN");
+				break;
 			//up
 			case 38:
 				if(lastkey!=38){
