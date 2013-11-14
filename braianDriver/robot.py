@@ -174,9 +174,12 @@ class Robot(object):
 		if (speed):
 			log.debug("moving on " + str(speed))
 			log.debug("aplying fit: left " + str(self.LEFT_CYCLES_FIT) + " right " + str(self.RIGHT_CYCLES_FIT))
+			aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100) else 0
+			aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100) else 0
+
 			if env == "prod":
-				self.pwm_left.ChangeDutyCycle(speed+self.LEFT_CYCLES_FIT)
-				self.pwm_right.ChangeDutyCycle(speed+self.RIGHT_CYCLES_FIT)
+				self.pwm_left.ChangeDutyCycle(speed+aditional_left_clycles)
+				self.pwm_right.ChangeDutyCycle(speed+aditional_right_clycles)
 
 		if (arc):
 			cycle_left, cycle_right = arc
