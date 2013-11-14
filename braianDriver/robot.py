@@ -64,6 +64,10 @@ class Robot(object):
 	#Frecuency by hertz
 	FRECUENCY = int(config.get("robot.gpio","frecuency"))
 
+	# Cycles fits for pwm cycles
+	LEFT_CYCLES_FIT = int(config.get("robot.gpio","left_cycles_fit"))
+	RIGHT_CYCLES_FIT = int(config.get("robot.gpio","right_cycles_fit"))
+
 	def __init__(self):
 		if env == "prod":
 			gpio.cleanup()
@@ -169,9 +173,10 @@ class Robot(object):
 
 		if (speed):
 			log.debug("moving on " + str(speed))
+			log.debug("aplying fit: left " + str(self.LEFT_CYCLES_FIT) + " right " + str(self.RIGHT_CYCLES_FIT))
 			if env == "prod":
-				self.pwm_left.ChangeDutyCycle(speed)
-				self.pwm_right.ChangeDutyCycle(speed)
+				self.pwm_left.ChangeDutyCycle(speed+self.LEFT_CYCLES_FIT)
+				self.pwm_right.ChangeDutyCycle(speed+self.RIGHT_CYCLES_FIT)
 
 		if (arc):
 			cycle_left, cycle_right = arc

@@ -28,14 +28,10 @@ html(lang="en")
                             div.panel.profile
                                 h4 comandos
                                 pre(class="brush: python; toolbar: false; smart-tabs: false;")
-                                    |from examples.nivel2_api import *
+                                    |from examples.nivel3_api import *
 
-                                    |adelante()
-                                    |adelante()
-                                    |girar_izquierda()
-                                    |atras()
-                                    |girar_derecha()
-                                    |adelante()
+                                    |adelante(numero)
+                                    |girar_izquierda(numero)
                             div.panel.profile
                                 h4 implementacion api
                                 pre(class="brush: python; toolbar: false; smart-tabs: false;")
@@ -44,28 +40,28 @@ html(lang="en")
 
                                     |robot = Robot()
 
-                                    |def adelante():
+                                    |def adelante(cuanto):
                                     |&#09;robot.set_forward()
                                     |&#09;robot.move(speed=Robot.SPEED_MEDIUM)
-                                    |&#09;sleep(1)
+                                    |&#09;sleep(cuanto)
                                     |&#09;robot.stop()
 
-                                    |def atras():
+                                    |def atras(cuanto):
                                     |&#09;robot.set_backward()
                                     |&#09;robot.move(speed=Robot.SPEED_MEDIUM)
-                                    |&#09;sleep(1)
+                                    |&#09;sleep(cuanto)
                                     |&#09;robot.stop()
 
-                                    |def girar_izquierda():
+                                    |def girar_izquierda(cuanto):
                                     |&#09;robot.set_rotate_left()
                                     |&#09;robot.move(speed=Robot.SPEED_LOW)
-                                    |&#09;sleep(1)
+                                    |&#09;sleep(cuanto)
                                     |&#09;robot.stop()
 
-                                    |def girar_derecha():
+                                    |def girar_derecha(cuanto):
                                     |&#09;robot.set_rotate_right()
                                     |&#09;robot.move(speed=Robot.SPEED_LOW)
-                                    |&#09;sleep(1)
+                                    |&#09;sleep(cuanto)
                                     |&#09;robot.stop()
 
                         div.right 
