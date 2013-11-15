@@ -225,8 +225,8 @@ class Robot(object):
 
 
 	def head_move_left(self):
-		log.debug("moving head to the left ")
 		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_HORIZONTAL_CYLES):
+			log.debug("moving head to the left ")
 			self.current_horizontal_head_pos += self.SERVO_UNITY_MOVEMENT
 			self._send_horizontal_signal(self.current_horizontal_head_pos)
 
@@ -239,6 +239,7 @@ class Robot(object):
 			self._send_horizontal_signal(self.current_horizontal_head_pos)
 
 	def _send_horizontal_signal(self, position):
+		log.debug("horizontal pos: " + str(position))
 		if env == "prod":
 			self.head_horizontal_port.start(position)
 			sleep(self.SERVO_DELAY)
@@ -259,6 +260,7 @@ class Robot(object):
 
 
 	def _send_vertical_signal(self, position):
+		log.debug("horizontal pos: " + str(position))
 		if env == "prod":
 			self.head_vertical_port.start(position)
 			sleep(self.SERVO_DELAY)
