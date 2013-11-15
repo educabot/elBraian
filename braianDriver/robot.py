@@ -114,8 +114,8 @@ class Robot(object):
 			gpio.setup(self.HEAD_HORIZONTAL_PIN,gpio.OUT)
 			gpio.setup(self.HEAD_VERTICAL_PIN,gpio.OUT)
 
-			self.head_horizontal_port = gpio.PWM(self.HEAD_HORIZONTAL_PIN, self.SERVO_FRECUENCY)
-			self.head_vertical_port = gpio.PWM(self.HEAD_VERTICAL_PIN, self.SERVO_FRECUENCY)
+			self.head_horizontal_port = gpio.PWM(self.HEAD_HORIZONTAL_PIN, self.SERVO_FREQUENCY)
+			self.head_vertical_port = gpio.PWM(self.HEAD_VERTICAL_PIN, self.SERVO_FREQUENCY)
 		
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
