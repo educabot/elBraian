@@ -15,16 +15,25 @@ vertical = gpio.PWM(7,50)
 horizontal.start(3.5)
 sleep(0.5)
 horizontal.stop()
-horizontal.start(11.5)
+
+sleep(0.5)
+
+horizontal.start(2.5)
 sleep(0.5)
 horizontal.stop()
 
-vertical.start(4.5)
-sleep(0.5)
-vertical.stop()
 
-vertical.start(8)
-sleep(0.5)
-vertical.stop()
+
+#horizontal.start(11.5)
+#sleep(0.5)
+#horizontal.stop()
+
+#vertical.start(4.5)
+#sleep(0.5)
+#vertical.stop()
+
+#vertical.start(8)
+#sleep(0.5)
+#vertical.stop()
 
 gpio.cleanup()
