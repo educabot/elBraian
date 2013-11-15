@@ -1,5 +1,6 @@
 import ConfigParser, os
 import logging
+from time import sleep
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -79,6 +80,8 @@ class Robot(object):
 	MIN_HORIZONTAL_CYLES = float(config.get("robot.gpio","min_horizontal_cycles"))
 	MAX_VERTICAL_CYLES = float(config.get("robot.gpio","max_vertical_cycles")) 
 	MIN_VERTICAL_CYLES = float(config.get("robot.gpio","min_vertical_cycles"))
+
+	SERVO_DELAY = float(config.get("robot.gpio","servo_delay"))
 
 
 
@@ -217,18 +220,15 @@ class Robot(object):
 		log.debug("turning my head to the center")
 		self.current_horizontal_head_pos = (self.MAX_HORIZONTAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
 		self.current_vertical_head_pos = (self.MAX_VERTICAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
-		if env == "prod":
-			self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
-			self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
-
+		self._send_horizontal_signal(self.current_horizontal_head_pos)
+		self._send_vertical_signal(self.current_vertical_head_pos)
 
 
 	def head_move_left(self):
 		log.debug("moving head to the left ")
 		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_HORIZONTAL_CYLES):
 			self.current_horizontal_head_pos += self.SERVO_UNITY_MOVEMENT
-			if env == "prod":
-				self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
+			self._send_horizontal_signal(self.current_horizontal_head_pos)
 
 
 
@@ -236,23 +236,31 @@ class Robot(object):
 		log.debug("moving head to the right ")
 		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_HORIZONTAL_CYLES):
 			self.current_horizontal_head_pos -= self.SERVO_UNITY_MOVEMENT
-			if env == "prod":
-				self.head_horizontal_port.ChangeDutyCycle(self.current_horizontal_head_pos)
+			self._send_horizontal_signal(self.current_horizontal_head_pos)
+
+	def _send_horizontal_signal(self, position):
+		if env == "prod":
+			self.head_horizontal_port.start(position)
+			sleep(self.SERVO_DELAY)
+			self.head_horizontal_port.stop()
 
 
 	def head_move_up(self):
 		log.debug("moving head to the up ")
 		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_VERTICAL_CYLES):
 			self.current_vertical_head_pos -= self.SERVO_UNITY_MOVEMENT
-			if env == "prod":
-				self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
-
+			self._send_vertical_signal(self.current_vertical_head_pos)
 
 	def head_move_down(self):
 		log.debug("moving head to the down ")
 		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_VERTICAL_CYLES):
 			self.current_vertical_head_pos += self.SERVO_UNITY_MOVEMENT
-			if env == "prod":
-				self.head_vertical_port.ChangeDutyCycle(self.current_vertical_head_pos)
+			self._send_vertical_signal(self.current_vertical_head_pos)
 
+
+	def _send_vertical_signal(self, position):
+		if env == "prod":
+			self.head_vertical_port.start(position)
+			sleep(self.SERVO_DELAY)
+			self.head_vertical_port.stop()
 		

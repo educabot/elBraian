@@ -133,18 +133,22 @@ $(document).ready(function(){
 			//head
 			//a
 			case 65:
+				$('.console').append($("<p> > Moving head left ..</p>"));
 				websocket.send("HEAD-LEFT");
 				break;
 			//d
 			case 68:
+				$('.console').append($("<p> > Moving head right ..</p>"));
 				websocket.send("HEAD-RIGHT");
 				break;
 			//w
 			case 87:
+				$('.console').append($("<p> > Moving head up ..</p>"));			
 				websocket.send("HEAD-UP");
 				break;
 			//s
 			case 83:
+				$('.console').append($("<p> > Moving head down ..</p>"));			
 				websocket.send("HEAD-DOWN");
 				break;
 			//up
@@ -183,7 +187,11 @@ $(document).ready(function(){
 
 	$(document).keyup(function(event){
 		lastkey = 0;
-		stop();
+		var key = event.which
+		console.log(key)
+		if(key!=65 && key!=68 && key!=87 && key!=83){
+			stop();
+		}
 	});
 
 
