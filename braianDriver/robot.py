@@ -257,7 +257,7 @@ class Robot(object):
 		if ((self.current_vertical_head_pos + 1) < self.HEAD_HORIZONTAL_RANGE):
 			log.debug("moving head to the left ")
 			self.current_horizontal_head_pos += 1
-			self._send_horizontal_signal(self.TIME_LAPSE_UP)
+			self._send_vertical_signal(self.TIME_LAPSE_UP)
 
 
 	def head_move_down(self):
@@ -265,11 +265,11 @@ class Robot(object):
 		if ((self.current_vertical_head_pos - 1) > 0):
 			log.debug("moving head to the left ")
 			self.current_horizontal_head_pos -= 1
-			self._send_horizontal_signal(self.TIME_LAPSE_DOWN)
+			self._send_vertical_signal(self.TIME_LAPSE_DOWN)
 
 
 	def _send_vertical_signal(self, orientation):
-		log.debug("horizontal pos: " + str(orientation))
+		log.debug("vertical pos: " + str(orientation))
 		if env == "prod":
 		    sleep(0.035)
 		    gpio.output(self.HEAD_VERTICAL_PIN,1)
