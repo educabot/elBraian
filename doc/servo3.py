@@ -10,7 +10,7 @@ gpio.setup(7,gpio.OUT)
 gpio.setup(5,gpio.OUT)
 
 def center():
-	for i in range(1,10):
+	for i in range(1,6):
         sleep(0.035)
         gpio.output(5,1)
         sleep(0.0015)

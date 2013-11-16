@@ -72,18 +72,13 @@ class Robot(object):
 	#Pin settings for head control
 	HEAD_HORIZONTAL_PIN = int(config.get("robot.gpio","head_pwm_pin_horizontal_axis"))
 	HEAD_VERTICAL_PIN = int(config.get("robot.gpio","head_pwm_pin_vertical_axis"))
+	HEAD_HORIZONTAL_RANGE = int(config.get("robot.gpio","head_horizontal_range"))
+	HEAD_VERTICAL_RANGE = int(config.get("robot.gpio","head_vertical_range"))
 
-	SERVO_FREQUENCY = int(config.get("robot.gpio","servo_frequency"))
-	SERVO_UNITY_MOVEMENT = float(config.get("robot.gpio","servo_unity_movement"))
-
-	MAX_HORIZONTAL_CYLES = float(config.get("robot.gpio","max_horizontal_cycles")) 
-	MIN_HORIZONTAL_CYLES = float(config.get("robot.gpio","min_horizontal_cycles"))
-	MAX_VERTICAL_CYLES = float(config.get("robot.gpio","max_vertical_cycles")) 
-	MIN_VERTICAL_CYLES = float(config.get("robot.gpio","min_vertical_cycles"))
-
-	SERVO_DELAY = float(config.get("robot.gpio","servo_delay"))
-
-
+	TIME_LAPSE_LEFT = 0.0025
+	TIME_LAPSE_RIGHT = 0.00025 
+	TIME_LAPSE_UP = 0.00025
+	TIME_LAPSE_DOWN = 0.0025
 
 	def __init__(self):
 		if env == "prod":
@@ -117,8 +112,6 @@ class Robot(object):
 			gpio.setup(self.HEAD_HORIZONTAL_PIN,gpio.OUT)
 			gpio.setup(self.HEAD_VERTICAL_PIN,gpio.OUT)
 
-			self.head_horizontal_port = gpio.PWM(self.HEAD_HORIZONTAL_PIN, self.SERVO_FREQUENCY)
-			self.head_vertical_port = gpio.PWM(self.HEAD_VERTICAL_PIN, self.SERVO_FREQUENCY)
 		
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
@@ -218,51 +211,68 @@ class Robot(object):
 
 	def center_head(self):
 		log.debug("turning my head to the center")
-		self.current_horizontal_head_pos = (self.MAX_HORIZONTAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
-		self.current_vertical_head_pos = (self.MAX_VERTICAL_CYLES + self.MIN_HORIZONTAL_CYLES) / 2
-		self._send_horizontal_signal(self.current_horizontal_head_pos)
-		self._send_vertical_signal(self.current_vertical_head_pos)
+		self.current_horizontal_head_pos = (self.HEAD_HORIZONTAL_RANGE) / 2
+		self.current_vertical_head_pos = (self.HEAD_VERTICAL_RANGE) / 2
+		##Shame on me
+		if env == "prod":			
+			for i in range(1,6):
+				sleep(0.035)
+				gpio.output(5,1)
+				sleep(0.0015)
+				gpio.output(5,0)
+			for i in range(1,6):
+				sleep(0.035)
+				gpio.output(7,1)
+				sleep(0.0015)
+				gpio.output(7,0)
 
 
 	def head_move_left(self):
-		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_HORIZONTAL_CYLES):
+		log.debug("moving head to the left")
+		if ((self.current_horizontal_head_pos - 1) > 0):
 			log.debug("moving head to the left ")
-			self.current_horizontal_head_pos += self.SERVO_UNITY_MOVEMENT
-			self._send_horizontal_signal(self.current_horizontal_head_pos)
-
+			self.current_horizontal_head_pos -= 1
+			self._send_horizontal_signal(self.TIME_LAPSE_LEFT)
 
 
 	def head_move_right(self):
 		log.debug("moving head to the right ")
-		if ((self.current_horizontal_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_HORIZONTAL_CYLES):
-			self.current_horizontal_head_pos -= self.SERVO_UNITY_MOVEMENT
-			self._send_horizontal_signal(self.current_horizontal_head_pos)
+		if ((self.current_horizontal_head_pos + 1) < self.HEAD_HORIZONTAL_RANGE):
+			log.debug("moving head to the left ")
+			self.current_horizontal_head_pos += 1
+			self._send_horizontal_signal(self.TIME_LAPSE_RIGHT)
 
-	def _send_horizontal_signal(self, position):
-		log.debug("horizontal pos: " + str(position))
+
+	def _send_horizontal_signal(self, orientation):
+		log.debug("horizontal pos: " + str(orientation))
 		if env == "prod":
-			self.head_horizontal_port.start(position)
-			sleep(self.SERVO_DELAY)
-			self.head_horizontal_port.stop()
+		    sleep(0.035)
+		    gpio.output(self.HEAD_HORIZONTAL_PIN,1)
+		    sleep(orientation)
+		    gpio.output(self.HEAD_HORIZONTAL_PIN,0)
 
 
 	def head_move_up(self):
 		log.debug("moving head to the up ")
-		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) >= self.MIN_VERTICAL_CYLES):
-			self.current_vertical_head_pos -= self.SERVO_UNITY_MOVEMENT
-			self._send_vertical_signal(self.current_vertical_head_pos)
+		if ((self.current_vertical_head_pos + 1) < self.HEAD_HORIZONTAL_RANGE):
+			log.debug("moving head to the left ")
+			self.current_horizontal_head_pos += 1
+			self._send_horizontal_signal(self.TIME_LAPSE_UP)
+
 
 	def head_move_down(self):
 		log.debug("moving head to the down ")
-		if ((self.current_vertical_head_pos + self.SERVO_UNITY_MOVEMENT) <= self.MAX_VERTICAL_CYLES):
-			self.current_vertical_head_pos += self.SERVO_UNITY_MOVEMENT
-			self._send_vertical_signal(self.current_vertical_head_pos)
+		if ((self.current_vertical_head_pos - 1) > 0):
+			log.debug("moving head to the left ")
+			self.current_horizontal_head_pos -= 1
+			self._send_horizontal_signal(self.TIME_LAPSE_DOWN)
 
 
-	def _send_vertical_signal(self, position):
-		log.debug("horizontal pos: " + str(position))
+	def _send_vertical_signal(self, orientation):
+		log.debug("horizontal pos: " + str(orientation))
 		if env == "prod":
-			self.head_vertical_port.start(position)
-			sleep(self.SERVO_DELAY)
-			self.head_vertical_port.stop()
+		    sleep(0.035)
+		    gpio.output(self.HEAD_VERTICAL_PIN,1)
+		    sleep(orientation)
+		    gpio.output(self.HEAD_VERTICAL_PIN,0)
 		
