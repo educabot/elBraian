@@ -1,0 +1,30 @@
+doctype 5
+html(lang="en")
+	head
+		meta(charset="utf-8")
+		meta(name="description", content="ElBraian MVP")
+		meta(name="author", content="Diego Ramirez")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0" )
+		link(rel="stylesheet", href="/static/components/bootstrap/dist/css/bootstrap.css")
+		script(src="static/components/jquery/dist/jquery.js")
+		script(src="/static/components/jqueryui/ui/jquery-ui.js")
+		script
+			$(function(){
+				$("#sort1, #sort2" ).sortable({
+					connectWith: ".list-group",
+					placeholder: "list-group-item.active"
+					}).disableSelection();
+				});
+	body
+		nav.navbar.navbar-inverse
+			.container-fluid
+				.navbar-header
+					a.navbar-brand(href="#") a aprogramar!
+				.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li
+							a(href="#") limpiar
+						li
+							a(href="#") correr
+		block main
+		block footer

@@ -1,0 +1,27 @@
+extends layout
+
+block main
+	.page-header 
+		blockquote
+			h3 A la luna voy a llegar solo si ayudarme puedes...
+			footer elBraian
+	.container-fluid
+		.row
+			.col-md-4
+				.panel.panel-primary
+					.panel-heading secuencia
+					.panel-body
+						ul.list-group#sort1
+							li.list-group-item moverme adelante
+							li.list-group-item moverme atras
+							li.list-group-item moverme al costado
+							li.list-group-item frenar
+			.col-md-4.col-md-offset-2
+				.panel.panel-success
+					.panel-heading acciones
+					.panel-body
+						ul.list-group#sort2
+							li.list-group-item avanzar
+							li.list-group-item parar 
+							li.list-group-item retroceder
+							li.list-group-item acelerar
