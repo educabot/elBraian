@@ -8,23 +8,18 @@ html(lang="en")
 		link(rel="stylesheet", href="/static/components/bootstrap/dist/css/bootstrap.css")
 		script(src="static/components/jquery/dist/jquery.js")
 		script(src="/static/components/jqueryui/ui/jquery-ui.js")
-		script
-			$(function(){
-				$("#sort1, #sort2" ).sortable({
-					connectWith: ".list-group",
-					placeholder: "list-group-item.active"
-					}).disableSelection();
-				});
+		block styles
+		block scripts
 	body
 		nav.navbar.navbar-inverse
 			.container-fluid
 				.navbar-header
-					a.navbar-brand(href="#") a aprogramar!
+					a.navbar-brand(href="#") misi&oacute;n > Rescate Lunar
 				.collapse.navbar-collapse
 					ul.nav.navbar-nav
 						li
 							a(href="#") limpiar
 						li
-							a(href="#") correr
+							a(href="#") comenzar
 		block main
 		block footer
