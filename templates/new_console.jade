@@ -5,26 +5,15 @@ block scripts
 block styles
 	link(rel="stylesheet", href="/static/components/jqueryui/themes/sunny/jquery-ui.css")
 block main
-	.page-header 
-		h3.text-console elbraian >_ A la luna voy a llegar, solo si ayudarme puedes...
-		h3.text-console >_
+	.page-header
+		.row
+			.col-md-6 
+				h3.text-console elbraian >_ Debo rescatar a mi amigo el satelite!
+				h3.text-console >_
+			.col-md-5.col-md-offset1
+				img.img-circle(src="/static/img/roboluna.jpg", height="150", width="150", style ="float: right")
 	.container-fluid
 		.row
-			.col-md-4
-				.panel.panel-primary
-					.panel-heading secuencia
-					.panel-body
-						ul.list-group#steps
-							li.list-group-item#placeholder agrega tu primer paso
-			.col-md-4
-				.row
-					.well
-						p
-							| arrastra la acciones del panel izquierdo y 
-							| conviertelo en un paso para elBraian
-							| no olvides determinar la importancia del movimiento
-							| o magnitud definiendo un numero 
-					button.btn.btn-success comezar mision
 			.col-md-4
 				.panel.panel-success
 					.panel-heading acciones
@@ -40,3 +29,20 @@ block main
 								span.glyphicon.glyphicon-chevron-right &nbsp;girar derecha
 							li.list-group-item
 								span.glyphicon.glyphicon-chevron-left &nbsp;girar izquierda
+
+			.col-md-4
+				.panel.panel-primary
+					.panel-heading secuencia
+					.panel-body
+						ol.list-group#steps
+							li.list-group-item#placeholder agrega tu primer paso
+
+			.col-md-4
+				.row
+					.jumbotron
+						p
+							| Arrastra la acciones del panel izquierdo y 
+							| conviertelo en un paso para elBraian.
+							| No olvides determinar la longitud del movimiento
+							| definiendo un numero 
+					button.btn.btn-success comezar mision

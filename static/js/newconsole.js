@@ -34,6 +34,7 @@ $(document).ready(function(){
 
 		}
 	}).sortable({
+		placeholder: "ui-state-highlight",
 		items: "li:not(.placeholder)",
 		sort: function() {
 	        $( this ).removeClass( "ui-state-default" );
