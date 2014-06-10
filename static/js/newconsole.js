@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	
-
 	//Just for testing
 	$('#sort1, #sort2' ).sortable({
 		connectWith: ".list-group",
@@ -19,7 +18,7 @@ $(document).ready(function(){
 		drop: function(event, ui){
 			$(this).find('#placeholder').remove();
 			var text = ui.draggable.text();
-			$('<li class="list-group-item"></li>').appendTo(this);
+			$('<li class="list-group-item dismissable"></li>').appendTo(this);
 			if(text.indexOf("avanzar")> -1){
 				$('<span class="glyphicon glyphicon-arrow-up"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
 			} else if (text.indexOf("parar")> -1){
@@ -31,6 +30,8 @@ $(document).ready(function(){
 			} else if (text.indexOf("girar izquierda")> -1){
 				$('<span class="glyphicon glyphicon-chevron-left"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
 			}
+			$('<input type="number" class="input-list">').appendTo($('#steps li:last-child'));
+			$('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>').appendTo($('#steps li:last-child'));
 
 		}
 	}).sortable({

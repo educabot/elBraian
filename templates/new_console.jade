@@ -1,9 +1,12 @@
 extends layout
 
 block scripts
+	script(src="static/js/bootstrap-spinedit.js")
+	script(src="static/components/bootstrap/dist/js/bootstrap.js")
 	script(src="static/js/newconsole.js")
 block styles
 	link(rel="stylesheet", href="/static/components/jqueryui/themes/sunny/jquery-ui.css")
+	link(rel="stylesheet", href="/static/css/newconsole.css")
 block main
 	.page-header
 		.row
