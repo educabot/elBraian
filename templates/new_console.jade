@@ -1,7 +1,6 @@
 extends layout
 
 block scripts
-	script(src="static/js/bootstrap-spinedit.js")
 	script(src="static/components/bootstrap/dist/js/bootstrap.js")
 	script(src="static/js/newconsole.js")
 block styles
@@ -10,11 +9,14 @@ block styles
 block main
 	.page-header
 		.row
-			.col-md-6 
-				h3.text-console elbraian >_ Debo rescatar a mi amigo el satelite!
-				img(src="/static/img/prompt.gif", width="50", height="25")
-			.col-md-5.col-md-offset1
-				img.img-circle(src="/static/img/roboluna.jpg", height="150", width="150", style ="float: right")
+			.container-fluid
+				.col-md-6
+					img.img-circle(src="/static/img/roboluna.jpg", height="170", width="150", style ="float: left")
+
+				.col-md-6
+					.well-console 
+						h3.text-console elbraian >_ Debo rescatar a mi amigo el satelite!
+						img(src="/static/img/prompt.gif", width="50", height="25")
 	.container-fluid
 		.row
 			.col-md-4
@@ -42,10 +44,12 @@ block main
 
 			.col-md-4
 				.row
-					.jumbotron
-						p
-							| Arrastra la acciones del panel izquierdo y 
-							| conviertelo en un paso para elBraian.
-							| No olvides determinar la longitud del movimiento
-							| definiendo un numero 
-					button.btn.btn-success comezar mision
+					.container-fluid
+						.col-jumbotron
+							p
+								| Arrastra la acciones del panel derecho y 
+								| conviertelo en un paso para elBraian.
+								| No olvides determinar la longitud del movimiento
+								| definiendo un numero que sera la cantidad en segundos
+								| que nuestro heroe se movera en ese sentido
+						button.btn.btn-success comezar mision
