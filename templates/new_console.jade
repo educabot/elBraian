@@ -10,16 +10,25 @@ block main
 	.page-header
 		.row
 			.container-fluid
-				.col-md-6
-					img.img-circle(src="/static/img/roboluna.jpg", height="170", width="150", style ="float: left")
+				.col-md-5
+					.well-console
+						h4.text-console
+							| > _ Arrastra la acciones del panel derecho y 
+							| conviertelo en un paso para elBraian.
+							| No olvides determinar la longitud del movimiento
+							| definiendo un numero que sera la cantidad en segundos
+							| que nuestro heroe se movera en ese sentido
 
-				.col-md-6
+				.col-md-2
+					img.img-rounded(src="/static/img/roboluna.jpg", height="170", width="150", style ="float: left")
+
+				.col-md-5
 					.well-console 
 						h3.text-console elbraian >_ Debo rescatar a mi amigo el satelite!
 						img(src="/static/img/prompt.gif", width="50", height="25")
 	.container-fluid
 		.row
-			.col-md-4
+			.col-md-3.col-md-offset-3
 				.panel.panel-success
 					.panel-heading acciones
 					.panel-body
@@ -34,22 +43,10 @@ block main
 								span.glyphicon.glyphicon-chevron-right &nbsp;girar derecha
 							li.list-group-item
 								span.glyphicon.glyphicon-chevron-left &nbsp;girar izquierda
-
-			.col-md-4
+						button.btn.btn-success.center-block comezar mision
+			.col-md-3
 				.panel.panel-primary
 					.panel-heading secuencia
 					.panel-body
 						ol.list-group#steps
 							li.list-group-item#placeholder agrega tu primer paso
-
-			.col-md-4
-				.row
-					.container-fluid
-						.col-jumbotron
-							p
-								| Arrastra la acciones del panel derecho y 
-								| conviertelo en un paso para elBraian.
-								| No olvides determinar la longitud del movimiento
-								| definiendo un numero que sera la cantidad en segundos
-								| que nuestro heroe se movera en ese sentido
-						button.btn.btn-success comezar mision
