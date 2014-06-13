@@ -12,10 +12,6 @@ html {
 }
 body {
   margin: 0;
-  background: url('/static/img/luna4.jpg');
-  background-size: 1300px 900px;
-  background-repeat: no-repeat;
-  display: compact;
 }
 article,
 aside,

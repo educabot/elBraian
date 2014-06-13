@@ -4,15 +4,18 @@
   right: -10px;
   color: inherit;
 }
-.text-white {
+.white {
   color: #D8D8D8;
 }
-.text-console {
+.console {
   color: #00AA00;
 }
 
-.text-console-nav {
-  color: #006600;
+body {
+  background: url('/static/img/luna4.jpg');
+  background-size: 1300px 900px;
+  background-repeat: no-repeat;
+  display: compact;
 }
 
 .input-list {
@@ -42,18 +45,4 @@
   	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     	      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 
-}
-
-.col-jumbotron {
-  padding: 30px;
-  margin-bottom: 30px;
-  color: inherit;
-  background-color: #eee;
-  border-radius: 6px;
-}
-
-.col-jumbotron p {
-  margin-bottom: 15px;
-  font-size: 21px;
-  font-weight: 200;
 }
