@@ -2,6 +2,8 @@ $(document).ready(function(){
 	var lastkey;
 	var host = "ws://"+ document.domain +"/robot";
 
+	console.log("url socket: " + document.domain);
+
 	var websocket = new WebSocket(host);
 	
 	var maxConsoleLines = 5;

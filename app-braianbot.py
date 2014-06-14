@@ -17,7 +17,7 @@ config.read('config/application.cfg')
 env = config.get("system","env")
 
 patch_tornado()
-define("port", default=9100, help="run on the given port",type=int)
+define("port", default=80, help="run on the given port",type=int)
 log = logging.getLogger("webserver")
 log.setLevel(logging.DEBUG)
 

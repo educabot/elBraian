@@ -1,4 +1,19 @@
 $(document).ready(function(){
+
+	var host = "ws://"+ document.domain +"/robot";
+
+	var websocket = new WebSocket(host);
+
+	websocket.onopen = function(evt){
+		console.log("connected");
+	};
+
+	websocket.onmessage = function(evt){
+		console.log("message: " + evt.data);
+	};
+
+	
+
 	
 	//Just for testing
 	$('#sort1, #sort2' ).sortable({
@@ -25,9 +40,9 @@ $(document).ready(function(){
 				$('<span class="glyphicon glyphicon-stop"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
 			} else if (text.indexOf("retroceder")> -1){
 				$('<span class="glyphicon glyphicon-arrow-down"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
-			} else if (text.indexOf("girar derecha")> -1){
+			} else if (text.indexOf("rotar derecha")> -1){
 				$('<span class="glyphicon glyphicon-chevron-right"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
-			} else if (text.indexOf("girar izquierda")> -1){
+			} else if (text.indexOf("rotar izquierda")> -1){
 				$('<span class="glyphicon glyphicon-chevron-left"></span>').text( ui.draggable.text()).appendTo($('#steps li:last-child'));
 			}
 			$('<input type="number" class="input-list">').appendTo($('#steps li:last-child'));
@@ -40,5 +55,28 @@ $(document).ready(function(){
 		sort: function() {
 	        $( this ).removeClass( "ui-state-default" );
       }
+	});
+
+	$('#execute').click(function(){
+		$('#steps li').each(function(index){
+			var text = $(this).text();
+			var timeHold = $(this).find('input').val();
+			console.log(index + text + "holding: "  + timeHold);
+			if(text.indexOf("avanzar") > -1 ) {
+				websocket.send("FORWARD");
+			} else if(text.indexOf("parar") > -1) {
+				websocket.send("STOP");
+			} else if(text.indexOf("rotar derecha") > -1){
+				websocket.send("ROTATE-RIGHT");
+			} else if(text.indexOf("ROTATE-LEFT") > -1) {
+				websocket.send("ROTATE-LEFT");
+			} else if(text.indexOf("retroceder") > -1) {
+				websocket.send("BACKWARD");
+			}
+			setTimeout(function(){
+				console.log("stopping");
+				websocket.send("STOP");
+			}, (timeHold * 1000));
+		});
 	});
 });
