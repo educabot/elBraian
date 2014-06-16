@@ -185,7 +185,7 @@ header h1 {
   text-shadow: 1px 3px 3px #000;
 }
 div.panel {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);*/
 }
 div.row {
   width: 100%;
