@@ -12,9 +12,12 @@ $(document).ready(function(){
 		console.log("message: " + evt.data);
 	};
 
-	
+	function pausecomp(ms) {
+		ms += new Date().getTime();
+		while (new Date() < ms){}
+	} 
 
-	
+
 	//Just for testing
 	$('#sort1, #sort2' ).sortable({
 		connectWith: ".list-group",
@@ -73,10 +76,9 @@ $(document).ready(function(){
 			} else if(text.indexOf("retroceder") > -1) {
 				websocket.send("BACKWARD");
 			}
-			setTimeout(function(){
-				console.log("stopping");
-				websocket.send("STOP");
-			}, (timeHold * 1000));
+			pausecomp(timeHold * 1000);
+			websocket.send("STOP");
 		});
 	});
+
 });
