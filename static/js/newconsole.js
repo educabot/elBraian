@@ -64,6 +64,18 @@ $(document).ready(function(){
 	});
 
 	$('#execute').click(function(){
+		setInterval(function(){
+			$('#execute').button('loading');	
+		},1000);		
+
+		runSteps();
+
+		setInterval(function(){
+			$('#execute').button('reset');	
+		},2000);		
+	});
+
+	function runSteps(){
 		$('#steps li').each(function(index){
 			var text = $(this).text();
 			var timeHold = $(this).find('input').val();
@@ -82,6 +94,5 @@ $(document).ready(function(){
 			pausecomp(timeHold * 1000);
 			websocket.send("STOP");
 		});
-	});
-
+	}
 });

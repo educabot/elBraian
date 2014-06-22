@@ -12,6 +12,7 @@ from braianDriver.robot import Robot
 import logging
 import json
 from utils.poolsockets import PoolWebSocketHandler
+from time import sleep
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
