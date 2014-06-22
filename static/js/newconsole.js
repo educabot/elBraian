@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var host = "ws://"+ document.domain +"/robot";
+	var host = "ws://"+ document.domain +":9100/robot";
 
 	var websocket = new WebSocket(host);
 
@@ -9,6 +9,9 @@ $(document).ready(function(){
 	};
 
 	websocket.onmessage = function(evt){
+		$('#counter h2').remove();
+		$('<h2 class="console"></h2>').text(">_  " + evt.data.substring(9,evt.data.lenght))
+		.appendTo('#counter');
 		console.log("message: " + evt.data);
 	};
 

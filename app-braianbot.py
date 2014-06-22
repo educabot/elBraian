@@ -11,6 +11,7 @@ from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
 import logging
 import json
+from utils.poolsockets import PoolWebSocketHandler
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -21,21 +22,26 @@ define("port", default=80, help="run on the given port",type=int)
 log = logging.getLogger("webserver")
 log.setLevel(logging.DEBUG)
 
+sockets =  PoolWebSocketHandler()
+
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('index.jade', pic_url=pic_url)
 		
 class RobotHandler(tornado.websocket.WebSocketHandler):
-
 	ROBOT = Robot()
 	"""
 	this class represent the basic socket operation to move the wheels
 	"""
-	def on_open(self):
+	def open(self):
+		sockets.clients.append(self)
 		log.debug("client connected..")
+		sockets.broadcast("clients: " + str(sockets.count()))
 		
 	def on_close(self):
+		sockets.clients.remove(self)
+		sockets.broadcast("clients: " + str(sockets.count()))
 		log.debug("get the hell out of here!")
 
 	def on_message(self,message):

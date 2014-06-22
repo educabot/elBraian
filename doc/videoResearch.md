@@ -6,7 +6,10 @@ But still works with the oficial
 
 
 m### take picture every 100 ms (-tl parameter)
-raspistill -w 320 -h 240 -q 50 -br 50 -vf -o /home/pi/tmp/mjpg/pic.jpg -tl 100 -t 9999999 -th 0:0:0 &
+
+
+
+ &
 
 ### picking the pictures up and expose them using and embedded web server
 

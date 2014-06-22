@@ -11,7 +11,7 @@ autostart=true
 
 
 [program:raspistream]
-command=raspistill -w 320 -h 240 -q 25 -br 50 -n -o /home/pi/stream/pic.jpg -tl 500 -t 9999999 -th 0:0:0
+command=raspistill -w 260 -h 200 -q 20 -br 50 -n -o /home/pi/tmp/stream/pic.jpg -tl 500 -t 9999999 -th 0:0:0
 autostart=true
 
 [program:mjpg-streamer]
