@@ -10,6 +10,23 @@
 	"message": "HEAD-UP",
 }
 
+{
+	message: "SEQUENCE",
+	payload: {
+		steps : [
+		{
+			id : 1,
+			heading: "FORWARD",
+			hold: 1000
+		},
+		{
+			id: 2,
+			heading : "BACKWARD",
+			hold: 2000
+		}
+		]
+	}
+}
 
 {
 	"message": "INFO",

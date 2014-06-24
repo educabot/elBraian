@@ -92,6 +92,9 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 			self.ROBOT.head_move_up()
 		elif message_obj["message"] == "HEAD-DOWN":
 			self.ROBOT.head_move_down()
+		elif message_obj["message"] == "SEQUENCE":
+			#TODO add sequence execution. please take in account DRY
+			# and try to reuse MOVE branch 
 
 
 class CameraHandler(tornado.websocket.WebSocketHandler):

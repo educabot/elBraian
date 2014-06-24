@@ -15,17 +15,12 @@ $(document).ready(function(){
 		console.log("message: " + evt.data);
 	};
 
-	function pausecomp(ms) {
-		ms += new Date().getTime();
-		while (new Date() < ms){}
-	} 
 
+	function sendMessage(msg){
+		console.log("sending: " + JSON.stringify(msg));
+		websocket.send(JSON.stringify(msg));
+	}
 
-	//Just for testing
-	$('#sort1, #sort2' ).sortable({
-		connectWith: ".list-group",
-		placeholder: "list-group-item.active"
-		}).disableSelection();
 
 	$('#actions li').draggable({
 		appendTo: "body",
@@ -64,35 +59,36 @@ $(document).ready(function(){
 	});
 
 	$('#execute').click(function(){
-		setInterval(function(){
-			$('#execute').button('loading');	
-		},1000);		
-
-		runSteps();
-
-		setInterval(function(){
-			$('#execute').button('reset');	
-		},2000);		
+		$('#execute').button('loading');
+		runSteps();		
 	});
 
 	function runSteps(){
+		var message = {message: "SEQUENCE", payload: {steps: []}};
+		var heading;
 		$('#steps li').each(function(index){
 			var text = $(this).text();
-			var timeHold = $(this).find('input').val();
+			var timeHold = ($(this).find('input').val()) * 1000;
 			console.log(index + text + "holding: "  + timeHold);
 			if(text.indexOf("avanzar") > -1 ) {
-				websocket.send("FORWARD");
+				heading = "FORWARD";
 			} else if(text.indexOf("parar") > -1) {
-				websocket.send("STOP");
+				heading = "STOP";
 			} else if(text.indexOf("rotar derecha") > -1){
-				websocket.send("ROTATE-RIGHT");
+				heading = "ROTATE-RIGHT";
 			} else if(text.indexOf("ROTATE-LEFT") > -1) {
-				websocket.send("ROTATE-LEFT");
+				heading = "ROTATE-LEFT";
 			} else if(text.indexOf("retroceder") > -1) {
-				websocket.send("BACKWARD");
+				heading = "BACKWARD";
 			}
-			pausecomp(timeHold * 1000);
-			websocket.send("STOP");
+
+			message.payload.steps.push({
+				id: index,
+				heading: heading,
+				hold: timeHold
+
+			});
 		});
+		sendMessage(message);
 	}
 });
