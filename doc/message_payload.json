@@ -1,0 +1,20 @@
+{
+	"message": "MOVE",
+	"payload":{
+		"hold": 1000,
+		"heading": "FORWARD"
+	}
+}
+
+{
+	"message": "HEAD-UP",
+}
+
+
+{
+	"message": "INFO",
+	"payload":{
+		"client_count": 3,
+		"remaining_steps": 2
+	}
+}

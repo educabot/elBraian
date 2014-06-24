@@ -21,3 +21,9 @@ before install make sure jpeg lib is installed. If it doesnt trye:
 
 LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/stream -i 1" -o "output_http.so -p 8095 -w ./www" &
 
+## 2014/06/23
+I shpuld try this new sheet
+
+https://github.com/jacksonliam/mjpg-streamer
+
+
