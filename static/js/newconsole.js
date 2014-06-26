@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var host = "ws://"+ document.domain +":9100/robot";
+	var host = "ws://"+ document.domain +"/robot";
 
 	var websocket = new WebSocket(host);
 
@@ -99,7 +99,7 @@ $(document).ready(function(){
 				heading = "STOP";
 			} else if(text.indexOf("rotar derecha") > -1){
 				heading = "ROTATE-RIGHT";
-			} else if(text.indexOf("ROTATE-LEFT") > -1) {
+			} else if(text.indexOf("rotar izquierda") > -1) {
 				heading = "ROTATE-LEFT";
 			} else if(text.indexOf("retroceder") > -1) {
 				heading = "BACKWARD";

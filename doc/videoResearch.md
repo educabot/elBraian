@@ -24,6 +24,12 @@ LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/strea
 ## 2014/06/23
 I shpuld try this new sheet
 
+
 https://github.com/jacksonliam/mjpg-streamer
+
+### should work with this simple call
+
+export LD_LIBRARY_PATH=.
+./mjpg_streamer -o "output_http.so -p 8095 -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 15 -vf -hf -quality 20 -ex night"
 
 
