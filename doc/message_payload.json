@@ -1,0 +1,37 @@
+{
+	"message": "MOVE",
+	"payload":{
+		"hold": 1000,
+		"heading": "FORWARD"
+	}
+}
+
+{
+	"message": "HEAD-UP",
+}
+
+{
+	"message": "SEQUENCE",
+	"payload": {
+		"steps" : [
+		{
+			"id" : 1,
+			"heading": "FORWARD",
+			"hold": 1000
+		},
+		{
+			"id": 2,
+			"heading" : "BACKWARD",
+			"hold": 2000
+		}
+		]
+	}
+}
+
+{
+	"message": "INFO",
+	"payload":{
+		"client_count": 3,
+		"remaining_steps": 2
+	}
+}
