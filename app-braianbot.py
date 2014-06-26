@@ -35,21 +35,9 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 	"""
 	this class represent the basic socket operation to move the wheels
 	"""
-	def open(self):
-		sockets.clients.append(self)
-		log.debug("client connected..")
-		sockets.broadcast("clients: " + str(sockets.count()))
-		
-	def on_close(self):
-		sockets.clients.remove(self)
-		sockets.broadcast("clients: " + str(sockets.count()))
-		log.debug("get the hell out of here!")
 
-	def on_message(self,message):
-		log.debug(message)
-		message_obj = json.loads(message)
-		if message_obj["message"] == "MOVE":
-			heading = message_obj["payload"]["heading"]
+	def executeStep(self, heading, time_hold):
+			
 			if (heading == "FORWARD"):
 				self.ROBOT.set_forward()
 				self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
@@ -75,15 +63,66 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.set_backward()
 				self.ROBOT.move(arc=Robot.RIGHT_ARC_CLOSE)
 
-			hold_time = message_obj["payload"].get("hold",0)
 
-			if hold_time > 0:
-				speed(hold_time);
+			if time_hold > 0:
+				sleep(time_hold/1000);
 				self.ROBOT.stop()
 
+
+
+	def open(self):
+		sockets.clients.append(self)
+		log.debug("client connected..")
+		message = {}
+		message["message"] = "INFO"
+		message["payload"] = {}
+		message["payload"]["client_count"] = sockets.count()
+		sockets.broadcast(json.dumps(message))
 		
+	def on_close(self):
+		sockets.clients.remove(self)
+		message = {}
+		message["message"] = "INFO"
+		message["payload"] = {}
+		message["payload"]["client_count"] = sockets.count()
+		log.debug("get the hell out of here!")
+
+	def on_message(self,message):
+		log.debug(message)
+		message_obj = json.loads(message)
+
+		if "payload" in message_obj:
+			heading = message_obj["payload"].get("heading","")
+			hold_time = message_obj["payload"].get("hold",0)
+		
+		message_response = {"message": "INFO"}
+		message_response["payload"] = {} 
+
+		if message_obj["message"] == "MOVE":
+			self.executeStep(heading, time_hold = 0)
+
+		elif message_obj["message"] == "SEQUENCE":
+
+			message_response["payload"]["status"] = "BLOCKED"
+			count = len(message_obj["payload"]["steps"])
+			message_response["payload"]["steps"] = count
+			message_response["payload"]["client_count"] = str(sockets.count())
+			#TODO please refactor this crap
+			sockets.broadcast_less(self,json.dumps(message_response))
+			message_response["payload"]["status"] = "RUNNING"
+			self.write_message(json.dumps(message_response))
+			for step in message_obj["payload"]["steps"]:
+				log.debug("execute step: " + str(step["id"]))
+				self.executeStep(step["heading"], step["hold"])
+				message_response["payload"]["remaining"] = count - (step["id"] + 1)
+				sockets.broadcast(json.dumps(message_response))
+			log.debug("ending sequence")
+			message_response["payload"]["status"] = "AVAILABLE"
+			sockets.broadcast(json.dumps(message_response))
+
 		elif (message_obj["message"] == "STOP"):
 				self.ROBOT.stop()
+
 		elif message_obj["message"] == "HEAD-RIGHT":
 			self.ROBOT.head_move_right()
 		elif message_obj["message"] == "HEAD-LEFT":
@@ -92,21 +131,22 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 			self.ROBOT.head_move_up()
 		elif message_obj["message"] == "HEAD-DOWN":
 			self.ROBOT.head_move_down()
-		elif message_obj["message"] == "SEQUENCE":
-			#TODO add sequence execution. please take in account DRY
-			# and try to reuse MOVE branch 
+	
+
+	def create_message(self, action):
+		pass
 
 
 class CameraHandler(tornado.websocket.WebSocketHandler):
-	def on_open(self):
-		self.write_message("connected!!")
+	def open(self):
+		self.write_message("connected to de camera")
 
 	def start_transmitVideo(self):
 		pass
 
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('consola.jade', code='')
+		self.render('console.jade', code='')
 	def post(self):
 		code = json.loads(self.request.body)
 		exec(code["code"])

@@ -9,10 +9,30 @@ $(document).ready(function(){
 	};
 
 	websocket.onmessage = function(evt){
+		var jsonObj = JSON.parse(evt.data);
 		$('#counter h2').remove();
-		$('<h2 class="console"></h2>').text(">_  " + evt.data.substring(9,evt.data.lenght))
+		$('<h2 class="console"></h2>').text(">_  " + jsonObj.payload.client_count)
 		.appendTo('#counter');
 		console.log("message: " + evt.data);
+
+
+		if(jsonObj.payload.status == "BLOCKED" || jsonObj.payload.status == "RUNNING"){
+			$('#execute').button('loading');
+			if (typeof jsonObj.payload.remaining == 'undefined'){
+				$('.progress-bar').text('0%');
+				$('.progress-bar').css('width', "0%");
+
+			}
+		} else {
+			$('#execute').button('reset');
+		}
+
+		if(typeof jsonObj.payload.remaining !='undefined'){
+			var percentage = (100 * (jsonObj.payload.steps - jsonObj.payload.remaining))/ jsonObj.payload.steps;
+			$('.progress-bar').css('width', percentage + '%');
+			$('.progress-bar').text(percentage + '%')
+		}
+
 	};
 
 
@@ -60,6 +80,9 @@ $(document).ready(function(){
 
 	$('#execute').click(function(){
 		$('#execute').button('loading');
+		$('#panel-control .progress').remove();
+		$('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>')
+		.appendTo('#panel-control');
 		runSteps();		
 	});
 
