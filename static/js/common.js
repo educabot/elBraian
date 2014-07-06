@@ -1,12 +1,38 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ document.domain +"/robot";
+	var host = "ws://"+ document.domain +":9100/robot";
 
 	console.log("url socket: " + document.domain);
 
 	var websocket = new WebSocket(host);
 	
 	var maxConsoleLines = 5;
+
+	$('#head-horizontal').slider({
+		orientation: 'horizontal',
+		range: 'min',
+		max: 200,
+		value: 100,
+		step: 20,
+		slide: refreshHeadPosition,
+		change: refreshHeadPosition
+	});
+
+	$('#head-vertical').slider({
+		orientation: 'vertical',
+		range: 'min',
+		max: 200,
+		value: 100,
+		step: 20,
+		slide: refreshHeadPosition,
+		change: refreshHeadPosition
+	});
+
+	function refreshHeadPosition(){
+		var vertical = $('#head-vertical').slider('value');
+		var horizontal = $('#head-horizontal').slider('value');
+		console.log("position: vertical " + vertical + " horizontal " + horizontal);
+	}
 
 	function checkCountOrRemove(){
 		if ($('.console').find('p').length > maxConsoleLines){
