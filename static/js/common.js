@@ -14,8 +14,8 @@ $(document).ready(function(){
 		max: 200,
 		value: 100,
 		step: 20,
-		slide: refreshHeadPosition,
-		change: refreshHeadPosition
+		slide: refreshHorizontalPosition,
+		change: refreshHorizontalPosition
 	});
 
 	$('#head-vertical').slider({
@@ -24,15 +24,32 @@ $(document).ready(function(){
 		max: 200,
 		value: 100,
 		step: 20,
-		slide: refreshHeadPosition,
-		change: refreshHeadPosition
+		slide: refreshVerticalPosition,
+		change: refreshVerticalPosition
 	});
 
-	function refreshHeadPosition(){
-		var vertical = $('#head-vertical').slider('value');
-		var horizontal = $('#head-horizontal').slider('value');
-		console.log("position: vertical " + vertical + " horizontal " + horizontal);
+	function refreshHorizontalPosition(){
+		var horizontal = $('#head-horizontal').slider('value') - 100;
+		console.log("position:  horizontal " + horizontal);
+		sendMessage({
+			message: "HEAD-MOVE",
+			payload: {
+				head_horizontal: horizontal
+			}
+		});
 	}
+
+	function refreshVerticalPosition(){
+		var vertical = $('#head-vertical').slider('value') - 100;
+		console.log("position: vertical " + vertical );
+		sendMessage({
+			message: "HEAD-MOVE",
+			payload: {
+				head_vertical: vertical
+			}
+		});
+	}
+
 
 	function checkCountOrRemove(){
 		if ($('.console').find('p').length > maxConsoleLines){
@@ -57,8 +74,15 @@ $(document).ready(function(){
 	};
 
 	websocket.onmessage = function(evt){
+		var jsonObj = JSON.parse(evt.data);
 		checkCountOrRemove();
 		$('.console').append($("<p> <server_message> " + evt.data + " </p>"));
+		$('#head-vertical').slider({
+			value : jsonObj.payload.head_vertical + 100
+		});
+		$('#head-horizontal').slider({
+			value : jsonObj.payload.head_horizontal + 100
+		});
 	};
 
 	function sendMessage(msg){
@@ -207,29 +231,58 @@ $(document).ready(function(){
 			//a
 			case 65:
 				$('.console').append($("<p> > Moving head left ..</p>"));
+				var newAngle = ($('#head-horizontal').slider('value') - 100) -20;
 				sendMessage({
-					message: "HEAD-LEFT"
+					message: "HEAD-MOVE",
+					payload: {
+						head_horizontal: newAngle
+					}
+				});
+				$('#head-horizontal').slider({
+					value : newAngle + 100
 				});
 				break;
 			//d
 			case 68:
 				$('.console').append($("<p> > Moving head right ..</p>"));
+				var newAngle = ($('#head-horizontal').slider('value') - 100) + 20;
 				sendMessage({
-					message: "HEAD-RIGHT"
+					message: "HEAD-MOVE",
+					payload : {
+						head_horizontal : newAngle
+					}
+
+				});
+				$('#head-horizontal').slider({
+					value: newAngle + 100
 				});
 				break;
 			//w
 			case 87:
 				$('.console').append($("<p> > Moving head up ..</p>"));	
+				var newAngle = $('#head-vertical').slider('value') - 100 + 20;
 				sendMessage({
-					message: "HEAD-UP"
+					message: "HEAD-MOVE",
+					payload : {
+						head_vertical: newAngle
+					}
+				});
+				$('#head-vertical').slider({
+					value: newAngle + 100
 				});
 				break;
 			//s
 			case 83:
 				$('.console').append($("<p> > Moving head down ..</p>"));
+				var newAngle = $('#head-vertical').slider('value') -100 -20;
 				sendMessage({
-					message: "HEAD-DOWN"
+					message: "HEAD-MOVE",
+					payload: {
+						head_vertical: newAngle
+					}
+				});
+				$('#head-vertical').slider({
+					value: newAngle + 100
 				});
 				break;
 			//up

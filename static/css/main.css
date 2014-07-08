@@ -274,24 +274,24 @@ div.horizontal-slide {
 }
 
 div.horizontal-slide .ui-slider-range {
-  background: #729fcf;
+  background: #929947;
   border-radius: 0px;
 }
 
 div.horizontal-slide .ui-slider-handle {
-  border-color: #729fcf;
+  border-color: #929947;
   width: 16px;
   height: 16px;
   border-radius: 3px;
 }
 
 div.vertical-slide .ui-slider-range {
-  background: #729fcf;
+  background: #929947;
   border-radius: 0px;
 }
 
 div.vertical-slide .ui-slider-handle {
-  border-color: #729fcf;
+  border-color: #929947;
   width: 16px;
   height: 16px;
   border-radius: 3px;
