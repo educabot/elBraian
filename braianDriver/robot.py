@@ -115,7 +115,7 @@ class Robot(object):
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 
 			# head
-			SERVO = PWM.Servo(pulse_incr_us=1)
+			self.SERVO = PWM.Servo(pulse_incr_us=1)
 
 				
 		self.current_horizontal_head_pos = 0
@@ -219,11 +219,11 @@ class Robot(object):
 		self.head_horizontal_current_position = 0 
 		self.head_vertical_current_position = 0
 		if env == "prod":
-			self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, _angle_to_ms(0))
-			self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, _angle_to_ms(0))
+			self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(0))
+			self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(0))
 
 
-	def _angle_to_ms(angle):
+	def _angle_to_ms(self,angle):
 		return 1520 + (int(angle)*400) / 45
 
 
@@ -234,7 +234,7 @@ class Robot(object):
 			log.debug("moving head horizontal to angle: " + str(angle))
 			self.head_horizontal_current_position = angle
 			if env == "prod":
-				self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, _angle_to_ms(angle))
+				self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(angle))
 
 
 	def move_head_vertical(self, angle):
@@ -244,4 +244,4 @@ class Robot(object):
 			log.debug("moving head vertical to angle: " + str(angle))
 			self.head_vertical_current_position = angle
 			if env == "prod":
-				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, _angle_to_ms(angle))
+				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(angle))
