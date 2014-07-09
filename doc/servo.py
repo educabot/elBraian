@@ -9,31 +9,18 @@ gpio.setmode(gpio.BOARD)
 gpio.setup(7,gpio.OUT)
 gpio.setup(5,gpio.OUT)
 
-horizontal = gpio.PWM(5,50)
-vertical = gpio.PWM(7,50)
+horizontal = gpio.PWM(5,25)
+#vertical = gpio.PWM(7,50)
 
-horizontal.start(3.5)
-sleep(0.5)
-horizontal.stop()
+horizontal.start(5)
 
-sleep(0.5)
+def angleConversion(value):
+	return float(value) / 10.0 + 2.5
 
-horizontal.start(2.5)
-sleep(0.5)
-horizontal.stop()
+horizontal.ChangeDutyCycle(angleConversion(90))
 
+while True:
+	angle = raw_input('enter the new angle: ')
+	horizontal.ChangeDutyCycle(angleConversion(angle))
+	sleep(1)
 
-
-#horizontal.start(11.5)
-#sleep(0.5)
-#horizontal.stop()
-
-#vertical.start(4.5)
-#sleep(0.5)
-#vertical.stop()
-
-#vertical.start(8)
-#sleep(0.5)
-#vertical.stop()
-
-gpio.cleanup()

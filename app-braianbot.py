@@ -76,6 +76,8 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		message = {}
 		message["message"] = "INFO"
 		message["payload"] = {}
+		message["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position 
+		message["payload"]["head_horizontal"] = self.ROBOT.head_horizontal_current_position
 		message["payload"]["client_count"] = sockets.count()
 		sockets.broadcast(json.dumps(message))
 		
@@ -97,6 +99,8 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		
 		message_response = {"message": "INFO"}
 		message_response["payload"] = {} 
+		message_response["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position 
+		message_response["payload"]["head_horizontal"] = self.ROBOT.head_horizontal_current_position
 
 		if message_obj["message"] == "MOVE":
 			self.executeStep(heading, time_hold = 0)
@@ -123,14 +127,11 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		elif (message_obj["message"] == "STOP"):
 				self.ROBOT.stop()
 
-		elif message_obj["message"] == "HEAD-RIGHT":
-			self.ROBOT.head_move_right()
-		elif message_obj["message"] == "HEAD-LEFT":
-			self.ROBOT.head_move_left()
-		elif message_obj["message"] == "HEAD-UP":
-			self.ROBOT.head_move_up()
-		elif message_obj["message"] == "HEAD-DOWN":
-			self.ROBOT.head_move_down()
+		elif message_obj["message"] == "HEAD-MOVE":
+			if "head_horizontal" in message_obj["payload"]:
+				self.ROBOT.move_head_horizontal(message_obj["payload"]["head_horizontal"])
+			if "head_vertical" in message_obj["payload"]:
+				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
 	
 
 	def create_message(self, action):

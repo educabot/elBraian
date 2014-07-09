@@ -265,3 +265,44 @@ div.remote button#down-left {
 div.remote button#down-right {
   border-bottom-right-radius: 5px;
 }
+div.horizontal-slide {
+  float: left;
+  clear: left;
+  width: 620px;
+  height: 7px;
+  margin: 10px;
+}
+
+div.horizontal-slide .ui-slider-range {
+  background: #929947;
+  border-radius: 0px;
+}
+
+div.horizontal-slide .ui-slider-handle {
+  border-color: #929947;
+  background: #933235;
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+}
+
+div.vertical-slide .ui-slider-range {
+  background: #929947;
+  border-radius: 0px;
+}
+
+div.vertical-slide .ui-slider-handle {
+  border-color: #929947;
+  background: #933235;
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+}
+
+div.vertical-slide {
+  float: left;
+  clear: left;
+  width: 7px;
+  height: 390px;
+  margin: 2px;
+}

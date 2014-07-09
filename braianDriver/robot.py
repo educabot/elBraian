@@ -26,6 +26,7 @@ log.info("using "+ env +" configuration ")
 
 if env == "prod":
 	import RPi.GPIO as gpio
+	from RPIO import PWM
 
 #import wirinpi
 
@@ -72,13 +73,18 @@ class Robot(object):
 	#Pin settings for head control
 	HEAD_HORIZONTAL_PIN = int(config.get("robot.gpio","head_pwm_pin_horizontal_axis"))
 	HEAD_VERTICAL_PIN = int(config.get("robot.gpio","head_pwm_pin_vertical_axis"))
-	HEAD_HORIZONTAL_RANGE = int(config.get("robot.gpio","head_horizontal_range"))
-	HEAD_VERTICAL_RANGE = int(config.get("robot.gpio","head_vertical_range"))
+	HEAD_HORIZONTAL_RANGE = config.get("robot.gpio","head_horizontal_range").split(",")
+	HEAD_VERTICAL_RANGE = config.get("robot.gpio","head_vertical_range").split(",")
 
 	TIME_LAPSE_LEFT = 0.0025
 	TIME_LAPSE_RIGHT = 0.00025 
 	TIME_LAPSE_UP = 0.00025
 	TIME_LAPSE_DOWN = 0.0025
+
+	SERVO = None
+
+	head_vertical_current_position = None
+	head_horizontal_current_position = None
 
 	def __init__(self):
 		if env == "prod":
@@ -109,10 +115,9 @@ class Robot(object):
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 
 			# head
-			gpio.setup(self.HEAD_HORIZONTAL_PIN,gpio.OUT)
-			gpio.setup(self.HEAD_VERTICAL_PIN,gpio.OUT)
+			self.SERVO = PWM.Servo(pulse_incr_us=1)
 
-		
+				
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
 		self.center_head()
@@ -210,69 +215,33 @@ class Robot(object):
 
 
 	def center_head(self):
-		log.debug("turning my head to the center")
-		self.current_horizontal_head_pos = (self.HEAD_HORIZONTAL_RANGE) / 2
-		self.current_vertical_head_pos = (self.HEAD_VERTICAL_RANGE) / 2
-		##Shame on me
-		if env == "prod":			
-			for i in range(1,6):
-				sleep(0.035)
-				gpio.output(5,1)
-				sleep(0.0015)
-				gpio.output(5,0)
-			for i in range(1,6):
-				sleep(0.035)
-				gpio.output(7,1)
-				sleep(0.0015)
-				gpio.output(7,0)
-
-
-	def head_move_left(self):
-		log.debug("moving head to the left")
-		if ((self.current_horizontal_head_pos - 1) > 0):
-			log.debug("moving head to the left ")
-			self.current_horizontal_head_pos -= 1
-			self._send_horizontal_signal(self.TIME_LAPSE_LEFT)
-
-
-	def head_move_right(self):
-		log.debug("moving head to the right ")
-		if ((self.current_horizontal_head_pos + 1) < self.HEAD_HORIZONTAL_RANGE):
-			log.debug("moving head to the left ")
-			self.current_horizontal_head_pos += 1
-			self._send_horizontal_signal(self.TIME_LAPSE_RIGHT)
-
-
-	def _send_horizontal_signal(self, orientation):
-		log.debug("horizontal pos: " + str(orientation))
+		log.debug("centering head")
+		self.head_horizontal_current_position = 0 
+		self.head_vertical_current_position = 0
 		if env == "prod":
-		    sleep(0.035)
-		    gpio.output(self.HEAD_HORIZONTAL_PIN,1)
-		    sleep(orientation)
-		    gpio.output(self.HEAD_HORIZONTAL_PIN,0)
+			self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(0))
+			self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(0))
 
 
-	def head_move_up(self):
-		log.debug("moving head to the up ")
-		if ((self.current_vertical_head_pos + 1) < self.HEAD_HORIZONTAL_RANGE):
-			log.debug("moving head to the left ")
-			self.current_horizontal_head_pos += 1
-			self._send_vertical_signal(self.TIME_LAPSE_UP)
+	def _angle_to_ms(self,angle):
+		return 1520 + (int(angle)*400) / 45
 
 
-	def head_move_down(self):
-		log.debug("moving head to the down ")
-		if ((self.current_vertical_head_pos - 1) > 0):
-			log.debug("moving head to the left ")
-			self.current_horizontal_head_pos -= 1
-			self._send_vertical_signal(self.TIME_LAPSE_DOWN)
+	def move_head_horizontal(self, angle):
+		log.debug("horizontal limits: " + self.HEAD_HORIZONTAL_RANGE[0] +" "+ self.HEAD_HORIZONTAL_RANGE[1])
+		log.debug("new horizontal angle: " + str(angle))
+		if angle > int(self.HEAD_HORIZONTAL_RANGE[0]) and angle < int(self.HEAD_HORIZONTAL_RANGE[1]):
+			log.debug("moving head horizontal to angle: " + str(angle))
+			self.head_horizontal_current_position = angle
+			if env == "prod":
+				self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(angle))
 
 
-	def _send_vertical_signal(self, orientation):
-		log.debug("vertical pos: " + str(orientation))
-		if env == "prod":
-		    sleep(0.035)
-		    gpio.output(self.HEAD_VERTICAL_PIN,1)
-		    sleep(orientation)
-		    gpio.output(self.HEAD_VERTICAL_PIN,0)
-		
+	def move_head_vertical(self, angle):
+		log.debug("vertical limits: " + self.HEAD_VERTICAL_RANGE[0] +" "+ self.HEAD_VERTICAL_RANGE[1])
+		log.debug("new vertical angle: " + str(angle))
+		if angle > int(self.HEAD_VERTICAL_RANGE[0]) and angle < int(self.HEAD_VERTICAL_RANGE[1]):
+			log.debug("moving head vertical to angle: " + str(angle))
+			self.head_vertical_current_position = angle
+			if env == "prod":
+				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(angle))
