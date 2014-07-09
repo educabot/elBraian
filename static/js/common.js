@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ document.domain +":9100/robot";
+	var host = "ws://"+ document.domain +"/robot";
 
 	console.log("url socket: " + document.domain);
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	});
 
 	function refreshHorizontalPosition(){
-		var horizontal = $('#head-horizontal').slider('value') - 100;
+		var horizontal = ($('#head-horizontal').slider('value') - 100) * (-1);
 		console.log("position:  horizontal " + horizontal);
 		sendMessage({
 			message: "HEAD-MOVE",
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	}
 
 	function refreshVerticalPosition(){
-		var vertical = $('#head-vertical').slider('value') - 100;
+		var vertical = ($('#head-vertical').slider('value') - 100) * (-1);
 		console.log("position: vertical " + vertical );
 		sendMessage({
 			message: "HEAD-MOVE",
@@ -231,7 +231,7 @@ $(document).ready(function(){
 			//a
 			case 65:
 				$('.console').append($("<p> > Moving head left ..</p>"));
-				var newAngle = ($('#head-horizontal').slider('value') - 100) -20;
+				var newAngle = (($('#head-horizontal').slider('value') - 100) -20) * -1;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload: {
@@ -245,7 +245,7 @@ $(document).ready(function(){
 			//d
 			case 68:
 				$('.console').append($("<p> > Moving head right ..</p>"));
-				var newAngle = ($('#head-horizontal').slider('value') - 100) + 20;
+				var newAngle = (($('#head-horizontal').slider('value') - 100) + 20) * -1;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload : {
@@ -260,7 +260,7 @@ $(document).ready(function(){
 			//w
 			case 87:
 				$('.console').append($("<p> > Moving head up ..</p>"));	
-				var newAngle = $('#head-vertical').slider('value') - 100 + 20;
+				var newAngle = ($('#head-vertical').slider('value') - 100 + 20) * -1;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload : {
@@ -274,7 +274,7 @@ $(document).ready(function(){
 			//s
 			case 83:
 				$('.console').append($("<p> > Moving head down ..</p>"));
-				var newAngle = $('#head-vertical').slider('value') -100 -20;
+				var newAngle = ($('#head-vertical').slider('value') -100 -20) * -1;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload: {
