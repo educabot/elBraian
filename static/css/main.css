@@ -269,7 +269,7 @@ div.horizontal-slide {
   float: left;
   clear: left;
   width: 620px;
-  height: 15px;
+  height: 7px;
   margin: 10px;
 }
 
@@ -280,8 +280,9 @@ div.horizontal-slide .ui-slider-range {
 
 div.horizontal-slide .ui-slider-handle {
   border-color: #929947;
-  width: 16px;
-  height: 16px;
+  background: #933235;
+  width: 8px;
+  height: 8px;
   border-radius: 3px;
 }
 
@@ -292,15 +293,16 @@ div.vertical-slide .ui-slider-range {
 
 div.vertical-slide .ui-slider-handle {
   border-color: #929947;
-  width: 16px;
-  height: 16px;
+  background: #933235;
+  width: 8px;
+  height: 8px;
   border-radius: 3px;
 }
 
 div.vertical-slide {
   float: left;
   clear: left;
-  width: 15px;
+  width: 7px;
   height: 390px;
-  margin: 5px;
+  margin: 2px;
 }
