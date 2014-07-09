@@ -231,7 +231,7 @@ $(document).ready(function(){
 			//a
 			case 65:
 				$('.console').append($("<p> > Moving head left ..</p>"));
-				var newAngle = (($('#head-horizontal').slider('value') - 100) -20) * -1;
+				var newAngle = ($('#head-horizontal').slider('value') - 100) +20 ;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload: {
@@ -245,7 +245,7 @@ $(document).ready(function(){
 			//d
 			case 68:
 				$('.console').append($("<p> > Moving head right ..</p>"));
-				var newAngle = (($('#head-horizontal').slider('value') - 100) + 20) * -1;
+				var newAngle = ($('#head-horizontal').slider('value') - 100) - 20 ;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload : {
@@ -260,7 +260,7 @@ $(document).ready(function(){
 			//w
 			case 87:
 				$('.console').append($("<p> > Moving head up ..</p>"));	
-				var newAngle = ($('#head-vertical').slider('value') - 100 + 20) * -1;
+				var newAngle = $('#head-vertical').slider('value') - 100 - 20;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload : {
@@ -274,7 +274,7 @@ $(document).ready(function(){
 			//s
 			case 83:
 				$('.console').append($("<p> > Moving head down ..</p>"));
-				var newAngle = ($('#head-vertical').slider('value') -100 -20) * -1;
+				var newAngle = $('#head-vertical').slider('value') -100 +20;
 				sendMessage({
 					message: "HEAD-MOVE",
 					payload: {
