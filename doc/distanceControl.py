@@ -13,7 +13,7 @@ def gpio_callback(gpio_id, val):
     print("gpio %s: %s, step counting: %s" % (gpio_id, val, steps) )
 
 rpio.add_interrupt_callback(4, gpio_callback)
-rpio.add_interrupt_callback(27, gpio_callback)
+rpio.add_interrupt_callback(21, gpio_callback)
 
 start = int(round(time.time) * 1000)
 

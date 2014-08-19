@@ -134,10 +134,6 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
 	
 
-	def create_message(self, action):
-		pass
-
-
 class CameraHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
 		self.write_message("connected to de camera")

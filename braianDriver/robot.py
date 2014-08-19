@@ -26,7 +26,7 @@ log.info("using "+ env +" configuration ")
 
 if env == "prod":
 	import RPi.GPIO as gpio
-	from RPIO import PWM
+	import RPIO as rpio
 
 #import wirinpi
 
@@ -76,10 +76,8 @@ class Robot(object):
 	HEAD_HORIZONTAL_RANGE = config.get("robot.gpio","head_horizontal_range").split(",")
 	HEAD_VERTICAL_RANGE = config.get("robot.gpio","head_vertical_range").split(",")
 
-	TIME_LAPSE_LEFT = 0.0025
-	TIME_LAPSE_RIGHT = 0.00025 
-	TIME_LAPSE_UP = 0.00025
-	TIME_LAPSE_DOWN = 0.0025
+	RIGHT_WHEEL_SENSOR = int(config.get("robot.gpio","right_wheel_sensor"))
+	LEFT_WHEEL_SENSOR = int(config.get("robot.gpio", "left_wheel_sensor"))
 
 	SERVO = None
 
@@ -91,7 +89,6 @@ class Robot(object):
 			gpio.cleanup()
 
 			gpio.setmode(gpio.BOARD)
-
 
 			##Left Side
 			gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
@@ -115,12 +112,14 @@ class Robot(object):
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 
 			# head
-			self.SERVO = PWM.Servo(pulse_incr_us=1)
+			self.SERVO = rpio.PWM.Servo(pulse_incr_us=1)
 
 				
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
 		self.center_head()
+		self._counting_steps = 0
+		self._current_steps = 0
 
 	def _set_left_forward(self):
 		gpio.output(self.FORWARD_LEFT_PIN, True)
@@ -245,3 +244,19 @@ class Robot(object):
 			self.head_vertical_current_position = angle
 			if env == "prod":
 				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(angle))
+
+	def steps(self, counting):
+		self._current_steps = counting
+		self.move(speed=self.SPEED_HIGH)
+		self.move(speed=self.SPEED_MEDIUM)
+		rpio.add_interrupt_callback(RIGHT_WHEEL_SENSOR, self._steps_callback, threaded_callback=True)
+		rpio.add_interrupt_callback(LEFT_WHEEL_SENSOR, self._steps_callback, threaded_callback=True)
+		rpio.wait_for_interrupts(threaded=True)
+
+	def _steps_callback(self, gpio_id, value):
+		self._counting_steps += 1
+		if self._counting_steps > self._current_steps:
+			self._counting_steps = 0
+			self._current_steps = 0
+			rpio.stop_waiting_for_interrupts()
+
