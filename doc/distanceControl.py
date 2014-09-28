@@ -10,15 +10,15 @@ counting_left = 0
 
 def gpio_callback(gpio_id, val):
 	global steps, stop, robot, counting_right, counting_left
-	steps += 1
+	
 	
 	if gpio_id == 4:
 		counting_left += 1
-	elif gpio_id == 21:
+	elif gpio_id == 22:
 		counting_right += 1
 
 	if counting_right - counting_left > 2 :
-		
+
 	if(steps >= int(input)):
 		robot.stop()
 		rpio.stop_waiting_for_interrupts()
@@ -26,7 +26,7 @@ def gpio_callback(gpio_id, val):
     print("gpio %s: %s, step counting: %s" % (gpio_id, val, steps) )
 
 rpio.add_interrupt_callback(4, gpio_callback)
-rpio.add_interrupt_callback(21, gpio_callback)
+rpio.add_interrupt_callback(22, gpio_callback)
 
 start = int(round(time.time) * 1000)
 
