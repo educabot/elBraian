@@ -5,7 +5,7 @@ class Cameo(object):
 
 	def __init__(self):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-		self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, True)
+		self._captureManager = CaptureManager(cv2.VideoCapture(1), self._windowManager, True)
 
 	def run(self):
 		self._windowManager.createWindow()
@@ -25,8 +25,11 @@ class Cameo(object):
 			self._captureManager.writeImage("screenshot.png")
 		elif keycode == 9: # tab
 			if not self._captureManager.isWritingVideo:
+				print "video start"
 				self._captureManager.startWritingVideo("screencast.avi")
+
 			else:
+				print "video stop"
 				self._captureManager.stopWritingVideo()
 		elif keycode == 27: # escape
 			self._windowManager.destroyWindow()

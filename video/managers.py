@@ -32,9 +32,9 @@ class CaptureManager(object):
 
 	@property 
 	def frame(self):
-		if self._enteredFrame and self._frame is None:
-			_,self._frame = self._capture.retrieve(channel = self.channel)
-			return self._frame
+		##if self._enteredFrame and self._frame is None:
+		_ , self._frame = self._capture.retrieve(channel = self.channel)
+		return self._frame
 
 	@property
 	def isWritingImage(self):
@@ -44,20 +44,23 @@ class CaptureManager(object):
 	def isWritingVideo(self):
 		return self._videoFileName is not None
 
+
 	def enterFrame(self):
 		if self._capture is not None:
 			self._enteredFrame = self._capture.grab()
+
 
 	def exitFrame(self):
 		if self.frame is None:
 			self._enteredFrame = False
 			return 
+
 		if self._framesElapsed == 0:
 			self._startTime = time.time()
 		else:
 			timeElapsed = time.time() - self._startTime
 			self._fpsEstimate = self._framesElapsed / timeElapsed
-			self._framesElapsed += 1
+		self._framesElapsed += 1
 
 		if self.previeWindowManager is not None:
 			if self.shouldMirrorPreview:
@@ -77,7 +80,7 @@ class CaptureManager(object):
 	def writeImage(self,filename):
 		self._imageFileName = filename
 
-	def startWritingVideo(self, filename, encoding = cv2.cv.CV_FOURCC('I','4','2','0')):
+	def startWritingVideo(self, filename, encoding = cv2.cv.CV_FOURCC('H','2','6','4')):
 		self._videoFileName = filename
 		self._videoEncoding = encoding
 
@@ -96,8 +99,10 @@ class CaptureManager(object):
 					return 
 				else:
 					fps = self._fpsEstimate
-					size = (int(self._capture.get(cv2.cv.CV.CAP_PROP_FRAME_WIDTH)),
-						int(self._capture.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)))
+					size = (int(self._capture.get(3)),
+						int(self._capture.get(4)))
+					print fps
+					print size
 					self._videoWriter = cv2.VideoWriter(self._videoFileName, self._videoEncoding, fps, size)
 					self._videoWriter.write(self._frame)
 
