@@ -1,9 +1,10 @@
 import cv2
 from managers import WindowManager, CaptureManager
-import rects
 import filters
 from trackers import FaceTracker
 import utils
+import rects
+from datetime import datetime
 
 class Cameo(object):
 
@@ -25,14 +26,18 @@ class Cameo(object):
 
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
+			
+			utils.draw_str(frame, (25,40), datetime.now().isoformat())
 			if len(faces) > 0 :
-				utils.draw_str(frame, (20,40), "Human Face")
+				utils.draw_str(frame, (25,60), "Human Face")
+
 
 			rects.swapRects(frame, frame, [face.faceRect for face in faces])
 			
 			if self._shouldDrawDebugRects:
 				self._faceTracker.drawDebugRects(frame)
 
+			utils.drawCameraFrame(frame, self._captureManager.size)
 			self._captureManager.exitFrame()
 			self._windowManager.processEvents()
 

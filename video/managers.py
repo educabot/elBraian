@@ -19,6 +19,7 @@ class CaptureManager(object):
 		self._startTime = None
 		self._framesElapsed = long(0)
 		self._fpsEstimate = None
+		self._size = (int(capture.get(3)), int(capture.get(4)))
 
 	@property
 	def channel(self):
@@ -50,6 +51,10 @@ class CaptureManager(object):
 	def enterFrame(self):
 		if self._capture is not None:
 			self._enteredFrame = self._capture.grab()
+
+	@property
+	def size(self):
+		return self._size
 
 
 	def exitFrame(self):

@@ -1,6 +1,7 @@
 import cv2
 import numpy
 import scipy.interpolate
+import rects
 
 
 def createCurveFunc(points):
@@ -70,3 +71,23 @@ def widthHeightDivideBy(image, divisor):
 def draw_str(dst, (x, y), s):
     cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 2, lineType=cv2.CV_AA)
     cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
+
+
+def drawCameraFrame(frame, size):
+	#Cross in the middle
+	width, height = size
+	rects.outlineRect(frame, (width/2, height/3, 0, height/3) ,(0, 255 , 0))
+	rects.outlineRect(frame, (width/3, height/2, width/3, 0) ,(0, 255 , 0))
+
+	rects.outlineRect(frame, (20, 20, 0, 60) ,(0, 255 , 0))
+	rects.outlineRect(frame, (20, 20, 60, 0) ,(0, 255 , 0))
+
+	rects.outlineRect(frame, (width-20, 20, 0, 60) ,(0, 255 , 0))
+	rects.outlineRect(frame, (width-80, 20, 60, 0) ,(0, 255 , 0))
+
+
+	rects.outlineRect(frame, (20, height-80, 0, 60) ,(0, 255 , 0))
+	rects.outlineRect(frame, (20, height-20, 60, 0) ,(0, 255 , 0))
+
+	rects.outlineRect(frame, (width-20, height- 80, 0, 60) ,(0, 255 , 0))
+	rects.outlineRect(frame, (width-80, height- 20, 60, 0) ,(0, 255 , 0))
