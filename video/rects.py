@@ -16,7 +16,7 @@ def copyRect(src, dst, srcRect, dstRect, interpolation = cv2.INTER_LINEAR):
 
 
 def swapRects(src, dst, rects, interpolation = cv2.INTER_LINEAR):
-	if dest is None:
+	if dst is None:
 		dst[:] = src
 
 	numRects = len(rects)
@@ -32,15 +32,6 @@ def swapRects(src, dst, rects, interpolation = cv2.INTER_LINEAR):
 		i -= 1
 
 	copyRect(temp, dst, (0, 0, w, h), rects[0], interpolation)
-
-
-def isGray(image):
-	return image.ndim < 3
-
-
-def widthHeightDivideBy(image, divisor):
-	h, w = image.shape[:2]
-	return (w/divisor, h/divisor)
 
 
 

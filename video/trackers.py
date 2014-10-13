@@ -22,7 +22,7 @@ class FaceTracker(object):
 		self._faces = []
 
 		self._faceClassifier = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt.xml")
-		self._eyeClassifier = cv2.CascadeClassifier("cascades/haarcascade_eye.xml")
+		#self._eyeClassifier = cv2.CascadeClassifier("cascades/haarcascade_eye.xml")
 
 	@property
 	def faces(self):
@@ -49,13 +49,13 @@ class FaceTracker(object):
 				x, y, w, h = faceRect
 
 				#search an eye at the upper-left sector
-				searchRect = (x+w/7, y, w*2/7, h/2)
-				face.leftEyeRect = self._detectOneObject(self._eyeClassifier, image, 
-					searchRect, 64)
+				#searchRect = (x+w/7, y, w*2/7, h/2)
+				#face.leftEyeRect = self._detectOneObject(self._eyeClassifier, image, 
+				#	searchRect, 64)
 
-				searchRect = (x+w/4, y, w*2/7, h/2)
-				face.rightEyeRect = self._detectOneObject(self._eyeClassifier, image, 
-					searchRect, 64)
+				#searchRect = (x+w/4, y, w*2/7, h/2)
+				#face.rightEyeRect = self._detectOneObject(self._eyeClassifier, image, 
+				#	searchRect, 64)
 
 				#TODO: implement nose detection
 
@@ -64,7 +64,7 @@ class FaceTracker(object):
 				self._faces.append(face)
 
 
-	def _detecOneObject(self, classifier, image, rect, imageSizeToMinSizeRatio):
+	def _detectOneObject(self, classifier, image, rect, imageSizeToMinSizeRatio):
 
 		x, y, w, h = rect
 
@@ -94,6 +94,6 @@ class FaceTracker(object):
 
 		for face in self.faces:
 			rects.outlineRect(image, face.faceRect, faceColor)
-			rects.outlineRect(image, face.leftEyeRect, leftEyeColor)
-			rects.outlineRect(image, face.rightEyeRect, rightEyeColor)
+			#rects.outlineRect(image, face.leftEyeRect, leftEyeColor)
+			#rects.outlineRect(image, face.rightEyeRect, rightEyeColor)
 		

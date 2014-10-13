@@ -19,6 +19,9 @@ def createCurveFunc(points):
 	return scipy.interpolate.interp1d(xs, ys, kind, bounds_error=False)
 
 
+def isGray(image):
+	return image.ndim < 3
+
 def createLookupArray(func, length = 256):
 	""" return a lookup for whole-numer inputs to a function"""
 
@@ -57,3 +60,13 @@ def createFlatView(array):
 	flatView = array.view()
 	flatView.shape =  array.size
 	return flatView
+
+
+def widthHeightDivideBy(image, divisor):
+	h, w = image.shape[:2]
+	return (w/divisor, h/divisor)
+
+
+def draw_str(dst, (x, y), s):
+    cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 2, lineType=cv2.CV_AA)
+    cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
