@@ -11,13 +11,24 @@ class Face(object):
 		self.noseRect = None
 		self.mouthRect = None
 
+class Arrow(object):
+	def __init__(self):
+		self.arrowRect = None
 
-class FaceTracker(object):
+
+class Tracker(object):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 		flags = cv2.cv.CV_HAAR_SCALE_IMAGE):
 		self.scaleFactor = scaleFactor
 		self.minNeighbors = minNeighbors
 		self.flags = flags
+
+
+class FaceTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_SCALE_IMAGE):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_SCALE_IMAGE)
 
 		self._faces = []
 
@@ -46,7 +57,7 @@ class FaceTracker(object):
 				face = Face()
 				face.faceRect = faceRect
 
-				x, y, w, h = faceRect
+				#x, y, w, h = faceRect
 
 				#search an eye at the upper-left sector
 				#searchRect = (x+w/7, y, w*2/7, h/2)
@@ -96,4 +107,42 @@ class FaceTracker(object):
 			rects.outlineRect(image, face.faceRect, faceColor)
 			#rects.outlineRect(image, face.leftEyeRect, leftEyeColor)
 			#rects.outlineRect(image, face.rightEyeRect, rightEyeColor)
+
+
+class ArrowTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_SCALE_IMAGE):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_SCALE_IMAGE)
+		self._arrows = []
+		self._arrowClassifier = cv2.CascadeClassifier("data/cascade.xml")
+	
+	@property
+	def arrows(self):
+		return self._arrows
+
+	def update(self, image):
+		self._arrows = []
+
+		minSize = utils.widthHeightDivideBy(image, 8)
+		arrowRects = self._arrowClassifier.detectMultiScale(image, self.scaleFactor,
+			self.minNeighbors, self.flags, minSize)
+		if arrowRects is not None:
+			for arrowRect in arrowRects:
+				arrow = Arrow()
+				arrow.arrowRect = arrowRect
+
+				self._arrows.append(arrow)
+
+
+	def drawDebugRects(self, image):
+		if utils.isGray(image):
+			arrowColor = 255
 		
+		else:
+			arrowColor = (0,0,255)
+		
+
+		for arrow in self.arrows:
+			rects.outlineRect(image, arrow.arrowRect, arrowColor)
+
