@@ -111,11 +111,11 @@ class FaceTracker(Tracker):
 
 class ArrowTracker(Tracker):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-		flags = cv2.cv.CV_HAAR_SCALE_IMAGE):
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-			flags = cv2.cv.CV_HAAR_SCALE_IMAGE)
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
 		self._arrows = []
-		self._arrowClassifier = cv2.CascadeClassifier("data/cascade.xml")
+		self._arrowClassifier = cv2.CascadeClassifier("cascades/up_cascade.xml")
 	
 	@property
 	def arrows(self):

@@ -28,7 +28,7 @@ class Cameo(object):
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
 
-			#self._arrowTracker.update(frame)
+			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.arrows
 			
 			utils.draw_str(frame, (25,40), datetime.now().isoformat())
@@ -36,7 +36,7 @@ class Cameo(object):
 				utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
 
 
-			rects.swapRects(frame, frame, [face.faceRect for face in faces])
+			#rects.swapRects(frame, frame, [face.faceRect for face in faces])
 			
 			if self._shouldDrawDebugRects:
 				self._faceTracker.drawDebugRects(frame)
