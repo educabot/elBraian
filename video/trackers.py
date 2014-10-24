@@ -1,6 +1,22 @@
 import cv2
 import rects
 import utils
+
+
+class Traceable(object):
+	def __init__(self):
+		self._rect = None
+
+	@property
+	def rect(self):
+		return self._rect
+
+	@rect.setter
+	def rect(self, value):
+		self._rect = value
+
+
+
 class Face(object):
 	"""Data on facial features"""
 
@@ -11,9 +27,14 @@ class Face(object):
 		self.noseRect = None
 		self.mouthRect = None
 
-class Arrow(object):
+class Arrow(Traceable):
 	def __init__(self):
-		self.arrowRect = None
+		Traceable.__init__(self)
+
+
+class Banana(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
 
 
 class Tracker(object):
@@ -164,3 +185,15 @@ class ArrowTracker(Tracker):
 	def _createElement(self):
 		return Arrow()
 
+
+
+class BananaTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("cascades/banana_classifier.xml")
+		self._elementRectColor= (0,255,0)
+	
+	def _createElement(self):
+		return Banana()
