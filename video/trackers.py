@@ -22,6 +22,69 @@ class Tracker(object):
 		self.scaleFactor = scaleFactor
 		self.minNeighbors = minNeighbors
 		self.flags = flags
+		self._elements = []
+		self._classifier = None
+		self._elementRectColor = None
+
+
+	@property
+	def elements(self):
+		return self._elements
+
+	
+	def update(self, image):
+		self._elements = []
+		if self._classifier is None:
+			raise Exception("classifier must be set before use it.")
+
+		minSize = utils.widthHeightDivideBy(image, 8)
+
+		elementsRects = self._classifier.detectMultiScale(image, self.scaleFactor,
+			self.minNeighbors, self.flags, minSize)
+		
+		if elementsRects is not None:
+			for elementRect in elementsRects:
+				element = self._createElement()
+
+				element.rect = elementRect
+
+				self._elements.append(element)
+
+
+	def _detectOneObject(self, classifier, image, rect, imageSizeToMinSizeRatio):
+
+		x, y, w, h = rect
+
+		minSize = utils.widthHeightDivideBy(image, imageSizeToMinSizeRatio)
+
+		subImage = image[y: y+h, x: x+w]
+
+		subRects = classifier.detectMultiScale(subImage, self.scaleFactor,
+			self.minNeighbors, self.flags, minSize)
+
+		if len(subRects) == 0 :
+			return None
+
+		subx, suby, subw, subh = subRects[0]
+		return (x+subx, y+suby, w+subw, h+subh)
+
+
+	def drawDebugRects(self, image):
+		
+		if self._elementRectColor is None:
+			raise Exception("Element color for this tracker need to be set.")
+
+		if utils.isGray(image):
+			elementColor = 255
+		
+		else:
+			elementColor = self._elementRectColor
+		
+
+		for element in self._elements:
+			rects.outlineRect(image, element.rect, elementColor)
+
+
 
 
 class FaceTracker(Tracker):
@@ -74,25 +137,6 @@ class FaceTracker(Tracker):
 
 				self._faces.append(face)
 
-
-	def _detectOneObject(self, classifier, image, rect, imageSizeToMinSizeRatio):
-
-		x, y, w, h = rect
-
-		minSize = utils.widthHeightDivideBy(image, imageSizeToMinSizeRatio)
-
-		subImage = image[y: y+h, x: x+w]
-
-		subRects = classifier.detectMultiScale(subImage, self.scaleFactor,
-			self.minNeighbors, self.flags, minSize)
-
-		if len(subRects) == 0 :
-			return None
-
-		subx, suby, subw, subh = subRects[0]
-		return (x+subx, y+suby, w+subw, h+subh)
-
-
 	def drawDebugRects(self, image):
 		if utils.isGray(image):
 			faceColor = 255
@@ -114,35 +158,9 @@ class ArrowTracker(Tracker):
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._arrows = []
-		self._arrowClassifier = cv2.CascadeClassifier("cascades/up_cascade.xml")
+		self._classifier = cv2.CascadeClassifier("cascades/up_cascade.xml")
+		self._elementRectColor= (0,0,255)
 	
-	@property
-	def arrows(self):
-		return self._arrows
-
-	def update(self, image):
-		self._arrows = []
-
-		minSize = utils.widthHeightDivideBy(image, 8)
-		arrowRects = self._arrowClassifier.detectMultiScale(image, self.scaleFactor,
-			self.minNeighbors, self.flags, minSize)
-		if arrowRects is not None:
-			for arrowRect in arrowRects:
-				arrow = Arrow()
-				arrow.arrowRect = arrowRect
-
-				self._arrows.append(arrow)
-
-
-	def drawDebugRects(self, image):
-		if utils.isGray(image):
-			arrowColor = 255
-		
-		else:
-			arrowColor = (0,0,255)
-		
-
-		for arrow in self.arrows:
-			rects.outlineRect(image, arrow.arrowRect, arrowColor)
+	def _createElement(self):
+		return Arrow()
 
