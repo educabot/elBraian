@@ -4,7 +4,7 @@ import time
 
 class CaptureManager(object):
 
-	def __init__(self, capture, previeWindowManager = None, shouldMirrorPreview = False):
+	def __init__(self, capture, previeWindowManager = None, size = None, shouldMirrorPreview = False):
 		
 		self.previeWindowManager = previeWindowManager
 		self.shouldMirrorPreview = shouldMirrorPreview
@@ -19,7 +19,13 @@ class CaptureManager(object):
 		self._startTime = None
 		self._framesElapsed = long(0)
 		self._fpsEstimate = None
-		self._size = (int(capture.get(3)), int(capture.get(4)))
+		if size is None:
+			self._size = (int(capture.get(3)), int(capture.get(4)))
+		else :
+			self._size = size 
+
+		self._capture.set(3, size[0])
+		self._capture.set(4, size[1])
 
 	@property
 	def channel(self):

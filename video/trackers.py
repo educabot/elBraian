@@ -110,13 +110,13 @@ class Tracker(object):
 
 class FaceTracker(Tracker):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-		flags = cv2.cv.CV_HAAR_SCALE_IMAGE):
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-		flags = cv2.cv.CV_HAAR_SCALE_IMAGE)
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
 
 		self._faces = []
 
-		self._faceClassifier = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt.xml")
+		self._faceClassifier = cv2.CascadeClassifier("video/cascades/haarcascade_frontalface_alt.xml")
 		#self._eyeClassifier = cv2.CascadeClassifier("cascades/haarcascade_eye.xml")
 
 	@property
@@ -132,7 +132,7 @@ class FaceTracker(Tracker):
 			image = cv2.cvtColor(image, cv2.cv.CV_BGR2GRAY)
 			cv2.equalizeHist(image, image)
 
-		minSize = utils.widthHeightDivideBy(image, 8)
+		minSize = utils.widthHeightDivideBy(image, 4)
 		faceRects = self._faceClassifier.detectMultiScale(image, self.scaleFactor,
 			self.minNeighbors, self.flags, minSize)
 
@@ -179,7 +179,7 @@ class ArrowTracker(Tracker):
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("cascades/up_cascade.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/up_cascade.xml")
 		self._elementRectColor= (0,0,255)
 	
 	def _createElement(self):
@@ -192,7 +192,7 @@ class BananaTracker(Tracker):
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("cascades/banana_classifier.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/banana_classifier.xml")
 		self._elementRectColor= (0,255,0)
 	
 	def _createElement(self):

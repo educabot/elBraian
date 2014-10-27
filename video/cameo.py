@@ -10,7 +10,7 @@ class Cameo(object):
 
 	def __init__(self):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-		self._captureManager = CaptureManager(cv2.VideoCapture(1), self._windowManager, False)
+		self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, (640, 480),False)
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
@@ -39,8 +39,8 @@ class Cameo(object):
 			if len(faces) > 0 :
 				utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
 
-			if len(bananas) > 0 :
-				utils.draw_str(frame, (25,80), "Banana [" + str(len(bananas)) + "]")
+			if len(arrows) > 0 :
+				utils.draw_str(frame, (25,80), "Directive [" + str(len(arrows)) + "]")
 
 			#rects.swapRects(frame, frame, [face.faceRect for face in faces])
 			
