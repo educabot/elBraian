@@ -10,7 +10,7 @@ class Cameo(object):
 
 	def __init__(self):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-		self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, (640, 480),False)
+		self._captureManager = CaptureManager(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
@@ -61,7 +61,7 @@ class Cameo(object):
 		x	  -> start/stop drawing debug rectangles
 		"""
 		if keycode == 32: # space
-			self._captureManager.writeImage("screenshot.png")
+			self._captureManager.writeImage("imgstream/screenshot.jpg")
 		elif keycode == 9: # tab
 			if not self._captureManager.isWritingVideo:
 				print "video start"

@@ -26,6 +26,7 @@ class Face(object):
 		self.rightEyeRect = None
 		self.noseRect = None
 		self.mouthRect = None
+		self.center = None
 
 class Arrow(Traceable):
 	def __init__(self):
@@ -141,7 +142,9 @@ class FaceTracker(Tracker):
 				face = Face()
 				face.faceRect = faceRect
 
-				#x, y, w, h = faceRect
+				x, y, w, h = faceRect
+
+				face.center = ( x + w/2 , y + h/2) 
 
 				#search an eye at the upper-left sector
 				#searchRect = (x+w/7, y, w*2/7, h/2)

@@ -39,8 +39,6 @@ class CaptureManager(object):
 
 	@property 
 	def frame(self):
-		##if self._enteredFrame and self._frame is None:
-		##_ , self._frame = self._capture.retrieve(channel = self.channel)
 		if self._enteredFrame and self._frame is None:
 			_, self._frame = self._capture.retrieve(channel = self.channel)
 		return self._frame
@@ -114,8 +112,6 @@ class CaptureManager(object):
 					fps = self._fpsEstimate
 					size = (int(self._capture.get(3)),
 						int(self._capture.get(4)))
-					print fps
-					print size
 					self._videoWriter = cv2.VideoWriter(self._videoFileName, self._videoEncoding, fps, size)
 					self._videoWriter.write(self._frame)
 
