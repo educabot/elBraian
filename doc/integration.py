@@ -231,3 +231,18 @@ def func1():
     ## do my stuffs
     print "new action"
 
+class RobotHandler(tornado.websocket.WebSocketHandler):
+    ROBOT = Robot()
+
+    def open(self):
+        sockets.clients.append(self)
+        log.debug("client connected..")
+        sockets.broadcast(json.dumps(message))
+
+    def on_close(self):
+        sockets.clients.remove(self)
+
+    def on_message(self,message):
+        log.debug(message)
+
+

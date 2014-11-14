@@ -1,7 +1,7 @@
 import cv2
 from managers import WindowManager, CaptureManager
 import filters
-from trackers import FaceTracker, ArrowTracker, BananaTracker
+from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker
 import utils
 import rects
 from datetime import datetime
@@ -15,6 +15,7 @@ class Cameo(object):
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
 		self._bananaTracker = BananaTracker()
+		self._turnTracker = TurnTracker()
 		self._shouldDrawDebugRects = False
 
 	def run(self):
@@ -32,6 +33,9 @@ class Cameo(object):
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
 
+			self._turnTracker.update(frame)
+			turns = self._turnTracker.elements
+
 			#self._bananaTracker.update(frame)
 			bananas = self._bananaTracker.elements
 			
@@ -48,6 +52,7 @@ class Cameo(object):
 				self._faceTracker.drawDebugRects(frame)
 				self._arrowTracker.drawDebugRects(frame)
 				self._bananaTracker.drawDebugRects(frame)
+				self._turnTracker.drawDebugRects(frame)
 
 			utils.drawCameraFrame(frame, self._captureManager.size)
 			self._captureManager.exitFrame()
