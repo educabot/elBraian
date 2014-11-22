@@ -10,7 +10,7 @@ class Cameo(object):
 
 	def __init__(self):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-		self._captureManager = CaptureManager(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
+		self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, (1280, 760),False)
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
@@ -33,7 +33,7 @@ class Cameo(object):
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
 
-			self._turnTracker.update(frame)
+			#self._turnTracker.update(frame)
 			turns = self._turnTracker.elements
 
 			#self._bananaTracker.update(frame)
