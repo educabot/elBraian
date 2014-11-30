@@ -26,7 +26,7 @@ log.info("using "+ env +" configuration ")
 
 if env == "prod":
 	import RPi.GPIO as gpio
-	import RPIO as rpio
+	import RPIO.PWM as pwm 
 
 #import wirinpi
 
@@ -112,7 +112,7 @@ class Robot(object):
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 
 			# head
-			self.SERVO = rpio.PWM.Servo(pulse_incr_us=1)
+			self.SERVO = pwm.Servo(pulse_incr_us=1)
 
 				
 		self.current_horizontal_head_pos = 0
