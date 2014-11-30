@@ -26,7 +26,7 @@ log.info("using "+ env +" configuration ")
 
 if env == "prod":
 	import RPi.GPIO as gpio
-	import RPIO.PWM as pwm 
+	import RPIO.PWM as pwm
 
 #import wirinpi
 

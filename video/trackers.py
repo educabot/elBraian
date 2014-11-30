@@ -33,6 +33,11 @@ class Arrow(Traceable):
 		Traceable.__init__(self)
 
 
+class TurnArrow(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
+
+
 class Banana(Traceable):
 	def __init__(self):
 		Traceable.__init__(self)
@@ -188,6 +193,17 @@ class ArrowTracker(Tracker):
 	def _createElement(self):
 		return Arrow()
 
+
+class TurnTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("video/cascades/turn_cascade.xml")
+		self._elementRectColor= (255,0,0)
+	
+	def _createElement(self):
+		return TurnArrow()
 
 
 class BananaTracker(Tracker):

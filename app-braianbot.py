@@ -154,6 +154,14 @@ class NewConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('new_console.jade')
 
+class WrongConsole(tornado.web.RequestHandler):
+	def get(self):
+		self.render('wrong_console.jade')
+
+class FixConsole(tornado.web.RequestHandler):
+	def get(self):
+		self.render('fix_console.jade')
+
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
@@ -162,7 +170,9 @@ if __name__ == '__main__':
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
-			(r"/newconsole",NewConsole)
+			(r"/newconsole",NewConsole),
+			(r"/consola", WrongConsole),
+			(r"/fixconsole", FixConsole)
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),

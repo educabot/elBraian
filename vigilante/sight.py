@@ -4,7 +4,6 @@ import logging
 from time import sleep
 import sys
 from video.trackers import FaceTracker, ArrowTracker
-from video.filters import BGRPortraCurveFilter
 from websocket import create_connection 
 import cv2
 import os, json
@@ -20,7 +19,7 @@ class FrameWatcher(PatternMatchingEventHandler):
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._faceTracker = FaceTracker()
-		self._curvefilter = BGRPortraCurveFilter()
+		#self._curvefilter = BGRPortraCurveFilter()
 		self._center = (320, 240)
 		self._threshold = 60
 		self._ws = create_connection("ws://localhost:9001/robot")
@@ -32,7 +31,7 @@ class FrameWatcher(PatternMatchingEventHandler):
 		if event.event_type == "created" or event.event_type == "modified":
 			print "processing image"
 			img = cv2.imread(event.src_path)
-			self._curvefilter.apply(img, img)
+			#self._curvefilter.apply(img, img)
 			self._faceTracker.update(img)
 			faces = self._faceTracker.faces
 			self._faceTracker.drawDebugRects(img)
