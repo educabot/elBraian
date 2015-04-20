@@ -2,6 +2,7 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler,PatternMatchingEventHandler
 import logging
 from time import sleep
+import filters
 import sys
 from video.trackers import FaceTracker, ArrowTracker
 from websocket import create_connection 
@@ -19,7 +20,7 @@ class FrameWatcher(PatternMatchingEventHandler):
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._faceTracker = FaceTracker()
-		#self._curvefilter = BGRPortraCurveFilter()
+		#self._curvefilter = filters.BGRPortraCurveFilter()
 		self._center = (320, 240)
 		self._threshold = 60
 		self._ws = create_connection("ws://localhost:9001/robot")

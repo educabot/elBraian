@@ -22,6 +22,10 @@ patch_tornado()
 define("port", default=80, help="run on the given port",type=int)
 log = logging.getLogger("webserver")
 log.setLevel(logging.DEBUG)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s") 
+file_handler=logging.FileHandler('/var/tmp/braian.log')
+file_handler.setFormatter(formatter)
+log.addHandler(file_handler)
 
 sockets =  PoolWebSocketHandler()
 
@@ -65,7 +69,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 
 
 			if time_hold > 0:
-				sleep(time_hold/1000);
+				sleep(time_hold/1000.00);
 				self.ROBOT.stop()
 
 
