@@ -8,7 +8,7 @@ from video.trackers import FaceTracker, ArrowTracker
 from websocket import create_connection 
 import cv2
 import os, json
-
+from video import filters
 
 
 class FrameWatcher(PatternMatchingEventHandler):
@@ -20,19 +20,23 @@ class FrameWatcher(PatternMatchingEventHandler):
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._faceTracker = FaceTracker()
+<<<<<<< HEAD
 		#self._curvefilter = filters.BGRPortraCurveFilter()
+=======
+		self._curvefilter = filters.BGRPortraCurveFilter()
+>>>>>>> 447e6e77feb9dce8a8d47f26b9f12bf424797ac1
 		self._center = (320, 240)
 		self._threshold = 60
-		self._ws = create_connection("ws://localhost:9001/robot")
+		self._ws = create_connection("ws://localhost/robot")
 
 
 
 	def __process(self, event):
 		print event.src_path, event.event_type
-		if event.event_type == "created" or event.event_type == "modified":
+		if event.event_type == "created":
 			print "processing image"
 			img = cv2.imread(event.src_path)
-			#self._curvefilter.apply(img, img)
+			self._curvefilter.apply(img, img)
 			self._faceTracker.update(img)
 			faces = self._faceTracker.faces
 			self._faceTracker.drawDebugRects(img)
@@ -50,9 +54,9 @@ class FrameWatcher(PatternMatchingEventHandler):
 
 	def __calculateVerticalAdjusment(self, face):
 		if face.center < self._center[1] - self._threshold:
-			self._vertical_position -= 10
+			self._vertical_position -= 20
 		if face.center > self._center[1] + self._threshold:
-			self._vertical_position += 10
+			self._vertical_position += 20
 
 
 	def __calculateHorizontalAdjustment(self, face):
