@@ -5,26 +5,22 @@ from time import sleep
 import filters
 import sys
 from video.trackers import FaceTracker, ArrowTracker
-from websocket import create_connection 
+from websocket import create_connection
 import cv2
 import os, json
 from video import filters
 
 
 class FrameWatcher(PatternMatchingEventHandler):
-	
+
 	patterns = ["*.jpg"]
-	
+
 	def __init__(self, *args):
 		PatternMatchingEventHandler.__init__(self, *args)
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._faceTracker = FaceTracker()
-<<<<<<< HEAD
 		#self._curvefilter = filters.BGRPortraCurveFilter()
-=======
-		self._curvefilter = filters.BGRPortraCurveFilter()
->>>>>>> 447e6e77feb9dce8a8d47f26b9f12bf424797ac1
 		self._center = (320, 240)
 		self._threshold = 60
 		self._ws = create_connection("ws://localhost/robot")

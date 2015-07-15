@@ -3,8 +3,10 @@ extends layout
 block scripts
 	script(src="static/js/newconsole.js")
 	script(src="static/components/bootstrap/dist/js/bootstrap.js")
+	script(src="//scratchblocks.github.io/scratchblocks2.js")
 block styles
 	link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
+	link(rel="stylesheet", href="//scratchblocks.github.io/scratchblocks2.css")
 block main
 	.page-header
 		.row
@@ -21,7 +23,25 @@ block main
 						img(src="/static/img/prompt.gif", width="50", height="25")
 	.container-fluid
 		.row
-			.col-md-3.col-md-offset-3
+			.col-md-3.col-md-offset-1
+				.panel.panel-warning
+					.panel-heading scratch
+					.panel-body
+						pre.blocks
+							|when [comenzar mision v] key pressed
+							br
+							|move (1) steps
+							br
+							|turn ccw (30) degrees
+							br
+							|turn left (30) degrees
+							br
+							|stop
+							br
+							|if () then
+							|end
+						
+			.col-md-3
 				.panel.panel-success#panel-control
 					.panel-heading acciones
 					.panel-body
@@ -57,4 +77,8 @@ block main
 							li.list-group-item
 								span.glyphicon.glyphicon-arrow-up &nbsp;avanzar
 								input.input-list(type="number", value = 2)
-
+block final_scripts
+	script
+		$(document).ready(function() {
+			scratchblocks2.parse();
+			});
