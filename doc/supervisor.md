@@ -61,3 +61,15 @@ update-rc.d braianserver defaults
 Note: Strongly need to check the Supervisor documentation properly
 
 
+LD_LIBRARY_PATH=/home/pi/mjpg-streamer/mjpg-streamer-experimental/ /home/pi/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -o "output_http.so -p 8095 -w /home/pi/mjpg-streamer/mjpg-streamer-experimental/www" -o "output_file.so -f /var/stream  -d 15000" -i "input_raspicam.so -x 640 -y 480 -fps 15  -quality 20 -ex night"
+
+
+
+
+[program:mjpg-streamer]
+command=/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i "input_raspicam.so -x 640 -y 480 -fps 15 -quality 20 -ex night" -o "output_http.so -p 8095 -w ./www"
+autostart=true
+directory=/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/
+environment=LD_LIBRARY_PATH="/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/"
+
+

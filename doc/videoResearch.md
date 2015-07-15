@@ -40,3 +40,10 @@ export LD_LIBRARY_PATH=.
 ./mjpg_streamer -o "output_http.so -p 8095 -w ./www" -o "output_file.so -f pics -d 15000" -i "input_raspicam.so -x 640 -y 480 -fps 15 -vf -hf -quality 20 -ex night"
 
 LD_LIBRARY_PATH=./ ./mjpg_streamer -i "input_file.so -r -n pic.jpg -f /var/stream -i 1" -o "output_http.so -p 8096 -w ./www" &
+
+
+note 
+sudo apt-get install cmake
+sudo apt-get install libjpeg8-dev imagemagick libv4l-dev
+
+LD_LIBRARY_PATH=./ ./mjpg_streamer -o "output_http.so -p 8095 -w ./www" -o "output_file.so -f /var/stream  -d 15000" -i "input_raspicam.so -x 640 -y 480 -fps 15  -quality 20 -ex night"
