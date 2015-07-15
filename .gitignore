@@ -2,3 +2,5 @@
 *.pyc
 static/components/*
 output/*
+video/positive
+video/negative
