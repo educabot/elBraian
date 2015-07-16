@@ -28,19 +28,21 @@ block main
 					.panel-heading scratch
 					.panel-body
 						pre.blocks
-							|when [comenzar mision v] key pressed
-							br
-							|move (1) steps
-							br
-							|turn ccw (30) degrees
-							br
-							|turn left (30) degrees
-							br
-							|stop
-							br
-							|if () then
-							|end
-						
+							ul.list-group#scratch
+								li.list-group-item 
+									|when [comenzar mision v] key pressed
+								li.list-group-item
+									|move (1) steps
+								li.list-group-item
+									|turn right (30) degrees
+								li.list-group-item
+									|turn left (30) degrees
+								li.list-group-item
+									|stop
+								li.list-group-item
+									|if (condition) then
+									|end
+							
 			.col-md-3
 				.panel.panel-success#panel-control
 					.panel-heading acciones

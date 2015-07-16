@@ -46,6 +46,11 @@ $(document).ready(function(){
 		appendTo: "body",
 		helper: "clone"
 	});
+	$('#scratch li').draggable({
+		appendTo: "body",
+		helper: "clone"		
+	});
+
 
 	$("#steps").droppable({
 		activeClass: "ui-state-default",
@@ -83,7 +88,7 @@ $(document).ready(function(){
 		$('#panel-control .progress').remove();
 		$('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>')
 		.appendTo('#panel-control');
-		runSteps();		
+		runSteps();
 	});
 
 	function runSteps(){
