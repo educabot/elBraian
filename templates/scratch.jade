@@ -7,29 +7,7 @@ block scripts
   script(src="static/blockly/blocks_compressed.js")
   script(src="static/blockly/python_compressed.js")    
   script(src="static/blockly/msg/js/es.js")
-  script
-    Blockly.Blocks['braian_movement_forward'] = {
-      init: function() {
-        this.appendValueInput("NAME")
-            .setCheck("Number")
-            .appendField("mover adelante")
-            .appendField(new Blockly.FieldTextInput("1"), "seconds")
-            .appendField("segundos");
-        this.setPreviousStatement(true);
-        this.setNextStatement(true);
-        this.setColour(330);
-        this.setTooltip('');
-        this.setHelpUrl('http://www.example.com/');
-      }
-    };
-    
-    Blockly.Python['braian_movement_forward'] = function(block) {
-      var text_seconds = block.getFieldValue('seconds');
-      var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
-      // TODO: Assemble Python into code variable.
-      var code = 'my_robot_set_movement_forward\nmy_robot.move()';
-      return code;
-    };
+  script(src="static/js/blocks.js")
 
 block styles
   link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
@@ -60,18 +38,26 @@ block main
               button.btn.btn-success.pull-right#execute(data-loading-text="en progreso...") comezar mision
 
       .col-md-8
-        div#blocklyDiv(style="height: 480px; width: 700px")
+        div#blocklyDiv(style="height: 580px; width: 700px")
         xml#toolbox(style="display: none")
-          block(type="controls_if")
+          block(type="braian_setup")
+          block(type="braian_movement_forward")
+          block(type="braian_movement_back")
+          block(type="turn_left")
+          block(type="turn_right")
           block(type="logic_compare")
           block(type="controls_repeat_ext")
           block(type="math_number")
-          block(type="math_arithmetic")
-          block(type="text")
-          block(type="braian_movement_forward")
+          block(type="controls_if")
 
             
 block final_scripts
   script
     var workspace = Blockly.inject('blocklyDiv',{media: 'static/blockly/media/',
-    toolbox: document.getElementById('toolbox'), trashcan: true});
+    toolbox: document.getElementById('toolbox'),
+    grid:
+         {spacing: 20,
+          length: 3,
+          colour: '#ccc',
+          snap: true},
+    trashcan: true});
