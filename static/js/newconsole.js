@@ -48,7 +48,7 @@ $(document).ready(function(){
 	});
 	$('#scratch li').draggable({
 		appendTo: "body",
-		helper: "clone"		
+		helper: "clone"
 	});
 
 
@@ -94,7 +94,11 @@ $(document).ready(function(){
 	function runSteps(){
 		var message = {message: "SEQUENCE", payload: {steps: []}};
 		var heading;
-		$('#steps li').each(function(index){
+		var index = 0;
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		alert(code);
+		eval(code);
+		/*$('#steps li').each(function(index){
 			var text = $(this).text();
 			var timeHold = ($(this).find('input').val()) * 1000;
 			console.log(index + text + "holding: "  + timeHold);
@@ -116,7 +120,7 @@ $(document).ready(function(){
 				hold: timeHold
 
 			});
-		});
+		});*/
 		sendMessage(message);
 	}
 });

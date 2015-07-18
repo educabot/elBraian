@@ -11,10 +11,9 @@ Blockly.Blocks['braian_movement_forward'] = {
   }
 };
 
-Blockly.Python['braian_movement_forward'] = function(block) {
+Blockly.JavaScript['braian_movement_forward'] = function(block) {
   var text_seconds = block.getFieldValue('seconds');
-  var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
-  var code = 'my_robot_set_movement_forward()\nmy_robot.move()';
+  var code = 'message.payload.steps.push({id: index, heading: "FORWARD", hold: '+ (parseInt(text_seconds) * 1000).toString() + '}); index = index + 1;';
   return code;
 };
 
@@ -28,8 +27,8 @@ Blockly.Blocks['braian_setup'] = {
   }
 };
 
-Blockly.Python['braian_setup'] = function(block) {
-  var code = '...';
+Blockly.JavaScript['braian_setup'] = function(block) {
+  var code = 'message.push()';
   return code;
 };
 
@@ -47,9 +46,9 @@ Blockly.Blocks['braian_movement_back'] = {
 };
 
 
-Blockly.Python['braian_movement_back'] = function(block) {
+Blockly.JavaScript['braian_movement_back'] = function(block) {
   var text_seconds = block.getFieldValue('seconds');
-  var code = '...';
+  var code = 'message.payload.steps.push({id: index, heading: "BACKWARD", hold: '+ (parseInt(text_seconds) * 1000).toString() + '}); index = index + 1;';
   return code;
 };
 
@@ -58,8 +57,8 @@ Blockly.Blocks['turn_left'] = {
     this.appendDummyInput()
         .appendField("girar izquierda")
         .appendField(new Blockly.FieldImage("static/img/turn-left.png", 15, 15, "*"))
-        .appendField(new Blockly.FieldAngle("90"), "grades")
-        .appendField("grados");
+        .appendField(new Blockly.FieldTextInput("2"), "stars")
+        .appendField("estrellas");
     this.setColour(330);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -68,9 +67,9 @@ Blockly.Blocks['turn_left'] = {
   }
 };
 
-Blockly.Python['turn_left'] = function(block) {
-  var angle_grades = block.getFieldValue('grades');
-  var code = '...';
+Blockly.JavaScript['turn_left'] = function(block) {
+  var text_stars = block.getFieldValue('stars');
+  var code = 'message.payload.steps.push({id: index, heading: "ROTATE-LEFT", hold: '+ (parseInt(text_stars) * 100).toString() + '}); index = index + 1;';
   return code;
 };
 
@@ -79,7 +78,7 @@ Blockly.Blocks['turn_right'] = {
     this.appendDummyInput()
         .appendField("girar derecha")
         .appendField(new Blockly.FieldImage("static/img/turn-right.png", 15, 15, "*"))
-        .appendField(new Blockly.FieldAngle("90"), "grades")
+        .appendField(new Blockly.FieldTextInput("2"), "stars")
         .appendField("grados");
     this.setColour(330);
     this.setPreviousStatement(true);
@@ -88,8 +87,8 @@ Blockly.Blocks['turn_right'] = {
   }
 };
 
-Blockly.Python['turn_right'] = function(block) {
-  var angle_grades = block.getFieldValue('grades');
-  var code = '...';
+Blockly.JavaScript['turn_right'] = function(block) {
+  var text_stars = block.getFieldValue('stars');
+  var code = 'message.payload.steps.push({id: index, heading: "ROTATE-LEFT", hold: '+ (parseInt(text_stars) * 100).toString() + '}); index = index + 1;';
   return code;
 };

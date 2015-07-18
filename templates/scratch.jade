@@ -5,7 +5,7 @@ block scripts
   script(src="static/components/bootstrap/dist/js/bootstrap.js")
   script(src="static/blockly/blockly_compressed.js")
   script(src="static/blockly/blocks_compressed.js")
-  script(src="static/blockly/python_compressed.js")    
+  script(src="static/blockly/javascript_compressed.js")    
   script(src="static/blockly/msg/js/es.js")
   script(src="static/js/blocks.js")
 
@@ -40,14 +40,12 @@ block main
       .col-md-8
         div#blocklyDiv(style="height: 580px; width: 700px")
         xml#toolbox(style="display: none")
-          block(type="braian_setup")
           block(type="braian_movement_forward")
           block(type="braian_movement_back")
           block(type="turn_left")
           block(type="turn_right")
-          block(type="controls_repeat_ext")
           block(type="math_number")
-          block(type="controls_if")
+          block(type="controls_repeat_ext")
 
             
 block final_scripts
