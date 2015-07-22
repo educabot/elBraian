@@ -178,10 +178,8 @@ if __name__ == '__main__':
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
-			(r"/newconsole",NewConsole),
+			(r"/newconsole",ScratchConsole),
 			(r"/consola", WrongConsole),
-			(r"/fixconsole", FixConsole),
-			(r"/scratch", ScratchConsole)
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),

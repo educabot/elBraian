@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var host = "ws://"+ document.domain +":9001/robot";
+	var host = "ws://"+ document.domain +"/robot";
 
 	var websocket = new WebSocket(host);
 
@@ -96,31 +96,7 @@ $(document).ready(function(){
 		var heading;
 		var index = 0;
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		alert(code);
 		eval(code);
-		/*$('#steps li').each(function(index){
-			var text = $(this).text();
-			var timeHold = ($(this).find('input').val()) * 1000;
-			console.log(index + text + "holding: "  + timeHold);
-			if(text.indexOf("avanzar") > -1 ) {
-				heading = "FORWARD";
-			} else if(text.indexOf("parar") > -1) {
-				heading = "STOP";
-			} else if(text.indexOf("rotar derecha") > -1){
-				heading = "ROTATE-RIGHT";
-			} else if(text.indexOf("rotar izquierda") > -1) {
-				heading = "ROTATE-LEFT";
-			} else if(text.indexOf("retroceder") > -1) {
-				heading = "BACKWARD";
-			}
-
-			message.payload.steps.push({
-				id: index,
-				heading: heading,
-				hold: timeHold
-
-			});
-		});*/
 		sendMessage(message);
 	}
 });
