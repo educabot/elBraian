@@ -1,11 +1,11 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ document.domain +":9001/robot";
+	var host = "ws://"+ document.domain +"/robot";
 
 	console.log("url socket: " + document.domain);
 
 	var websocket = new WebSocket(host);
-	
+
 	var maxConsoleLines = 5;
 
 	$('#head-horizontal').slider({
@@ -53,18 +53,18 @@ $(document).ready(function(){
 
 	function checkCountOrRemove(){
 		if ($('.console').find('p').length > maxConsoleLines){
-			$('.console ').find('p').first().remove();	
-		} 
+			$('.console ').find('p').first().remove();
+		}
 	}
 
 	function stop(){
-		
+
 		checkCountOrRemove();
 
 		$('.console').append($("<p> > Stop</p>"));
 		sendMessage({
 			message: "STOP"
-		});		
+		});
 	}
 
 	websocket.onopen = function(evt){
@@ -114,7 +114,7 @@ $(document).ready(function(){
 		sendMessage({
 			message: "MOVE",
 			payload: {
-				heading: "FORWARD-TURNING-LEFT" 
+				heading: "FORWARD-TURNING-LEFT"
 			}
 		});
 	});
@@ -156,7 +156,7 @@ $(document).ready(function(){
 	});
 
 	//ROTATE-RIGHT
-	$('#rotate-right').mousedown(function(){		
+	$('#rotate-right').mousedown(function(){
 		checkCountOrRemove();
 		$('.console').append($("<p> > Rotating right ..</p>"));
 		sendMessage({
@@ -190,7 +190,7 @@ $(document).ready(function(){
 
 	//BACKWARD-LEFT
 	$('#down-left').mousedown(function(){
-		
+
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning backward left..</p>"));
 		sendMessage({
@@ -207,7 +207,7 @@ $(document).ready(function(){
 
 	//BACKWARD-RIGHT
 	$('#down-right').mousedown(function(){
-		
+
 		checkCountOrRemove();
 		$('.console').append($("<p> > Turning backward right..</p>"));
 		sendMessage({
@@ -226,7 +226,7 @@ $(document).ready(function(){
 	$(document).keydown(function(event){
 		checkCountOrRemove();
 		switch(event.which){
-			
+
 			//head
 			//a
 			case 65:
@@ -246,7 +246,7 @@ $(document).ready(function(){
 				break;
 			//w
 			case 87:
-				$('.console').append($("<p> > Moving head up ..</p>"));	
+				$('.console').append($("<p> > Moving head up ..</p>"));
 				var newAngle = $('#head-vertical').slider('value') - 100 + 20;
 				$('#head-vertical').slider({
 					value: newAngle + 100
