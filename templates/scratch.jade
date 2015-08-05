@@ -1,0 +1,63 @@
+extends layout
+
+block scripts
+  script(src="static/js/newconsole.js")
+  script(src="static/components/bootstrap/dist/js/bootstrap.js")
+  script(src="static/blockly/blockly_compressed.js")
+  script(src="static/blockly/blocks_compressed.js")
+  script(src="static/blockly/javascript_compressed.js")    
+  script(src="static/blockly/msg/js/es.js")
+  script(src="static/js/blocks.js")
+
+block styles
+  link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
+block main
+  .page-header
+    .row
+      .container-fluid
+        .col-md-5
+          .well-console#counter
+            h3.console >: cantidad de astronautas
+        .col-md-2
+          img.img-rounded(src="/static/img/roboluna.jpg", height="170", width="150", style ="float: left")
+
+        .col-md-5
+          .well-console 
+            h3.console elbraian >_ Debo rescatar a mi amigo el satelite!
+            img(src="/static/img/prompt.gif", width="50", height="25")
+  .container-fluid
+    .row
+      .col-md-4
+        .container-fluid
+          .row
+            .col-md-12
+              img(src=pic_url, height="250", width="350", style="position: relative; float: right;")
+          .row
+            .col-md-12
+              br
+              button.btn.btn-success.pull-right#execute(data-loading-text="en progreso...") comezar mision
+          .row
+            .col-md-12#panel-control
+              br
+      .col-md-8
+        div#blocklyDiv(style="height: 430px; width: 600px")
+        xml#toolbox(style="display: none")
+          block(type="start")
+          block(type="braian_movement_forward")
+          block(type="braian_movement_back")
+          block(type="turn_left")
+          block(type="turn_right")
+          block(type="math_number")
+          block(type="controls_repeat_ext")
+
+            
+block final_scripts
+  script
+    var workspace = Blockly.inject('blocklyDiv',{media: 'static/blockly/media/',
+    toolbox: document.getElementById('toolbox'),
+    grid:
+         {spacing: 20,
+          length: 3,
+          colour: '#ccc',
+          snap: true},
+    trashcan: true});

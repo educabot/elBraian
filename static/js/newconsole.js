@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var host = "ws://"+ document.domain +"/robot";
+	var host = "ws://"+ document.domain +":9001/robot";
 
 	var websocket = new WebSocket(host);
 
@@ -46,6 +46,11 @@ $(document).ready(function(){
 		appendTo: "body",
 		helper: "clone"
 	});
+	$('#scratch li').draggable({
+		appendTo: "body",
+		helper: "clone"
+	});
+
 
 	$("#steps").droppable({
 		activeClass: "ui-state-default",
@@ -83,35 +88,15 @@ $(document).ready(function(){
 		$('#panel-control .progress').remove();
 		$('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>')
 		.appendTo('#panel-control');
-		runSteps();		
+		runSteps();
 	});
 
 	function runSteps(){
 		var message = {message: "SEQUENCE", payload: {steps: []}};
 		var heading;
-		$('#steps li').each(function(index){
-			var text = $(this).text();
-			var timeHold = ($(this).find('input').val()) * 1000;
-			console.log(index + text + "holding: "  + timeHold);
-			if(text.indexOf("avanzar") > -1 ) {
-				heading = "FORWARD";
-			} else if(text.indexOf("parar") > -1) {
-				heading = "STOP";
-			} else if(text.indexOf("rotar derecha") > -1){
-				heading = "ROTATE-RIGHT";
-			} else if(text.indexOf("rotar izquierda") > -1) {
-				heading = "ROTATE-LEFT";
-			} else if(text.indexOf("retroceder") > -1) {
-				heading = "BACKWARD";
-			}
-
-			message.payload.steps.push({
-				id: index,
-				heading: heading,
-				hold: timeHold
-
-			});
-		});
+		var index = 0;
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		eval(code);
 		sendMessage(message);
 	}
 });

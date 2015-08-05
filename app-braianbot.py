@@ -22,6 +22,10 @@ patch_tornado()
 define("port", default=80, help="run on the given port",type=int)
 log = logging.getLogger("webserver")
 log.setLevel(logging.DEBUG)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler=logging.FileHandler('/var/tmp/braian.log')
+file_handler.setFormatter(formatter)
+log.addHandler(file_handler)
 
 sockets =  PoolWebSocketHandler()
 
@@ -29,7 +33,7 @@ class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('index.jade', pic_url=pic_url)
-		
+
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
 	"""
@@ -37,7 +41,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 	"""
 
 	def executeStep(self, heading, time_hold):
-			
+
 			if (heading == "FORWARD"):
 				self.ROBOT.set_forward()
 				self.ROBOT.move(speed=Robot.SPEED_MEDIUM)
@@ -65,7 +69,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 
 
 			if time_hold > 0:
-				sleep(time_hold/1000);
+				sleep(time_hold/1000.00);
 				self.ROBOT.stop()
 
 
@@ -76,11 +80,11 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		message = {}
 		message["message"] = "INFO"
 		message["payload"] = {}
-		message["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position 
+		message["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position
 		message["payload"]["head_horizontal"] = self.ROBOT.head_horizontal_current_position
 		message["payload"]["client_count"] = sockets.count()
 		sockets.broadcast(json.dumps(message))
-		
+
 	def on_close(self):
 		sockets.clients.remove(self)
 		message = {}
@@ -96,10 +100,10 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 		if "payload" in message_obj:
 			heading = message_obj["payload"].get("heading","")
 			hold_time = message_obj["payload"].get("hold",0)
-		
+
 		message_response = {"message": "INFO"}
-		message_response["payload"] = {} 
-		message_response["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position 
+		message_response["payload"] = {}
+		message_response["payload"]["head_vertical"] = self.ROBOT.head_vertical_current_position
 		message_response["payload"]["head_horizontal"] = self.ROBOT.head_horizontal_current_position
 
 		if message_obj["message"] == "MOVE":
@@ -132,7 +136,7 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.move_head_horizontal(message_obj["payload"]["head_horizontal"])
 			if "head_vertical" in message_obj["payload"]:
 				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
-	
+
 
 class CameraHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
@@ -154,6 +158,18 @@ class NewConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('new_console.jade')
 
+class WrongConsole(tornado.web.RequestHandler):
+	def get(self):
+		self.render('wrong_console.jade')
+
+class FixConsole(tornado.web.RequestHandler):
+	def get(self):
+		self.render('fix_console.jade')
+class ScratchConsole(tornado.web.RequestHandler):
+	def get(self):
+		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
+		self.render('scratch.jade', pic_url=pic_url)
+
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
@@ -162,11 +178,12 @@ if __name__ == '__main__':
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
-			(r"/newconsole",NewConsole)
+			(r"/newconsole",ScratchConsole),
+			(r"/consola", WrongConsole),
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
-		debug=True	
+		debug=True
 	)
 	http_server = tornado.httpserver.HTTPServer(app)
 	http_server.listen(options.port)

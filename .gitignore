@@ -1,3 +1,6 @@
 .DS_Store
 *.pyc
 static/components/*
+output/*
+video/positive
+video/negative

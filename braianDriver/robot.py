@@ -17,27 +17,22 @@ elif logger_level == "WARNING":
 	log.setLevel(logging.WARNING)
 
 handler = logging.StreamHandler()
-formatter = logging.Formatter("%(levelname)s %(asctime)s %(module)s %(funcName)s %(lineno)d %(message)s") 
+file_handler = logging.FileHandler('/var/tmp/braian.log')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s") 
 handler.setFormatter(formatter)
+if env == 'prod':
+	file_handler.setFormatter(formatter)
+	log.addHandler(file_handler)
 log.addHandler(handler)
+
 
 
 log.info("using "+ env +" configuration ")
 
 if env == "prod":
 	import RPi.GPIO as gpio
-	import RPIO as rpio
+	import RPIO.PWM as pwm
 
-#import wirinpi
-
-##Speed expressed on duty cycles
-
-## Setting up the GPIO
-## using PWM by hardware must use wiringpi
-#wiring_pin = 1
-
-#wiringpi.wiringPiSetup()
-#wiringpi.pinMode(wiring_pin,2) #PWM mode
 
 class Robot(object):
 	SPEED_HIGH = int(config.get("robot.speed","speed_high"))  
@@ -112,7 +107,7 @@ class Robot(object):
 			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
 
 			# head
-			self.SERVO = rpio.PWM.Servo(pulse_incr_us=1)
+			self.SERVO = pwm.Servo(pulse_incr_us=1)
 
 				
 		self.current_horizontal_head_pos = 0
