@@ -77,7 +77,7 @@ Blockly.Blocks['turn_right'] = {
 
 Blockly.JavaScript['turn_right'] = function(block) {
   var text_stars = block.getFieldValue('stars');
-  var code = 'message.payload.steps.push({id: index, heading: "ROTATE-LEFT", hold: '+ (parseInt(text_stars) * 100).toString() + '}); index = index + 1;';
+  var code = 'message.payload.steps.push({id: index, heading: "ROTATE-RIGHT", hold: '+ (parseInt(text_stars) * 100).toString() + '}); index = index + 1;';
   return code;
 };
 
