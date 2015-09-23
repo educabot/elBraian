@@ -2,10 +2,21 @@ import cv2
 import numpy
 import time
 
-class CaptureManager(object):
+class ICaptureManager(object):
+
+	def frame():
+		"property to hold the captured image"
+		pass
+
+	def enterFrame():
+		"action to take a frame if you dont already have one"
+		pass
+
+
+class CaptureManagerOpenCV(ICaptureManager):
 
 	def __init__(self, capture, previeWindowManager = None, size = None, shouldMirrorPreview = False):
-		
+
 		self.previeWindowManager = previeWindowManager
 		self.shouldMirrorPreview = shouldMirrorPreview
 		self._capture = capture
@@ -22,7 +33,7 @@ class CaptureManager(object):
 		if size is None:
 			self._size = (int(capture.get(3)), int(capture.get(4)))
 		else :
-			self._size = size 
+			self._size = size
 
 		self._capture.set(3, size[0])
 		self._capture.set(4, size[1])
@@ -37,7 +48,7 @@ class CaptureManager(object):
 			self._channel = value
 			self._frame = None
 
-	@property 
+	@property
 	def frame(self):
 		if self._enteredFrame and self._frame is None:
 			_, self._frame = self._capture.retrieve(channel = self.channel)
@@ -47,7 +58,7 @@ class CaptureManager(object):
 	def isWritingImage(self):
 		return self._imageFileName is not None
 
-	@property 
+	@property
 	def isWritingVideo(self):
 		return self._videoFileName is not None
 
@@ -64,7 +75,7 @@ class CaptureManager(object):
 	def exitFrame(self):
 		if self.frame is None:
 			self._enteredFrame = False
-			return 
+			return
 
 		if self._framesElapsed == 0:
 			self._startTime = time.time()
@@ -107,13 +118,39 @@ class CaptureManager(object):
 			fps = self._capture.get(cv2.cv.CV_CAP_PROP_FPS)
 			if fps == 0.0:
 				if self._framesElapsed < 20:
-					return 
+					return
 				else:
 					fps = self._fpsEstimate
 					size = (int(self._capture.get(3)),
 						int(self._capture.get(4)))
 					self._videoWriter = cv2.VideoWriter(self._videoFileName, self._videoEncoding, fps, size)
 					self._videoWriter.write(self._frame)
+
+class CaptureManagerPiCamera(ICaptureManager):
+	def __init__(self, camera, capture, previeWindowManager = None,
+			size = None, shouldMirrorPreview = False):
+		self.previeWindowManager = previeWindowManager
+		self.shouldMirrorPreview = shouldMirrorPreview
+		self._camera = camera
+		self._capture = capture
+		if size is None:
+			self._size = (640, 480)
+		else :
+			self._size = size
+
+
+	@property
+	def frame(self):
+		if self._enteredFrame and self._frame is None:
+			self._camera.capture(self._capture, format="brg")
+		return self._capture.array
+
+	def enterFrame(self):
+		"""
+		this a dummie Impl
+		"""
+		pass
+
 
 class WindowManager(object):
 
@@ -122,7 +159,7 @@ class WindowManager(object):
 		self._windowName = windowName
 		self._isWindowCreated = False
 
-	@property 
+	@property
 	def isWindowCreated(self):
 		return self._isWindowCreated
 

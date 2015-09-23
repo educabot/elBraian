@@ -1,16 +1,26 @@
 import cv2
-from managers import WindowManager, CaptureManager
+from managers import WindowManager, CaptureManagerOpenCV
 import filters
 from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker
 import utils
 import rects
 from datetime import datetime
+import sys
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 
 class Cameo(object):
 
-	def __init__(self):
+	def __init__(self, type):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-		self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, (1280, 760),False)
+
+		if type == "pi":
+			camera = PiCamera()
+			capture = PiRGBArray(camera)
+			self._captureManager = CaptureManagerPi(camera, capture, self._windowManager, (640, 480),False)
+		else:
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(0), self._windowManager, (1280, 760),False)
+
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
@@ -38,7 +48,7 @@ class Cameo(object):
 
 			#self._bananaTracker.update(frame)
 			bananas = self._bananaTracker.elements
-			
+
 			utils.draw_str(frame, (25,40), datetime.now().isoformat())
 			if len(faces) > 0 :
 				utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
@@ -47,7 +57,7 @@ class Cameo(object):
 				utils.draw_str(frame, (25,80), "Directive [" + str(len(arrows)) + "]")
 
 			#rects.swapRects(frame, frame, [face.faceRect for face in faces])
-			
+
 			if self._shouldDrawDebugRects:
 				self._faceTracker.drawDebugRects(frame)
 				self._arrowTracker.drawDebugRects(frame)
@@ -81,4 +91,4 @@ class Cameo(object):
 			self._windowManager.destroyWindow()
 
 if __name__ == "__main__":
-	Cameo().run()
+	Cameo(sys.argv[1]).run()
