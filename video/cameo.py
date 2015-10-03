@@ -1,5 +1,5 @@
 import cv2
-from managers import WindowManager, CaptureManagerOpenCV
+from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
 import filters
 from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker
 import utils
@@ -17,9 +17,9 @@ class Cameo(object):
 		if type == "pi":
 			camera = PiCamera()
 			capture = PiRGBArray(camera)
-			self._captureManager = CaptureManagerPi(camera, capture, self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
 		else:
-			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(0), self._windowManager, (1280, 760),False)
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (1280, 760),False)
 
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()

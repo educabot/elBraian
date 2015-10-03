@@ -12,66 +12,6 @@ class ICaptureManager(object):
 		"action to take a frame if you dont already have one"
 		pass
 
-
-class CaptureManagerOpenCV(ICaptureManager):
-
-	def __init__(self, capture, previeWindowManager = None, size = None, shouldMirrorPreview = False):
-
-		self.previeWindowManager = previeWindowManager
-		self.shouldMirrorPreview = shouldMirrorPreview
-		self._capture = capture
-		self._channel = 0
-		self._enteredFrame = False
-		self._frame = None
-		self._imageFileName = None
-		self._videoFileName = None
-		self._videoEncoding = None
-		self._videoWriter = None
-		self._startTime = None
-		self._framesElapsed = long(0)
-		self._fpsEstimate = None
-		if size is None:
-			self._size = (int(capture.get(3)), int(capture.get(4)))
-		else :
-			self._size = size
-
-		self._capture.set(3, size[0])
-		self._capture.set(4, size[1])
-
-	@property
-	def channel(self):
-		return self._channel
-
-	@channel.setter
-	def channel(self, value):
-		if self._channel != value:
-			self._channel = value
-			self._frame = None
-
-	@property
-	def frame(self):
-		if self._enteredFrame and self._frame is None:
-			_, self._frame = self._capture.retrieve(channel = self.channel)
-		return self._frame
-
-	@property
-	def isWritingImage(self):
-		return self._imageFileName is not None
-
-	@property
-	def isWritingVideo(self):
-		return self._videoFileName is not None
-
-
-	def enterFrame(self):
-		if self._capture is not None:
-			self._enteredFrame = self._capture.grab()
-
-	@property
-	def size(self):
-		return self._size
-
-
 	def exitFrame(self):
 		if self.frame is None:
 			self._enteredFrame = False
@@ -126,6 +66,67 @@ class CaptureManagerOpenCV(ICaptureManager):
 					self._videoWriter = cv2.VideoWriter(self._videoFileName, self._videoEncoding, fps, size)
 					self._videoWriter.write(self._frame)
 
+	@property
+	def isWritingImage(self):
+		return self._imageFileName is not None
+
+	@property
+	def isWritingVideo(self):
+		return self._videoFileName is not None
+
+	@property
+	def size(self):
+		return self._size
+
+
+class CaptureManagerOpenCV(ICaptureManager):
+
+	def __init__(self, capture, previeWindowManager = None, size = None, shouldMirrorPreview = False):
+
+		self.previeWindowManager = previeWindowManager
+		self.shouldMirrorPreview = shouldMirrorPreview
+		self._capture = capture
+		self._channel = 0
+		self._enteredFrame = False
+		self._frame = None
+		self._imageFileName = None
+		self._videoFileName = None
+		self._videoEncoding = None
+		self._videoWriter = None
+		self._startTime = None
+		self._framesElapsed = long(0)
+		self._fpsEstimate = None
+		if size is None:
+			self._size = (int(capture.get(3)), int(capture.get(4)))
+		else :
+			self._size = size
+
+		self._capture.set(3, size[0])
+		self._capture.set(4, size[1])
+
+	@property
+	def channel(self):
+		return self._channel
+
+	@channel.setter
+	def channel(self, value):
+		if self._channel != value:
+			self._channel = value
+			self._frame = None
+
+	@property
+	def frame(self):
+		if self._enteredFrame and self._frame is None:
+			_, self._frame = self._capture.retrieve(channel = self.channel)
+		return self._frame
+
+
+	def enterFrame(self):
+		if self._capture is not None:
+			self._enteredFrame = self._capture.grab()
+
+
+
 class CaptureManagerPiCamera(ICaptureManager):
 	def __init__(self, camera, capture, previeWindowManager = None,
 			size = None, shouldMirrorPreview = False):
@@ -133,6 +134,7 @@ class CaptureManagerPiCamera(ICaptureManager):
 		self.shouldMirrorPreview = shouldMirrorPreview
 		self._camera = camera
 		self._capture = capture
+		self._frame = None
 		if size is None:
 			self._size = (640, 480)
 		else :
@@ -142,14 +144,14 @@ class CaptureManagerPiCamera(ICaptureManager):
 	@property
 	def frame(self):
 		if self._enteredFrame and self._frame is None:
-			self._camera.capture(self._capture, format="brg")
-		return self._capture.array
+			return self._enteredFrame.array
+		else:
+			self._frame = self._camera.capture(self._capture, format="brg")
+			return self._frame.array
 
 	def enterFrame(self):
-		"""
-		this a dummie Impl
-		"""
-		pass
+		if self._capture is not None:
+			self._enteredFrame = self._camera.capture(self._capture, format="brg")
 
 
 class WindowManager(object):
