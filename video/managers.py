@@ -29,6 +29,7 @@ class ICaptureManager(object):
 				mirroredFrame = numpy.fliplr(self._frame).copy()
 				self.previeWindowManager.show(mirroredFrame)
 			else:
+				print "showing"
 				self.previeWindowManager.show(self._frame)
 
 		if self.isWritingImage:

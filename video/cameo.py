@@ -6,18 +6,23 @@ import utils
 import rects
 from datetime import datetime
 import sys
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
+import time
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 class Cameo(object):
 
 	def __init__(self, type):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
-
-		if type == "pi":
-			camera = PiCamera()
-			capture = PiRGBArray(camera)
-			self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
+		self._type = type
+		if self._type == "pi":
+			self._pi_camera = PiCamera()
+			self._pi_camera.resolution(640, 480)
+			self._pi_camera.framerate = 32
+			self._pi_capture = PiRGBArray(camera, size = (640, 480))
+			#warming up camera
+			time.sleep(0.1)
+			#self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (1280, 760),False)
 
@@ -30,43 +35,65 @@ class Cameo(object):
 
 	def run(self):
 		self._windowManager.createWindow()
-		while self._windowManager.isWindowCreated:
-			self._captureManager.enterFrame()
-			frame = self._captureManager.frame
+		if self._type == "pi":
+			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_post=True):
+				if self._windowManager.isWindowCreated:
+					frame = image.array
+					self._curveFilter.apply(frame, frame)
+					self._faceTracker.update(frame)
+					faces = self._faceTracker.faces
 
-			#filters.strokeEdges(frame, frame)
-			self._curveFilter.apply(frame, frame)
+					self._arrowTracker.update(frame)
+					arrows = self._arrowTracker.elements
+					self._draw_on_image(frame, faces, arrows)
+					self._windowManager.show(frame)
+					self._pi_capture.truncate(0)
+					self._windowManager.processEvents()
+				else:
+					break
 
-			self._faceTracker.update(frame)
-			faces = self._faceTracker.faces
 
-			self._arrowTracker.update(frame)
-			arrows = self._arrowTracker.elements
+		else:
+			while self._windowManager.isWindowCreated:
+				self._captureManager.enterFrame()
+				frame = self._captureManager.frame
 
-			#self._turnTracker.update(frame)
-			turns = self._turnTracker.elements
+				#filters.strokeEdges(frame, frame)
+				self._curveFilter.apply(frame, frame)
 
-			#self._bananaTracker.update(frame)
-			bananas = self._bananaTracker.elements
+				self._faceTracker.update(frame)
+				faces = self._faceTracker.faces
 
-			utils.draw_str(frame, (25,40), datetime.now().isoformat())
-			if len(faces) > 0 :
-				utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
+				self._arrowTracker.update(frame)
+				arrows = self._arrowTracker.elements
 
-			if len(arrows) > 0 :
-				utils.draw_str(frame, (25,80), "Directive [" + str(len(arrows)) + "]")
+				#self._turnTracker.update(frame)
+				turns = self._turnTracker.elements
 
-			#rects.swapRects(frame, frame, [face.faceRect for face in faces])
+				#self._bananaTracker.update(frame)
+				bananas = self._bananaTracker.elements
+				self._draw_on_image(frame, faces, arrows)
+				self._captureManager.exitFrame()
+				self._windowManager.processEvents()
 
-			if self._shouldDrawDebugRects:
-				self._faceTracker.drawDebugRects(frame)
-				self._arrowTracker.drawDebugRects(frame)
-				self._bananaTracker.drawDebugRects(frame)
-				self._turnTracker.drawDebugRects(frame)
+	def _draw_on_image(self,frame, faces, arrows):
+		utils.draw_str(frame, (25,40), datetime.now().isoformat())
+		if len(faces) > 0 :
+			utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
 
-			utils.drawCameraFrame(frame, self._captureManager.size)
-			self._captureManager.exitFrame()
-			self._windowManager.processEvents()
+		if len(arrows) > 0 :
+			utils.draw_str(frame, (25,80), "Directive [" + str(len(arrows)) + "]")
+
+		#rects.swapRects(frame, frame, [face.faceRect for face in faces])
+
+		if self._shouldDrawDebugRects:
+			self._faceTracker.drawDebugRects(frame)
+			self._arrowTracker.drawDebugRects(frame)
+			#self._bananaTracker.drawDebugRects(frame)
+			#self._turnTracker.drawDebugRects(frame)
+
+		utils.drawCameraFrame(frame, self._captureManager.size)
+
 
 	def onKeyPress(self, keycode):
 		"""
