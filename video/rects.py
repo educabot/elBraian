@@ -5,7 +5,7 @@ def outlineRect(image, rect, color):
 		return
 
 	x , y, w, h = rect
-	cv2.rectangle(image, (x, y), (x + w, y + h), color)
+	cv2.rectangle(image, (x, y), (x + w, y + h), color, 6)
 
 
 def copyRect(src, dst, srcRect, dstRect, interpolation = cv2.INTER_LINEAR):
@@ -34,5 +34,10 @@ def swapRects(src, dst, rects, interpolation = cv2.INTER_LINEAR):
 	copyRect(temp, dst, (0, 0, w, h), rects[0], interpolation)
 
 
+def draw_circle(image, circle, color):
+	if circle is None:
+		return
 
-
+	x, y, r, c = circle
+	cv2.circle(image, (int(x), int(y)), int(r), color, 4)
+	cv2.circle(image, c, 5, (0, 0, 255), -1)

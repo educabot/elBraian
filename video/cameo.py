@@ -1,14 +1,15 @@
 import cv2
 from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
 import filters
-from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker
+from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker, CircleTracker
 import utils
 import rects
 from datetime import datetime
 import sys
 import time
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+import numpy as np
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 
 class Cameo(object):
 
@@ -17,9 +18,10 @@ class Cameo(object):
 		self._type = type
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
-			self._pi_camera.resolution(640, 480)
+			self._pi_camera.resolution = (640, 480)
 			self._pi_camera.framerate = 32
-			self._pi_capture = PiRGBArray(camera, size = (640, 480))
+			self._pi_camera.vflip = True
+			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
 			#self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
@@ -31,12 +33,13 @@ class Cameo(object):
 		self._arrowTracker = ArrowTracker()
 		self._bananaTracker = BananaTracker()
 		self._turnTracker = TurnTracker()
+		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = False
 
 	def run(self):
 		self._windowManager.createWindow()
 		if self._type == "pi":
-			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_post=True):
+			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
 				if self._windowManager.isWindowCreated:
 					frame = image.array
 					self._curveFilter.apply(frame, frame)
@@ -45,6 +48,9 @@ class Cameo(object):
 
 					self._arrowTracker.update(frame)
 					arrows = self._arrowTracker.elements
+					self._circleTracker.update(frame)
+					circles = self._circleTracker.elements
+
 					self._draw_on_image(frame, faces, arrows)
 					self._windowManager.show(frame)
 					self._pi_capture.truncate(0)
@@ -72,11 +78,17 @@ class Cameo(object):
 
 				#self._bananaTracker.update(frame)
 				bananas = self._bananaTracker.elements
-				self._draw_on_image(frame, faces, arrows)
+
+				#circles
+
+				self._circleTracker.update(frame)
+				circles = self._circleTracker.elements
+
+				self._draw_on_image(frame, faces, arrows, circles)
 				self._captureManager.exitFrame()
 				self._windowManager.processEvents()
 
-	def _draw_on_image(self,frame, faces, arrows):
+	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
 		utils.draw_str(frame, (25,40), datetime.now().isoformat())
 		if len(faces) > 0 :
 			utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
@@ -86,14 +98,20 @@ class Cameo(object):
 
 		#rects.swapRects(frame, frame, [face.faceRect for face in faces])
 
+		if len(circles) > 0 :
+			utils.draw_str(frame, (25, 100), "I saw balls!: " + str(len(circles)))
+
 		if self._shouldDrawDebugRects:
 			self._faceTracker.drawDebugRects(frame)
 			self._arrowTracker.drawDebugRects(frame)
+			self._circleTracker.drawDebug(frame)
 			#self._bananaTracker.drawDebugRects(frame)
 			#self._turnTracker.drawDebugRects(frame)
 
-		utils.drawCameraFrame(frame, self._captureManager.size)
-
+		if size is None:
+			utils.drawCameraFrame(frame, self._captureManager.size)
+		else:
+			utils.drawCameraFrame(frame, (640, 480))
 
 	def onKeyPress(self, keycode):
 		"""
