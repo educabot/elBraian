@@ -17,9 +17,10 @@ class Cameo(object):
 		self._type = type
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
-			self._pi_camera.resolution(640, 480)
+			self._pi_camera.resolution = (640, 480)
 			self._pi_camera.framerate = 32
-			self._pi_capture = PiRGBArray(camera, size = (640, 480))
+			self._pi_camera.vflip = True
+			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
 			#self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
@@ -36,7 +37,7 @@ class Cameo(object):
 	def run(self):
 		self._windowManager.createWindow()
 		if self._type == "pi":
-			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_post=True):
+			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True, quality=50):
 				if self._windowManager.isWindowCreated:
 					frame = image.array
 					self._curveFilter.apply(frame, frame)
@@ -92,7 +93,7 @@ class Cameo(object):
 			#self._bananaTracker.drawDebugRects(frame)
 			#self._turnTracker.drawDebugRects(frame)
 
-		utils.drawCameraFrame(frame, self._captureManager.size)
+		utils.drawCameraFrame(frame, (640, 480))
 
 
 	def onKeyPress(self, keycode):
