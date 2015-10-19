@@ -139,12 +139,20 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
 
 
-class CameraHandler(tornado.websocket.WebSocketHandler):
+class VigilanteHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
 		self.write_message("connected to de camera")
 
-	def start_transmitVideo(self):
-		pass
+	def on_close(self):
+		log.debug("user disconnected")
+
+	def on_message(self):
+		'''
+		Vigilante module should send the processed photo.
+		Therefore, this little guy should broadcast the frame
+		to the clients
+		'''
+
 
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -178,6 +186,7 @@ if __name__ == '__main__':
 			(r"/",IndexHandler),
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
+			(r"/vigilante", VigilanteHandler),
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
 			(r"/consola", WrongConsole),

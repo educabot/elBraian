@@ -8,8 +8,11 @@ from datetime import datetime
 import sys
 import time
 import numpy as np
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+from PIL import Image
+import StringIO
+from websocket import create_connection
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 
 class Cameo(object):
 
@@ -35,6 +38,7 @@ class Cameo(object):
 		self._turnTracker = TurnTracker()
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = False
+		self._ws = create_connection("ws://localhost:9001/vigilante")
 
 	def run(self):
 		self._windowManager.createWindow()
@@ -86,6 +90,11 @@ class Cameo(object):
 
 				self._draw_on_image(frame, faces, arrows, circles)
 				self._captureManager.exitFrame()
+				'''
+				Also, we need to send this frame to a new websocket to be delivered
+				'''
+				self._sendI
+
 				self._windowManager.processEvents()
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
@@ -134,6 +143,19 @@ class Cameo(object):
 			self._shouldDrawDebugRects = not self._shouldDrawDebugRects
 		elif keycode == 27: # escape
 			self._windowManager.destroyWindow()
+
+	def _convertoBinary(self, frame):
+		image = Image.fromarray(frame)
+		output = StringIO.StringIO()
+		image.save(output)
+		print "out"
+		print output
+		return output
+
+	def _sendImage(self,frame):
+		self._ws.send(self._convertoBinary(frame))
+
+
 
 if __name__ == "__main__":
 	Cameo(sys.argv[1]).run()

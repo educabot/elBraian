@@ -13,5 +13,7 @@ numpy==1.9.2
 pathtools==0.1.2
 picamera==1.10
 scipy==0.16.0
+Pillow==3.0.0
+websocket-client==0.32.0
 #RPi.GPIO==0.5.3a
 #RPIO==0.10.0
