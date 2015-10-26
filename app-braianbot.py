@@ -13,6 +13,9 @@ import logging
 import json
 from utils.poolsockets import PoolWebSocketHandler
 from time import sleep
+import StringIO
+from PIL import Image
+import cv2
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -28,12 +31,12 @@ file_handler.setFormatter(formatter)
 log.addHandler(file_handler)
 
 sockets =  PoolWebSocketHandler()
+socketsVigilante = PoolWebSocketHandler()
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		home = config.get("web","home")
-		pic_url = home + ":8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
-		self.render('index.jade', pic_url=pic_url)
+		self.render('index.jade')
 
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
@@ -139,21 +142,6 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
 
 
-class VigilanteHandler(tornado.websocket.WebSocketHandler):
-	def open(self):
-		self.write_message("connected to de camera")
-
-	def on_close(self):
-		log.debug("user disconnected")
-
-	def on_message(self):
-		'''
-		Vigilante module should send the processed photo.
-		Therefore, this little guy should broadcast the frame
-		to the clients
-		'''
-
-
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('console.jade', code='')
@@ -179,6 +167,25 @@ class ScratchConsole(tornado.web.RequestHandler):
 		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('scratch.jade', pic_url=pic_url)
 
+class StreamHandler(tornado.web.RequestHandler):
+	def get(self):
+		my_boundary = "vigilante"
+		#self.set_status(200)
+		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
+		while True:
+			image = Image.open('imgstream/screenshot.jpg')
+			tmpFile = StringIO.StringIO()
+			image.save(tmpFile,format="jpeg")
+			self.write( '--'+ my_boundary + '\r\n')
+			self.write("Content-type: image/jpeg\r\n")
+			self.write("Content-length: %s\r\n\r\n" % tmpFile.len)
+			self.write(str(tmpFile.getvalue()))
+			self.write('\r\n')
+			self.write('--' + my_boundary + '--\r\n')
+			tmpFile.close()
+			self.flush()
+			sleep(0.5)
+
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
 	app = tornado.web.Application(
@@ -186,10 +193,10 @@ if __name__ == '__main__':
 			(r"/",IndexHandler),
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
-			(r"/vigilante", VigilanteHandler),
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
 			(r"/consola", WrongConsole),
+			(r"/stream", StreamHandler),
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),

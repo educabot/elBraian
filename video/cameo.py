@@ -8,9 +8,6 @@ from datetime import datetime
 import sys
 import time
 import numpy as np
-from PIL import Image
-import StringIO
-from websocket import create_connection
 #from picamera.array import PiRGBArray
 #from picamera import PiCamera
 
@@ -29,7 +26,7 @@ class Cameo(object):
 			time.sleep(0.1)
 			#self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
 		else:
-			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (1280, 760),False)
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
@@ -38,7 +35,6 @@ class Cameo(object):
 		self._turnTracker = TurnTracker()
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = False
-		self._ws = create_connection("ws://localhost:9001/vigilante")
 
 	def run(self):
 		self._windowManager.createWindow()
@@ -91,9 +87,9 @@ class Cameo(object):
 				self._draw_on_image(frame, faces, arrows, circles)
 				self._captureManager.exitFrame()
 				'''
-				Also, we need to send this frame to a new websocket to be delivered
+				Also, we need to send this frame to a new specific directory to be delivered
 				'''
-				self._sendI
+				self._captureManager.writeImage("imgstream/screenshot.jpg")
 
 				self._windowManager.processEvents()
 
@@ -143,17 +139,6 @@ class Cameo(object):
 			self._shouldDrawDebugRects = not self._shouldDrawDebugRects
 		elif keycode == 27: # escape
 			self._windowManager.destroyWindow()
-
-	def _convertoBinary(self, frame):
-		image = Image.fromarray(frame)
-		output = StringIO.StringIO()
-		image.save(output)
-		print "out"
-		print output
-		return output
-
-	def _sendImage(self,frame):
-		self._ws.send(self._convertoBinary(frame))
 
 
 

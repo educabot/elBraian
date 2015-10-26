@@ -322,6 +322,4 @@ $(document).ready(function(){
 			stop();
 		}
 	});
-
-
 });
