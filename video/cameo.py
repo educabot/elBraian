@@ -2,15 +2,10 @@ import cv2
 from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
 import filters
 from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker, CircleTracker
-import utils
-import rects
+import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
-import sys
-import time
-import numpy as np
-import redis
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 class Cameo(object):
 
@@ -25,7 +20,7 @@ class Cameo(object):
 			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
-			#self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
@@ -120,7 +115,7 @@ class Cameo(object):
 			#self._bananaTracker.drawDebugRects(frame)
 			#self._turnTracker.drawDebugRects(frame)
 
-		if size is None:
+		if size is None or self._type != "pi":
 			utils.drawCameraFrame(frame, self._captureManager.size)
 		else:
 			utils.drawCameraFrame(frame, (640, 480))

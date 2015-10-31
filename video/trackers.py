@@ -235,9 +235,8 @@ class CircleTracker(Tracker):
 
 	def update(self, image):
 		self._elements = []
-		greenLower = (29, 86, 6)
-		greenUpper = (64, 255, 255)
-
+		greenLower = np.array([29, 86, 6])
+		greenUpper = np.array([64, 255, 255])
 		blurred = cv2.GaussianBlur(image, (11, 11), 0)
 		hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
