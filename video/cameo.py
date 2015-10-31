@@ -8,6 +8,7 @@ from datetime import datetime
 import sys
 import time
 import numpy as np
+import redis
 #from picamera.array import PiRGBArray
 #from picamera import PiCamera
 
@@ -35,6 +36,7 @@ class Cameo(object):
 		self._turnTracker = TurnTracker()
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = False
+		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 	def run(self):
 		self._windowManager.createWindow()
@@ -89,9 +91,14 @@ class Cameo(object):
 				'''
 				Also, we need to send this frame to a new specific directory to be delivered
 				'''
-				self._captureManager.writeImage("imgstream/screenshot.jpg")
+				#self._captureManager.writeImage("imgstream/screenshot.jpg")
+				self._send_to_redis(frame)
 
 				self._windowManager.processEvents()
+
+	def _send_to_redis(self,frame):
+		_, img = cv2.imencode(".jpg", frame)
+		self._redis_client.set("vigilante_screenshot", img.tostring())
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
 		utils.draw_str(frame, (25,40), datetime.now().isoformat())

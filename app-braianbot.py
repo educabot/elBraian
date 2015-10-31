@@ -16,6 +16,7 @@ from time import sleep
 import StringIO
 from PIL import Image
 import cv2
+import redis, numpy as np
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -168,12 +169,17 @@ class ScratchConsole(tornado.web.RequestHandler):
 		self.render('scratch.jade', pic_url=pic_url)
 
 class StreamHandler(tornado.web.RequestHandler):
+	def initialize(self, redis_client):
+		self._redis_client = redis_client
+
 	def get(self):
 		my_boundary = "vigilante"
-		#self.set_status(200)
+		self.set_status(200)
 		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
 		while True:
-			image = Image.open('imgstream/screenshot.jpg')
+			np_array = np.fromstring(self._redis_client.get("vigilante_screenshot"), np.uint8)
+			img = cv2.imdecode(np_array, cv2.CV_LOAD_IMAGE_COLOR)
+			image = Image.fromarray(img)
 			tmpFile = StringIO.StringIO()
 			image.save(tmpFile,format="jpeg")
 			self.write( '--'+ my_boundary + '\r\n')
@@ -181,13 +187,15 @@ class StreamHandler(tornado.web.RequestHandler):
 			self.write("Content-length: %s\r\n\r\n" % tmpFile.len)
 			self.write(str(tmpFile.getvalue()))
 			self.write('\r\n')
-			self.write('--' + my_boundary + '--\r\n')
+			self.write('--' + my_boundary + '\r\n')
+			print tmpFile.len
 			tmpFile.close()
 			self.flush()
-			sleep(0.5)
+			sleep(0.1)
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
+	redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 	app = tornado.web.Application(
 		handlers=[
 			(r"/",IndexHandler),
@@ -196,7 +204,7 @@ if __name__ == '__main__':
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
 			(r"/consola", WrongConsole),
-			(r"/stream", StreamHandler),
+			(r"/stream", StreamHandler, dict(redis_client=redis_client)),
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
