@@ -17,6 +17,7 @@ import StringIO
 from PIL import Image
 import cv2
 import redis, numpy as np
+from tornado import gen
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -172,7 +173,10 @@ class StreamHandler(tornado.web.RequestHandler):
 	def initialize(self, redis_client):
 		self._redis_client = redis_client
 
+	@tornado.web.asynchronous
+	@gen.coroutine
 	def get(self):
+		loop = tornado.ioloop.IOLoop.current()
 		my_boundary = "vigilante"
 		self.set_status(200)
 		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
@@ -190,8 +194,9 @@ class StreamHandler(tornado.web.RequestHandler):
 			self.write('--' + my_boundary + '\r\n')
 			print tmpFile.len
 			tmpFile.close()
-			self.flush()
 			sleep(0.1)
+			yield gen.Task(self.flush)
+
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
