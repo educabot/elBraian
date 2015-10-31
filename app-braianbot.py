@@ -192,7 +192,6 @@ class StreamHandler(tornado.web.RequestHandler):
 			self.write(str(tmpFile.getvalue()))
 			self.write('\r\n')
 			self.write('--' + my_boundary + '\r\n')
-			print tmpFile.len
 			tmpFile.close()
 			sleep(0.1)
 			yield gen.Task(self.flush)
