@@ -6,11 +6,12 @@ import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from time import sleep
 
 class Cameo(object):
 
 	def __init__(self, type):
-		self._windowManager = WindowManager('Braian', self.onKeyPress)
+		self._windowManager = None
 		self._type = type
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
@@ -20,9 +21,9 @@ class Cameo(object):
 			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
-			self._captureManager = CaptureManagerPiCamera(camera, capture, self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (640, 480),False)
 		else:
-			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), None, (640, 480),False)
 
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
@@ -34,27 +35,22 @@ class Cameo(object):
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 	def run(self):
-		self._windowManager.createWindow()
 		if self._type == "pi":
 			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
-				if self._windowManager.isWindowCreated:
-					frame = image.array
-					self._curveFilter.apply(frame, frame)
-					self._faceTracker.update(frame)
-					faces = self._faceTracker.faces
+				frame = image.array
+				#self._curveFilter.apply(frame, frame)
+				#self._faceTracker.update(frame)
+				#faces = self._faceTracker.faces
 
-					self._arrowTracker.update(frame)
-					arrows = self._arrowTracker.elements
-					self._circleTracker.update(frame)
-					circles = self._circleTracker.elements
+				#self._arrowTracker.update(frame)
+				#arrows = self._arrowTracker.elements
+				#self._circleTracker.update(frame)
+				#circles = self._circleTracker.elements
 
-					self._draw_on_image(frame, faces, arrows)
-					self._windowManager.show(frame)
-					self._pi_capture.truncate(0)
-					self._windowManager.processEvents()
-				else:
-					break
-
+				self._pi_capture.truncate(0)
+				self._send_to_redis(frame)
+				sleep(0.25)
+				
 
 		else:
 			while self._windowManager.isWindowCreated:
