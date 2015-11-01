@@ -8,13 +8,12 @@ import ConfigParser, os
 from tornado.options import define,options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
-from braianDriver.robot import Robot
+   from braianDriver.robot import Robot
 import logging
 import json
+
 from utils.poolsockets import PoolWebSocketHandler
 from time import sleep
-import StringIO
-from PIL import Image
 import cv2
 import redis, numpy as np
 from tornado import gen
@@ -38,7 +37,7 @@ socketsVigilante = PoolWebSocketHandler()
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		home = config.get("web","home")
-		self.render('index.jade')
+		self.render('index.jade', host_url = home)
 
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
@@ -181,19 +180,13 @@ class StreamHandler(tornado.web.RequestHandler):
 		self.set_status(200)
 		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
 		while True:
-			np_array = np.fromstring(self._redis_client.get("vigilante_screenshot"), np.uint8)
-			#img = cv2.imdecode(np_array, cv2.CV_LOAD_IMAGE_COLOR)
-			#image = Image.fromarray(img)
-			#image = Image.open("imgstream/screenshot.jpg")
-			#tmpFile = StringIO.StringIO()
-			#image.save(tmpFile,format="jpeg")
+			data = self._redis_client.get("vigilante_screenshot")
 			self.write( '--'+ my_boundary + '\r\n')
 			self.write("Content-type: image/jpeg\r\n")
-			self.write("Content-length: %s\r\n\r\n" % len(img.data))
-			self.write(img.data)
+			self.write("Content-length: %s\r\n\r\n" % len(str(data)))
+			self.write(data)
 			self.write('\r\n')
 			self.write('--' + my_boundary + '\r\n')
-			#tmpFile.close()
 			sleep(0.25)
 			yield gen.Task(self.flush)
 

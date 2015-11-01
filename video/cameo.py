@@ -11,7 +11,8 @@ from time import sleep
 class Cameo(object):
 
 	def __init__(self, type):
-		self._windowManager = None
+		self._windowManager = WindowManager('Braian', self.onKeyPress)
+
 		self._type = type
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
@@ -31,7 +32,7 @@ class Cameo(object):
 		self._bananaTracker = BananaTracker()
 		self._turnTracker = TurnTracker()
 		self._circleTracker = CircleTracker()
-		self._shouldDrawDebugRects = False
+		self._shouldDrawDebugRects = True
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 	def run(self):
@@ -41,6 +42,25 @@ class Cameo(object):
 				#self._curveFilter.apply(frame, frame)
 				#self._faceTracker.update(frame)
 				#faces = self._faceTracker.faces
+		if self._windowManager is not None:
+			self._windowManager.createWindow()
+		if self._type == "pi":
+			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
+				frame = image.array
+				self._curveFilter.apply(frame, frame)
+				self._faceTracker.update(frame)
+				faces = self._faceTracker.faces
+
+				self._arrowTracker.update(frame)
+				arrows = self._arrowTracker.elements
+				self._circleTracker.update(frame)
+				circles = self._circleTracker.elements
+
+				self._draw_on_image(frame, faces, arrows, circles)
+				self._windowManager.show(frame)
+				self._send_to_redis(frame)
+				self._pi_capture.truncate(0)
+				#self._windowManager.processEvents()
 
 				#self._arrowTracker.update(frame)
 				#arrows = self._arrowTracker.elements
@@ -53,17 +73,17 @@ class Cameo(object):
 				
 
 		else:
-			while self._windowManager.isWindowCreated:
+			while self._windowManager is not None and self._windowManager.isWindowCreated:
 				self._captureManager.enterFrame()
 				frame = self._captureManager.frame
 
 				#filters.strokeEdges(frame, frame)
-				self._curveFilter.apply(frame, frame)
+				#self._curveFilter.apply(frame, frame)
 
 				self._faceTracker.update(frame)
 				faces = self._faceTracker.faces
 
-				self._arrowTracker.update(frame)
+				#self._arrowTracker.update(frame)
 				arrows = self._arrowTracker.elements
 
 				#self._turnTracker.update(frame)
@@ -89,7 +109,7 @@ class Cameo(object):
 
 	def _send_to_redis(self,frame):
 		_, img = cv2.imencode(".jpg", frame)
-		self._redis_client.set("vigilante_screenshot", img.tostring())
+		self._redis_client.set("vigilante_screenshot", img.data)
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
 		utils.draw_str(frame, (25,40), datetime.now().isoformat())
