@@ -8,6 +8,7 @@ import logging
 import ConfigParser
 #from picamera.array import PiRGBArray
 #from picamera import PiCamera
+from time import sleep
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -34,7 +35,7 @@ class Cameo(object):
 			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
-			self._captureManager = CaptureManagerPiCamera(camera, capture, None, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (640, 480),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
@@ -48,6 +49,12 @@ class Cameo(object):
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 	def run(self):
+		if self._type == "pi":
+			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
+				frame = image.array
+				#self._curveFilter.apply(frame, frame)
+				#self._faceTracker.update(frame)
+				#faces = self._faceTracker.faces
 		if self._windowManager is not None:
 			self._windowManager.createWindow()
 		if self._type == "pi":
@@ -85,7 +92,7 @@ class Cameo(object):
 			self._windowManager.processEvents()
 
 	def _proccess_on_pi(self):
-		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
+		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=False):
 			frame = image.array
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
