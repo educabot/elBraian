@@ -27,9 +27,9 @@ class ICaptureManager(object):
 		if self.previeWindowManager is not None:
 			if self.shouldMirrorPreview:
 				mirroredFrame = numpy.fliplr(self._frame).copy()
-				self.previeWindowManager.show(mirroredFrame)
-			else:
-				self.previeWindowManager.show(self._frame)
+				#self.previeWindowManager.show(mirroredFrame)
+			#else:
+				#self.previeWindowManager.show(self._frame)
 
 		if self.isWritingImage:
 			cv2.imwrite(self._imageFileName, self._frame)
