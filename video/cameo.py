@@ -14,12 +14,15 @@ config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
 env = config.get("system","env")
 
-log = logging.getLogger("webserver")
+log = logging.getLogger("cameo")
 log.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler=logging.FileHandler('/var/tmp/cameo.log')
 file_handler.setFormatter(formatter)
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
 log.addHandler(file_handler)
+log.addHandler(console_handler)
 
 
 class Cameo(object):
@@ -72,14 +75,16 @@ class Cameo(object):
 
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
-
+			log.debug("Faces tracked: " + str(faces))
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
+			log.debug("Arrows tracked: " + str(arrows))
 
 			#circles
 
 			self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
+			log.debug("Balls tracked: " + str(circles))
 
 			self._draw_on_image(frame, faces, arrows, circles)
 			self._captureManager.exitFrame()
@@ -97,12 +102,13 @@ class Cameo(object):
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
-
+			log.debug("Faces tracked: " + str(faces))
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
+			log.debug("Arrows tracked: " + str(arrows))
 			self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
-
+			log.debug("Balls tracked: " + str(circles))
 			self._draw_on_image(frame, faces, arrows, circles)
 			self._windowManager.show(frame)
 			self._send_to_redis(frame)
