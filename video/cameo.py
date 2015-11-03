@@ -33,7 +33,7 @@ class Cameo(object):
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
 			self._pi_camera.resolution = (640, 480)
-			self._pi_camera.framerate = 10
+			self._pi_camera.framerate = 5
 			self._pi_camera.vflip = True
 			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
@@ -53,16 +53,10 @@ class Cameo(object):
 
 	def run(self):
 		if self._type == "pi":
-			for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
-				frame = image.array
-				#self._curveFilter.apply(frame, frame)
-				#self._faceTracker.update(frame)
-				#faces = self._faceTracker.faces
-		if self._windowManager is not None:
-			self._windowManager.createWindow()
-		if self._type == "pi":
 			self._proccess_on_pi()
 		else:
+			if self._windowManager is not None:
+				self._windowManager.createWindow()
 			self._proccess_on_dev()
 
 	def _proccess_on_dev(self):
@@ -97,7 +91,7 @@ class Cameo(object):
 			self._windowManager.processEvents()
 
 	def _proccess_on_pi(self):
-		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=False):
+		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
 			frame = image.array
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
