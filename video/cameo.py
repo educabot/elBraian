@@ -119,15 +119,21 @@ class Cameo(object):
 
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
-			if len(arrows) > 0:
-				log.debug("Arrows tracked: " + str(arrows))
+			if len(arrows) > 0 :
+				log.debug("Arrows tracked: " + str(len(arrows)))
+				for arrow in arrows:
+					print arrow.rect
+
+			#circles
 
 			self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
-			if len(circles) > 0:
-				log.debug("Balls tracked: " + str(circles))
+			if len(circles) > 0 :
+				log.debug("Balls tracked: " + str(len(circles)))
+				for circle in circles:
+					print circle.rect
 
-			#self._draw_on_image(frame, faces, arrows, circles)
+			self._draw_on_image(frame, faces, arrows, circles)
 			self._windowManager.show(frame)
 			self._send_to_redis(frame)
 			self._pi_capture.truncate(0)
