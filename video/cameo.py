@@ -6,8 +6,8 @@ import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
 import logging
 import ConfigParser
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 from time import sleep
 from websocket import create_connection
 
@@ -36,12 +36,13 @@ class Cameo(object):
 			self._pi_camera.resolution = (320, 240)
 			self._pi_camera.framerate = 5
 			self._pi_camera.vflip = True
+			self._pi_camera.hflip = True
 			self._pi_camera.drc_strength = "high"
-			self._pi_camera.brightness = 80
-			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
+			self._pi_camera.brightness = 50
+			self._pi_capture = PiRGBArray(self._pi_camera, size = (320, 240))
 			#warming up camera
 			time.sleep(0.1)
-			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 240),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
@@ -53,7 +54,7 @@ class Cameo(object):
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = True
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
-		self._ws = create_connection("ws://localhost:9001/robot")
+		self._ws = create_connection("ws://localhost/robot")
 		self._vertical_position = 0
 		self._horizontal_position = 0
 
@@ -108,16 +109,16 @@ class Cameo(object):
 	def _proccess_on_pi(self):
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
 			frame = image.array
-			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
 
 			if len(faces) > 0:
 				log.debug("Faces tracked: " + str(len(faces)))
 				for face in faces:
-					print face.rect
+					print face.faceRect
+					print type(face.faceRect)
 
-			self._arrowTracker.update(frame)
+			#self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
 			if len(arrows) > 0 :
 				log.debug("Arrows tracked: " + str(len(arrows)))
@@ -126,7 +127,7 @@ class Cameo(object):
 
 			#circles
 
-			self._circleTracker.update(frame)
+			#self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
 			if len(circles) > 0 :
 				log.debug("Balls tracked: " + str(len(circles)))
@@ -134,7 +135,6 @@ class Cameo(object):
 					print circle.rect
 
 			self._draw_on_image(frame, faces, arrows, circles)
-			self._windowManager.show(frame)
 			self._send_to_redis(frame)
 			self._pi_capture.truncate(0)
 			#time.sleep(0.25)
@@ -159,7 +159,7 @@ class Cameo(object):
 
 		if self._shouldDrawDebugRects:
 			self._faceTracker.drawDebugRects(frame)
-			self._arrowTracker.drawDebugRects(frame)
+			#self._arrowTracker.drawDebugRects(frame)
 			self._circleTracker.drawDebug(frame)
 			#self._bananaTracker.drawDebugRects(frame)
 			#self._turnTracker.drawDebugRects(frame)

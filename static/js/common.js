@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ window.location.hostname +":9001/robot";
+	var host = "ws://"+ window.location.hostname +"/robot";
 
 	console.log("url socket: " + document.domain);
 
@@ -13,7 +13,7 @@ $(document).ready(function(){
 		range: 'min',
 		max: 200,
 		value: 100,
-		step: 20,
+		step: 5,
 		slide: refreshHorizontalPosition,
 		change: refreshHorizontalPosition
 	});
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		range: 'min',
 		max: 200,
 		value: 100,
-		step: 20,
+		step: 5,
 		slide: refreshVerticalPosition,
 		change: refreshVerticalPosition
 	});
@@ -231,7 +231,7 @@ $(document).ready(function(){
 			//a
 			case 65:
 				$('.console').append($("<p> > Moving head left ..</p>"));
-				var newAngle = ($('#head-horizontal').slider('value') - 100) - 20 ;
+				var newAngle = ($('#head-horizontal').slider('value') - 100) - 5 ;
 				$('#head-horizontal').slider({
 					value : newAngle + 100
 				});
@@ -239,7 +239,7 @@ $(document).ready(function(){
 			//d
 			case 68:
 				$('.console').append($("<p> > Moving head right ..</p>"));
-				var newAngle = ($('#head-horizontal').slider('value') - 100) + 20 ;
+				var newAngle = ($('#head-horizontal').slider('value') - 100) + 5 ;
 				$('#head-horizontal').slider({
 					value: newAngle + 100
 				});
@@ -247,7 +247,7 @@ $(document).ready(function(){
 			//w
 			case 87:
 				$('.console').append($("<p> > Moving head up ..</p>"));
-				var newAngle = $('#head-vertical').slider('value') - 100 + 20;
+				var newAngle = $('#head-vertical').slider('value') - 100 + 5;
 				$('#head-vertical').slider({
 					value: newAngle + 100
 				});
@@ -255,7 +255,7 @@ $(document).ready(function(){
 			//s
 			case 83:
 				$('.console').append($("<p> > Moving head down ..</p>"));
-				var newAngle = $('#head-vertical').slider('value') -100 - 20;
+				var newAngle = $('#head-vertical').slider('value') -100 - 5;
 				$('#head-vertical').slider({
 					value: newAngle + 100
 				});

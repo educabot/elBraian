@@ -92,4 +92,4 @@ def drawCameraFrame(frame, size):
 	rects.outlineRect(frame, (width-20, height- 80, 0, 60) ,(0, 255 , 0))
 	rects.outlineRect(frame, (width-80, height- 20, 60, 0) ,(0, 255 , 0))
 
-	draw_str(frame,(width-200, height - 40), "elBraian perspective")
+	#draw_str(frame,(width-200, height - 40), "elBraian perspective")
