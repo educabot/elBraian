@@ -9,6 +9,7 @@ import ConfigParser
 #from picamera.array import PiRGBArray
 #from picamera import PiCamera
 from time import sleep
+from websocket import create_connection
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -32,9 +33,11 @@ class Cameo(object):
 		self._type = type
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
-			self._pi_camera.resolution = (640, 480)
+			self._pi_camera.resolution = (320, 240)
 			self._pi_camera.framerate = 5
 			self._pi_camera.vflip = True
+			self._pi_camera.drc_strength = "high"
+			self._pi_camera.brightness = 80
 			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
 			#warming up camera
 			time.sleep(0.1)
@@ -50,6 +53,9 @@ class Cameo(object):
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = True
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
+		self._ws = create_connection("ws://localhost:9001/robot")
+		self._vertical_position = 0
+		self._horizontal_position = 0
 
 	def run(self):
 		if self._type == "pi":
@@ -69,16 +75,25 @@ class Cameo(object):
 
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
-			log.debug("Faces tracked: " + str(faces))
+			if len(faces) > 0:
+				log.debug("Faces tracked: " + str(len(faces)))
+				for face in faces:
+					print face.faceRect
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
-			log.debug("Arrows tracked: " + str(arrows))
+			if len(arrows) > 0 :
+				log.debug("Arrows tracked: " + str(len(arrows)))
+				for arrow in arrows:
+					print arrow.rect
 
 			#circles
 
 			self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
-			log.debug("Balls tracked: " + str(circles))
+			if len(circles) > 0 :
+				log.debug("Balls tracked: " + str(len(circles)))
+				for circle in circles:
+					print circle.rect
 
 			self._draw_on_image(frame, faces, arrows, circles)
 			self._captureManager.exitFrame()
@@ -96,18 +111,27 @@ class Cameo(object):
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
-			log.debug("Faces tracked: " + str(faces))
+
+			if len(faces) > 0:
+				log.debug("Faces tracked: " + str(len(faces)))
+				for face in faces:
+					print face.rect
+
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
-			log.debug("Arrows tracked: " + str(arrows))
+			if len(arrows) > 0:
+				log.debug("Arrows tracked: " + str(arrows))
+
 			self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
-			log.debug("Balls tracked: " + str(circles))
-			self._draw_on_image(frame, faces, arrows, circles)
+			if len(circles) > 0:
+				log.debug("Balls tracked: " + str(circles))
+
+			#self._draw_on_image(frame, faces, arrows, circles)
 			self._windowManager.show(frame)
 			self._send_to_redis(frame)
 			self._pi_capture.truncate(0)
-			time.sleep(0.25)
+			#time.sleep(0.25)
 
 
 	def _send_to_redis(self,frame):
@@ -138,6 +162,15 @@ class Cameo(object):
 			utils.drawCameraFrame(frame, self._captureManager.size)
 		else:
 			utils.drawCameraFrame(frame, (640, 480))
+
+
+	def __sendMessageToRobot(self):
+		message = {}
+		message["message"] = "HEAD-MOVE"
+		message["payload"] = {}
+		message["payload"]["head_horizontal"] = self._horizontal_position
+		message["payload"]["head_vertical"] = self._vertical_position
+		self._ws.send(json.dumps(message))
 
 	def onKeyPress(self, keycode):
 		"""
