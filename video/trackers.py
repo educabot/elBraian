@@ -144,7 +144,7 @@ class FaceTracker(Tracker):
 			image = cv2.cvtColor(image, cv2.cv.CV_BGR2GRAY)
 			cv2.equalizeHist(image, image)
 
-		minSize = utils.widthHeightDivideBy(image, 4)
+		minSize = utils.widthHeightDivideBy(image, 6)
 		faceRects = self._faceClassifier.detectMultiScale(image, self.scaleFactor,
 			self.minNeighbors, self.flags, minSize)
 

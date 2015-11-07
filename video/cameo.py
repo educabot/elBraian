@@ -10,6 +10,7 @@ import ConfigParser
 #from picamera import PiCamera
 from time import sleep
 from websocket import create_connection
+import json
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -36,12 +37,13 @@ class Cameo(object):
 			self._pi_camera.resolution = (320, 240)
 			self._pi_camera.framerate = 5
 			self._pi_camera.vflip = True
+			self._pi_camera.hflip = True
 			self._pi_camera.drc_strength = "high"
 			self._pi_camera.brightness = 80
-			self._pi_capture = PiRGBArray(self._pi_camera, size = (640, 480))
+			self._pi_capture = PiRGBArray(self._pi_camera, size = (320, 220))
 			#warming up camera
 			time.sleep(0.1)
-			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (640, 480),False)
+			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 220),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
@@ -101,13 +103,15 @@ class Cameo(object):
 			Also, we need to send this frame to a new specific directory to be delivered
 			'''
 			self._send_to_redis(frame)
+			if len(faces) > 0:
+				self.__head_adjustement(faces[0].faceRect)
 			time.sleep(0.1)
 
 			self._windowManager.processEvents()
 
 	def _proccess_on_pi(self):
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
-			frame = image.array
+			#frame = image.array
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
@@ -115,7 +119,7 @@ class Cameo(object):
 			if len(faces) > 0:
 				log.debug("Faces tracked: " + str(len(faces)))
 				for face in faces:
-					print face.rect
+					print face.faceRect
 
 			self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
@@ -134,18 +138,33 @@ class Cameo(object):
 					print circle.rect
 
 			self._draw_on_image(frame, faces, arrows, circles)
-			self._windowManager.show(frame)
 			self._send_to_redis(frame)
 			self._pi_capture.truncate(0)
-			#time.sleep(0.25)
 
+
+	def __head_adjustement(self, rect):
+		x = rect[0]
+		y = rect[1]
+
+		if x > 160:
+			self._horizontal_position = ((x-160)/4.8) + self._horizontal_position
+		elif(x < 160):
+			self._horizontal_position = ((160-x)/4.8) - self._horizontal_position
+
+		if x > 120:
+			self._vertical_position = ((x-120)/4.8) - self._vertical_position
+		elif(x < 120):
+			self._vertical_position = ((120-x)/4.8) + self._vertical_position
+
+		self.__sendMessageToRobot()
 
 	def _send_to_redis(self,frame):
+		#_, img = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 10])
 		_, img = cv2.imencode(".jpg", frame)
 		self._redis_client.set("vigilante_screenshot", img.data)
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
-		utils.draw_str(frame, (25,40), datetime.now().isoformat())
+		#utils.draw_str(frame, (25,40), datetime.now().isoformat())
 		if len(faces) > 0 :
 			utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
 
@@ -159,8 +178,8 @@ class Cameo(object):
 
 		if self._shouldDrawDebugRects:
 			self._faceTracker.drawDebugRects(frame)
-			self._arrowTracker.drawDebugRects(frame)
-			self._circleTracker.drawDebug(frame)
+			#self._arrowTracker.drawDebugRects(frame)
+			#self._circleTracker.drawDebug(frame)
 			#self._bananaTracker.drawDebugRects(frame)
 			#self._turnTracker.drawDebugRects(frame)
 
