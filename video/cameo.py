@@ -139,22 +139,25 @@ class Cameo(object):
 
 			self._draw_on_image(frame, faces, arrows, circles)
 			self._send_to_redis(frame)
-			self._pi_capture.truncate(0)
+			if len(faces) > 0:
+				self.__head_adjustement(faces[0].faceRect)
 
+			self._pi_capture.truncate(0)
+			time.sleep(5)
 
 	def __head_adjustement(self, rect):
-		x = rect[0]
-		y = rect[1]
+		x = rect[0] - (rect[2]/2)
+		y = rect[1] + (rect[3]/2)
 
-		if x > 160:
-			self._horizontal_position = ((x-160)/4.8) + self._horizontal_position
-		elif(x < 160):
-			self._horizontal_position = ((160-x)/4.8) - self._horizontal_position
+		if x < 160:
+			self._horizontal_position = self._horizontal_position - ((x-160)/4.8)
+		elif(x > 160):
+			self._horizontal_position = ((160-x)/4.8) + self._horizontal_position
 
-		if x > 120:
-			self._vertical_position = ((x-120)/4.8) - self._vertical_position
-		elif(x < 120):
-			self._vertical_position = ((120-x)/4.8) + self._vertical_position
+		if y > 120:
+			self._vertical_position = ((y - 120)/4.8) + self._vertical_position
+		elif(y < 120):
+			self._vertical_position = self._vertical_position - ((120 - y)/4.8) 
 
 		self.__sendMessageToRobot()
 
