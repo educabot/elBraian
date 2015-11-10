@@ -9,8 +9,8 @@ import ConfigParser
 #from picamera.array import PiRGBArray
 #from picamera import PiCamera
 from time import sleep
-from websocket import create_connection
 import json
+from braianDriver.robot import Robot
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -55,9 +55,9 @@ class Cameo(object):
 		self._circleTracker = CircleTracker()
 		self._shouldDrawDebugRects = True
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
-		self._ws = create_connection("ws://localhost:9001/robot")
 		self._vertical_position = 0
 		self._horizontal_position = 0
+		self._robot = Robot()
 
 	def run(self):
 		if self._type == "pi":
@@ -105,7 +105,6 @@ class Cameo(object):
 			self._send_to_redis(frame)
 			if len(faces) > 0:
 				self.__head_adjustement(faces[0].faceRect)
-			time.sleep(0.1)
 
 			self._windowManager.processEvents()
 
@@ -139,6 +138,11 @@ class Cameo(object):
 
 			self._draw_on_image(frame, faces, arrows, circles)
 			self._send_to_redis(frame)
+			if len(faces) > 0:
+				self.__head_adjustement(faces[0].faceRect)
+				#just to make sure 
+				time.sleep(0.5)
+
 			self._pi_capture.truncate(0)
 
 
@@ -156,7 +160,8 @@ class Cameo(object):
 		elif(x < 120):
 			self._vertical_position = ((120-x)/4.8) + self._vertical_position
 
-		self.__sendMessageToRobot()
+		self._robot.move_head_horizontal(self._horizontal_position)
+		self._robot.move_head_vertical(self._vertical_position)
 
 	def _send_to_redis(self,frame):
 		#_, img = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 10])
