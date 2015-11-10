@@ -6,8 +6,8 @@ import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
 import logging
 import ConfigParser
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 from time import sleep
 import json
 from braianDriver.robot import Robot
@@ -39,11 +39,11 @@ class Cameo(object):
 			self._pi_camera.vflip = True
 			self._pi_camera.hflip = True
 			self._pi_camera.drc_strength = "high"
-			self._pi_camera.brightness = 80
-			self._pi_capture = PiRGBArray(self._pi_camera, size = (320, 220))
+			self._pi_camera.brightness = 50
+			self._pi_capture = PiRGBArray(self._pi_camera, size = (320, 240))
 			#warming up camera
 			time.sleep(0.1)
-			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 220),False)
+			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 240),False)
 		else:
 			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
@@ -110,7 +110,7 @@ class Cameo(object):
 
 	def _proccess_on_pi(self):
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
-			#frame = image.array
+			frame = image.array
 			#self._curveFilter.apply(frame, frame)
 			self._faceTracker.update(frame)
 			faces = self._faceTracker.faces
@@ -120,7 +120,7 @@ class Cameo(object):
 				for face in faces:
 					print face.faceRect
 
-			self._arrowTracker.update(frame)
+			#self._arrowTracker.update(frame)
 			arrows = self._arrowTracker.elements
 			if len(arrows) > 0 :
 				log.debug("Arrows tracked: " + str(len(arrows)))
@@ -129,7 +129,7 @@ class Cameo(object):
 
 			#circles
 
-			self._circleTracker.update(frame)
+			#self._circleTracker.update(frame)
 			circles = self._circleTracker.elements
 			if len(circles) > 0 :
 				log.debug("Balls tracked: " + str(len(circles)))
@@ -145,20 +145,19 @@ class Cameo(object):
 
 			self._pi_capture.truncate(0)
 
-
 	def __head_adjustement(self, rect):
-		x = rect[0]
-		y = rect[1]
+		x = rect[0] - (rect[2]/2)
+		y = rect[1] + (rect[3]/2)
 
-		if x > 160:
-			self._horizontal_position = ((x-160)/4.8) + self._horizontal_position
-		elif(x < 160):
-			self._horizontal_position = ((160-x)/4.8) - self._horizontal_position
+		if x < 160:
+			self._horizontal_position = self._horizontal_position - ((x-160)/4.8)
+		elif(x > 160):
+			self._horizontal_position = ((160-x)/4.8) + self._horizontal_position
 
-		if x > 120:
-			self._vertical_position = ((x-120)/4.8) - self._vertical_position
-		elif(x < 120):
-			self._vertical_position = ((120-x)/4.8) + self._vertical_position
+		if y > 120:
+			self._vertical_position = ((y - 120)/4.8) + self._vertical_position
+		elif(y < 120):
+			self._vertical_position = self._vertical_position - ((120 - y)/4.8)
 
 		self._robot.move_head_horizontal(self._horizontal_position)
 		self._robot.move_head_vertical(self._vertical_position)
