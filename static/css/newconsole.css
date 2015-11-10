@@ -12,7 +12,7 @@
 }
 
 body {
-  background: url('/static/img/luna4.jpg');
+  background: url('/static/img/bg-main.jpg');
   background-size: 1300px 900px;
   background-repeat: no-repeat;
   display: compact;
