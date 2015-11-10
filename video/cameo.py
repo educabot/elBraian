@@ -4,12 +4,11 @@ import filters
 from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker, CircleTracker
 import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
-import logging
+import logging, math
 import ConfigParser
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from time import sleep
-import json
 from braianDriver.robot import Robot
 
 config = ConfigParser.ConfigParser()
@@ -146,21 +145,29 @@ class Cameo(object):
 			self._pi_capture.truncate(0)
 
 	def __head_adjustement(self, rect):
+		threashold = 10
+
 		x = rect[0] - (rect[2]/2)
 		y = rect[1] + (rect[3]/2)
 
+		new_vertical_value = self._vertical_position
+		new_horizontal_value = self._horizontal_position
+
 		if x < 160:
-			self._horizontal_position = self._horizontal_position - ((x-160)/4.8)
+			new_horizontal_value = self._horizontal_position - ((x-160)/4.8)
 		elif(x > 160):
-			self._horizontal_position = ((160-x)/4.8) + self._horizontal_position
+			new_horizontal_value = ((160-x)/4.8) + self._horizontal_position
 
 		if y > 120:
-			self._vertical_position = ((y - 120)/4.8) + self._vertical_position
+			new_vertical_value = ((y - 120)/4.8) + self._vertical_position
 		elif(y < 120):
-			self._vertical_position = self._vertical_position - ((120 - y)/4.8)
+			new_vertical_value = self._vertical_position - ((120 - y)/4.8)
 
-		self._robot.move_head_horizontal(self._horizontal_position)
-		self._robot.move_head_vertical(self._vertical_position)
+		if math.fabs(new_vertical_value - self._vertical_position) > threashold or math.fabs(new_horizontal_value - self._horizontal_position) > threashold:
+			self._horizontal_position = new_horizontal_value
+			self._vertical_position = new_vertical_value
+			self._robot.move_head_horizontal(self._horizontal_position)
+			self._robot.move_head_vertical(self._vertical_position)
 
 	def _send_to_redis(self,frame):
 		#_, img = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 10])
@@ -192,15 +199,6 @@ class Cameo(object):
 		else:
 			utils.drawCameraFrame(frame, (640, 480))
 
-
-	def __sendMessageToRobot(self):
-		message = {}
-		message["message"] = "HEAD-MOVE"
-		message["payload"] = {}
-		message["payload"]["head_horizontal"] = self._horizontal_position
-		message["payload"]["head_vertical"] = self._vertical_position
-		self._ws.send(json.dumps(message))
-
 	def onKeyPress(self, keycode):
 		"""
 		space -> take a shoot
@@ -220,7 +218,6 @@ class Cameo(object):
 			self._shouldDrawDebugRects = not self._shouldDrawDebugRects
 		elif keycode == 27: # escape
 			self._windowManager.destroyWindow()
-
 
 
 if __name__ == "__main__":
