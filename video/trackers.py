@@ -34,12 +34,7 @@ class Arrow(Traceable):
 		Traceable.__init__(self)
 
 
-class TurnArrow(Traceable):
-	def __init__(self):
-		Traceable.__init__(self)
-
-
-class Banana(Traceable):
+class TurnLeft(Traceable):
 	def __init__(self):
 		Traceable.__init__(self)
 
@@ -48,6 +43,13 @@ class Circle(Traceable):
 	def __init__(self):
 		Traceable.__init__(self)
 
+class TurnRight(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
+
+class Ball(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
 
 class Tracker(object):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
@@ -193,35 +195,23 @@ class ArrowTracker(Tracker):
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/up_cascade.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/forward_cascade.xml")
 		self._elementRectColor= (0,0,255)
 
 	def _createElement(self):
 		return Arrow()
 
 
-class TurnTracker(Tracker):
+class TurnLeftTracker(Tracker):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/turn_cascade.xml")
-		self._elementRectColor= (255,0,0)
-
-	def _createElement(self):
-		return TurnArrow()
-
-
-class BananaTracker(Tracker):
-	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
-		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/banana_classifier.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/turn_left_cascade.xml")
 		self._elementRectColor= (0,255,0)
 
 	def _createElement(self):
-		return Banana()
+		return TurnLeft()
 
 
 class CircleTracker(Tracker):
@@ -271,3 +261,25 @@ class CircleTracker(Tracker):
 
 		for circle in self._elements:
 			rects.draw_circle(image, circle.rect, elementColor)
+
+class TurnRightTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("video/cascades/turn_right_cascade.xml")
+		self._elementRectColor= (125,125,0)
+
+	def _createElement(self):
+		return TurnRight()
+
+class BallTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("video/cascades/ball_cascade.xml")
+		self._elementRectColor= (0,200,200)
+
+	def _createElement(self):
+		return Ball()

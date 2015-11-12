@@ -1,13 +1,13 @@
 import cv2
 from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
 import filters
-from trackers import FaceTracker, ArrowTracker, BananaTracker, TurnTracker, CircleTracker
+from trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
 import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
 import logging, math
 import ConfigParser
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 from time import sleep
 from braianDriver.robot import Robot
 
@@ -44,14 +44,15 @@ class Cameo(object):
 			time.sleep(0.1)
 			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 240),False)
 		else:
-			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(0), self._windowManager, (640, 480),False)
 
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()
 		self._arrowTracker = ArrowTracker()
-		#self._bananaTracker = BananaTracker()
-		#self._turnTracker = TurnTracker()
+		self._turnLeftTracker = TurnLeftTracker()
 		self._circleTracker = CircleTracker()
+		self._turnRightTracker = TurnRightTracker()
+		self._ballTracker = BallTracker()
 		self._shouldDrawDebugRects = True
 		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 		self._vertical_position = 0
@@ -87,6 +88,31 @@ class Cameo(object):
 				for arrow in arrows:
 					print arrow.rect
 
+			#turn left
+			self._turnLeftTracker.update(frame)
+			turns_left = self._turnLeftTracker.elements
+			if len(turns_left) > 0:
+				log.debug("Turn Left detected " + str(len(turns_left)))
+				for turn in turns_left:
+					print turn.rect
+
+			#turn Right
+			self._turnRightTracker.update(frame)
+			turns_right = self._turnRightTracker.elements
+			if len(turns_right) > 0:
+				log.debug("Turn Right detected " + str(len(turns_right)))
+				for turn in turns_right:
+					print turn.rect
+
+
+			#Ball
+			self._ballTracker.update(frame)
+			balls = self._ballTracker.elements
+			if len(balls) > 0:
+				log.debug("Turn Right detected " + str(len(balls)))
+				for ball in balls:
+					print ball.rect
+
 			#circles
 
 			self._circleTracker.update(frame)
@@ -106,6 +132,7 @@ class Cameo(object):
 				self.__head_adjustement(faces[0].faceRect)
 
 			self._windowManager.processEvents()
+			time.sleep(0.2)
 
 	def _proccess_on_pi(self):
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
@@ -189,10 +216,11 @@ class Cameo(object):
 
 		if self._shouldDrawDebugRects:
 			self._faceTracker.drawDebugRects(frame)
-			#self._arrowTracker.drawDebugRects(frame)
-			#self._circleTracker.drawDebug(frame)
-			#self._bananaTracker.drawDebugRects(frame)
-			#self._turnTracker.drawDebugRects(frame)
+			self._arrowTracker.drawDebugRects(frame)
+			self._circleTracker.drawDebug(frame)
+			self._turnLeftTracker.drawDebugRects(frame)
+			self._turnRightTracker.drawDebugRects(frame)
+			self._ballTracker.drawDebugRects(frame)
 
 		if size is None or self._type != "pi":
 			utils.drawCameraFrame(frame, self._captureManager.size)
