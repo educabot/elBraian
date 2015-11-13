@@ -58,6 +58,9 @@ class Cameo(object):
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._robot = Robot()
+		self._forward_counter = 0
+		self._turn_right_counter = 0
+		self._turn_left_counter = 0
 
 	def run(self):
 		if self._type == "pi":
@@ -67,69 +70,81 @@ class Cameo(object):
 				self._windowManager.createWindow()
 			self._proccess_on_dev()
 
+	def _track(self, frame):
+		self._faceTracker.update(frame)
+		faces = self._faceTracker.faces
+		if len(faces) > 0:
+			log.debug("Faces tracked: " + str(len(faces)))
+			for face in faces:
+				print face.faceRect
+
+		self._arrowTracker.update(frame)
+		arrows = self._arrowTracker.elements
+		if len(arrows) > 0 :
+			self._forward_counter = self._forward_counter + 1
+			log.debug("Arrows tracked: " + str(len(arrows)))
+			for arrow in arrows:
+				print arrow.rect
+		else:
+			self._forward_counter = 0
+
+
+		#turn left
+		self._turnLeftTracker.update(frame)
+		turns_left = self._turnLeftTracker.elements
+		if len(turns_left) > 0:
+			self._turn_left_counter = self._turn_left_counter + 1
+			log.debug("Turn Left detected " + str(len(turns_left)))
+			for turn in turns_left:
+				print turn.rect
+		else:
+			self._turn_left_counter = 0
+
+		#turn Right
+		self._turnRightTracker.update(frame)
+		turns_right = self._turnRightTracker.elements
+		if len(turns_right) > 0:
+			self._turn_right_counter = self._turn_right_counter + 1
+			log.debug("Turn Right detected " + str(len(turns_right)))
+			for turn in turns_right:
+				print turn.rect
+		else:
+			self._turn_right_counter = 0
+
+		#perform the proper action
+		if self._forward_counter >=3:
+			self._take_action("forward")
+		elif self._turn_right_counter >=3:
+			self._take_action("turn_right")
+
+		#Ball
+		#self._ballTracker.update(frame)
+		balls = self._ballTracker.elements
+		if len(balls) > 0:
+			log.debug("Turn Right detected " + str(len(balls)))
+			for ball in balls:
+				print ball.rect
+
+		#circles
+
+		#self._circleTracker.update(frame)
+		circles = self._circleTracker.elements
+		if len(circles) > 0 :
+			log.debug("Balls tracked: " + str(len(circles)))
+			for circle in circles:
+				print circle.rect
+		self._draw_on_image(frame, faces, arrows, circles)
+
+
 	def _proccess_on_dev(self):
 		while self._windowManager is not None and self._windowManager.isWindowCreated:
 			self._captureManager.enterFrame()
 			frame = self._captureManager.frame
-
-			#filters.strokeEdges(frame, frame)
-			#self._curveFilter.apply(frame, frame)
-
-			self._faceTracker.update(frame)
-			faces = self._faceTracker.faces
-			if len(faces) > 0:
-				log.debug("Faces tracked: " + str(len(faces)))
-				for face in faces:
-					print face.faceRect
-			self._arrowTracker.update(frame)
-			arrows = self._arrowTracker.elements
-			if len(arrows) > 0 :
-				log.debug("Arrows tracked: " + str(len(arrows)))
-				for arrow in arrows:
-					print arrow.rect
-
-			#turn left
-			self._turnLeftTracker.update(frame)
-			turns_left = self._turnLeftTracker.elements
-			if len(turns_left) > 0:
-				log.debug("Turn Left detected " + str(len(turns_left)))
-				for turn in turns_left:
-					print turn.rect
-
-			#turn Right
-			self._turnRightTracker.update(frame)
-			turns_right = self._turnRightTracker.elements
-			if len(turns_right) > 0:
-				log.debug("Turn Right detected " + str(len(turns_right)))
-				for turn in turns_right:
-					print turn.rect
-
-
-			#Ball
-			self._ballTracker.update(frame)
-			balls = self._ballTracker.elements
-			if len(balls) > 0:
-				log.debug("Turn Right detected " + str(len(balls)))
-				for ball in balls:
-					print ball.rect
-
-			#circles
-
-			self._circleTracker.update(frame)
-			circles = self._circleTracker.elements
-			if len(circles) > 0 :
-				log.debug("Balls tracked: " + str(len(circles)))
-				for circle in circles:
-					print circle.rect
-
-			self._draw_on_image(frame, faces, arrows, circles)
+			self._track(frame)
 			self._captureManager.exitFrame()
-			'''
-			Also, we need to send this frame to a new specific directory to be delivered
-			'''
 			self._send_to_redis(frame)
-			if len(faces) > 0:
-				self.__head_adjustement(faces[0].faceRect)
+			#if len(faces) > 0:
+				#self.__head_adjustement(faces[0].faceRect)
 
 			self._windowManager.processEvents()
 			time.sleep(0.2)
@@ -137,35 +152,10 @@ class Cameo(object):
 	def _proccess_on_pi(self):
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
 			frame = image.array
-			#self._curveFilter.apply(frame, frame)
-			self._faceTracker.update(frame)
-			faces = self._faceTracker.faces
-
-			if len(faces) > 0:
-				log.debug("Faces tracked: " + str(len(faces)))
-				for face in faces:
-					print face.faceRect
-
-			#self._arrowTracker.update(frame)
-			arrows = self._arrowTracker.elements
-			if len(arrows) > 0 :
-				log.debug("Arrows tracked: " + str(len(arrows)))
-				for arrow in arrows:
-					print arrow.rect
-
-			#circles
-
-			#self._circleTracker.update(frame)
-			circles = self._circleTracker.elements
-			if len(circles) > 0 :
-				log.debug("Balls tracked: " + str(len(circles)))
-				for circle in circles:
-					print circle.rect
-
-			self._draw_on_image(frame, faces, arrows, circles)
+			self._track(frame)
 			self._send_to_redis(frame)
 			if len(faces) > 0:
-				self.__head_adjustement(faces[0].faceRect)
+				#self.__head_adjustement(faces[0].faceRect)
 				#just to make sure
 				time.sleep(0.5)
 
@@ -226,6 +216,24 @@ class Cameo(object):
 			utils.drawCameraFrame(frame, self._captureManager.size)
 		else:
 			utils.drawCameraFrame(frame, (640, 480))
+
+	def _take_action(self, action):
+		if action == "forward":
+			self._robot.set_forward()
+			self._robot.move(speed=Robot.SPEED_MEDIUM)
+			sleep(1)
+			self._robot.stop()
+		elif action == "turn_right":
+			self._robot.set_rotate_right()
+			self._robot.move(speed=Robot.SPEED_MEDIUM)
+			sleep(1)
+			self._robot.stop()
+		elif action == "turn_left":
+			self._robot.set_rotate_right()
+			self._robot.move(speed=Robot.SPEED_MEDIUM)
+			sleep(1)
+			self._robot.stop()
+
 
 	def onKeyPress(self, keycode):
 		"""
