@@ -154,10 +154,10 @@ class Cameo(object):
 			frame = image.array
 			self._track(frame)
 			self._send_to_redis(frame)
-			if len(faces) > 0:
+			#if len(faces) > 0:
 				#self.__head_adjustement(faces[0].faceRect)
 				#just to make sure
-				time.sleep(0.5)
+			#	time.sleep(0.5)
 
 			self._pi_capture.truncate(0)
 
