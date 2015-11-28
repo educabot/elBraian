@@ -6,10 +6,14 @@ import utils, rects, sys, time, numpy as np, redis
 from datetime import datetime
 import logging, math
 import ConfigParser
-#from picamera.array import PiRGBArray
-#from picamera import PiCamera
 from time import sleep
 from braianDriver.robot import Robot
+try:
+	from picamera.array import PiRGBArray
+	from picamera import PiCamera
+except Exception as e:
+	PiCamera = None
+	PiRGBArray = None
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -44,7 +48,7 @@ class Cameo(object):
 			time.sleep(0.1)
 			self._captureManager = CaptureManagerPiCamera(self._pi_camera, self._pi_capture, None, (320, 240),False)
 		else:
-			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(0), self._windowManager, (640, 480),False)
+			self._captureManager = CaptureManagerOpenCV(cv2.VideoCapture(1), self._windowManager, (640, 480),False)
 
 		self._curveFilter = filters.BGRPortraCurveFilter()
 		self._faceTracker = FaceTracker()

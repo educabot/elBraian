@@ -27,7 +27,7 @@ pts = deque(maxlen=args["buffer"])
 # if a video path was not supplied, grab the reference
 # to the webcam
 if not args.get("video", False):
-	camera = cv2.VideoCapture(1)
+	camera = cv2.VideoCapture(0)
 
 # otherwise, grab a reference to the video file
 else:
