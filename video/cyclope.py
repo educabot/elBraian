@@ -30,7 +30,7 @@ log.addHandler(file_handler)
 log.addHandler(console_handler)
 
 
-class Cameo(object):
+class Cyclope(object):
 
 	def __init__(self, type):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
@@ -261,4 +261,4 @@ class Cameo(object):
 
 
 if __name__ == "__main__":
-	Cameo(sys.argv[1]).run()
+	Cyclope(sys.argv[1]).run()
