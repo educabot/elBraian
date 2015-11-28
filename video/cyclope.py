@@ -68,6 +68,10 @@ class Cyclope(object):
 		self._turn_left_counter = 0
 
 	def run(self):
+		"""
+		Start the loop
+		Will need to change that and use event loop provided by async library
+		"""
 		if self._type == "pi":
 			self._proccess_on_pi()
 		else:
@@ -76,6 +80,14 @@ class Cyclope(object):
 			self._proccess_on_dev()
 
 	def _track(self, frame):
+		"""
+		Perform the opencv tracking for every tracker defined in the class
+		Every tracker returns an array of rect which will be use for drawing
+		Args:
+			frame: Np array object given by opencv
+		Returns:
+			Nothing
+		"""
 		self._faceTracker.update(frame)
 		faces = self._faceTracker.faces
 		if len(faces) > 0:
@@ -142,6 +154,8 @@ class Cyclope(object):
 
 
 	def _proccess_on_dev(self):
+		""" This is the event Loop for dev environment"""
+
 		while self._windowManager is not None and self._windowManager.isWindowCreated:
 			self._captureManager.enterFrame()
 			frame = self._captureManager.frame
@@ -155,6 +169,8 @@ class Cyclope(object):
 			time.sleep(0.2)
 
 	def _proccess_on_pi(self):
+		"""Event loop for actual production environment aka, PI"""
+
 		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
 			frame = image.array
 			self._track(frame)
@@ -167,6 +183,16 @@ class Cyclope(object):
 			self._pi_capture.truncate(0)
 
 	def __head_adjustement(self, rect):
+		"""
+		Perform the positioning to head
+
+		Args:
+			rect: the actual position of the detected object expressed: [x,y,h,w]
+				where x and y are the start point of the rect starting from upper left corner
+				Therefore, "h"eigh and "w"idth end the rect shape
+		Returns:
+			Nothing
+		"""
 		threashold = 10
 
 		x = rect[0] - (rect[2]/2)
@@ -192,6 +218,7 @@ class Cyclope(object):
 			self._robot.move_head_vertical(self._vertical_position)
 
 	def _send_to_redis(self,frame):
+		""" Send given frame.data property to redis """
 		_, img = cv2.imencode(".jpg", frame)
 		try:
 			self._redis_client.set("vigilante_screenshot", img.data)
@@ -200,6 +227,7 @@ class Cyclope(object):
 			sys.exit(0)
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
+		""" Draw given arrayc rect on the same given frame """
 		#utils.draw_str(frame, (25,40), datetime.now().isoformat())
 		if len(faces) > 0 :
 			utils.draw_str(frame, (25,60), "Human [" + str(len(faces)) + "]")
@@ -226,6 +254,14 @@ class Cyclope(object):
 			utils.drawCameraFrame(frame, (640, 480))
 
 	def _take_action(self, action):
+		"""
+		Given a string perfom the proper action on the actual robot
+		using Robot Class from driver
+		Args:
+			action: String containing the action to perform. Nasty
+		Returns:
+			Nothing
+		"""
 		if action == "forward":
 			self._robot.set_forward()
 			self._robot.move(speed=Robot.SPEED_MEDIUM)
