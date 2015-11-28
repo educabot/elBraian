@@ -2,7 +2,8 @@ import cv2
 from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
 import filters
 from trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
-import utils, rects, sys, time, numpy as np, redis
+import utils, rects, sys, time, numpy as np, redis, sys
+from redis.exceptions import ConnectionError
 from datetime import datetime
 import logging, math
 import ConfigParser
@@ -11,7 +12,7 @@ from braianDriver.robot import Robot
 try:
 	from picamera.array import PiRGBArray
 	from picamera import PiCamera
-except Exception as e:
+except ImportError as e:
 	PiCamera = None
 	PiRGBArray = None
 
@@ -191,9 +192,12 @@ class Cyclope(object):
 			self._robot.move_head_vertical(self._vertical_position)
 
 	def _send_to_redis(self,frame):
-		#_, img = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 10])
 		_, img = cv2.imencode(".jpg", frame)
-		self._redis_client.set("vigilante_screenshot", img.data)
+		try:
+			self._redis_client.set("vigilante_screenshot", img.data)
+		except ConnectionError as e:
+			log.error("Error connecting to redis")
+			sys.exit(0)
 
 	def _draw_on_image(self,frame, faces, arrows, circles, size=None):
 		#utils.draw_str(frame, (25,40), datetime.now().isoformat())
