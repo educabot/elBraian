@@ -1,6 +1,7 @@
 import cv2
 import rects
 import utils
+import numpy as np
 
 
 class Traceable(object):
@@ -33,15 +34,22 @@ class Arrow(Traceable):
 		Traceable.__init__(self)
 
 
-class TurnArrow(Traceable):
+class TurnLeft(Traceable):
 	def __init__(self):
 		Traceable.__init__(self)
 
 
-class Banana(Traceable):
+class Circle(Traceable):
 	def __init__(self):
 		Traceable.__init__(self)
 
+class TurnRight(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
+
+class Ball(Traceable):
+	def __init__(self):
+		Traceable.__init__(self)
 
 class Tracker(object):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
@@ -58,7 +66,7 @@ class Tracker(object):
 	def elements(self):
 		return self._elements
 
-	
+
 	def update(self, image):
 		self._elements = []
 		if self._classifier is None:
@@ -68,7 +76,7 @@ class Tracker(object):
 
 		elementsRects = self._classifier.detectMultiScale(image, self.scaleFactor,
 			self.minNeighbors, self.flags, minSize)
-		
+
 		if elementsRects is not None:
 			for elementRect in elementsRects:
 				element = self._createElement()
@@ -97,16 +105,16 @@ class Tracker(object):
 
 
 	def drawDebugRects(self, image):
-		
+
 		if self._elementRectColor is None:
 			raise Exception("Element color for this tracker need to be set.")
 
 		if utils.isGray(image):
 			elementColor = 255
-		
+
 		else:
 			elementColor = self._elementRectColor
-		
+
 
 		for element in self._elements:
 			rects.outlineRect(image, element.rect, elementColor)
@@ -138,7 +146,7 @@ class FaceTracker(Tracker):
 			image = cv2.cvtColor(image, cv2.cv.CV_BGR2GRAY)
 			cv2.equalizeHist(image, image)
 
-		minSize = utils.widthHeightDivideBy(image, 4)
+		minSize = utils.widthHeightDivideBy(image, 6)
 		faceRects = self._faceClassifier.detectMultiScale(image, self.scaleFactor,
 			self.minNeighbors, self.flags, minSize)
 
@@ -149,15 +157,15 @@ class FaceTracker(Tracker):
 
 				x, y, w, h = faceRect
 
-				face.center = ( x + w/2 , y + h/2) 
+				face.center = ( x + w/2 , y + h/2)
 
 				#search an eye at the upper-left sector
 				#searchRect = (x+w/7, y, w*2/7, h/2)
-				#face.leftEyeRect = self._detectOneObject(self._eyeClassifier, image, 
+				#face.leftEyeRect = self._detectOneObject(self._eyeClassifier, image,
 				#	searchRect, 64)
 
 				#searchRect = (x+w/4, y, w*2/7, h/2)
-				#face.rightEyeRect = self._detectOneObject(self._eyeClassifier, image, 
+				#face.rightEyeRect = self._detectOneObject(self._eyeClassifier, image,
 				#	searchRect, 64)
 
 				#TODO: implement nose detection
@@ -187,32 +195,91 @@ class ArrowTracker(Tracker):
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/up_cascade.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/forward_cascade.xml")
 		self._elementRectColor= (0,0,255)
-	
+
 	def _createElement(self):
 		return Arrow()
 
 
-class TurnTracker(Tracker):
+class TurnLeftTracker(Tracker):
 	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
 		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
 			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/turn_cascade.xml")
-		self._elementRectColor= (255,0,0)
-	
-	def _createElement(self):
-		return TurnArrow()
-
-
-class BananaTracker(Tracker):
-	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
-		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
-			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
-		self._classifier = cv2.CascadeClassifier("video/cascades/banana_classifier.xml")
+		self._classifier = cv2.CascadeClassifier("video/cascades/turn_left_cascade.xml")
 		self._elementRectColor= (0,255,0)
-	
+
 	def _createElement(self):
-		return Banana()
+		return TurnLeft()
+
+
+class CircleTracker(Tracker):
+	def __init__(self):
+		self._elementRectColor= (0,0,255)
+		self._elements = []
+
+	def _createElement(self):
+		return Circle()
+
+
+	def update(self, image):
+		self._elements = []
+		greenLower = np.array([29, 86, 6])
+		greenUpper = np.array([64, 255, 255])
+		blurred = cv2.GaussianBlur(image, (11, 11), 0)
+		hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+		mask = cv2.inRange(hsv, greenLower, greenUpper)
+		mask = cv2.erode(mask, None, iterations=2)
+		mask = cv2.dilate(mask, None, iterations=2)
+
+		cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+			cv2.CHAIN_APPROX_SIMPLE)[-2]
+		center = None
+
+		if len(cnts) > 0:
+			c = max(cnts, key=cv2.contourArea)
+			((x, y), radius) = cv2.minEnclosingCircle(c)
+			M = cv2.moments(c)
+			center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+
+			if radius > 10:
+				element = self._createElement()
+				element.rect = (x, y, radius, center)
+				self._elements.append(element)
+
+	def drawDebug(self, image):
+		if self._elementRectColor is None:
+			raise Exception("Element color for this tracker need to be set.")
+
+		if utils.isGray(image):
+			elementColor = 255
+
+		else:
+			elementColor = self._elementRectColor
+
+		for circle in self._elements:
+			rects.draw_circle(image, circle.rect, elementColor)
+
+class TurnRightTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("video/cascades/turn_right_cascade.xml")
+		self._elementRectColor= (125,125,0)
+
+	def _createElement(self):
+		return TurnRight()
+
+class BallTracker(Tracker):
+	def __init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+		flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT):
+		Tracker.__init__(self, scaleFactor = 1.2, minNeighbors = 2, \
+			flags = cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+		self._classifier = cv2.CascadeClassifier("video/cascades/ball_cascade.xml")
+		self._elementRectColor= (0,200,200)
+
+	def _createElement(self):
+		return Ball()

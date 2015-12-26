@@ -69,7 +69,7 @@ def widthHeightDivideBy(image, divisor):
 
 
 def draw_str(dst, (x, y), s):
-    cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 2, lineType=cv2.CV_AA)
+    cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 1, lineType=cv2.CV_AA)
     cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
 
 
@@ -92,4 +92,4 @@ def drawCameraFrame(frame, size):
 	rects.outlineRect(frame, (width-20, height- 80, 0, 60) ,(0, 255 , 0))
 	rects.outlineRect(frame, (width-80, height- 20, 60, 0) ,(0, 255 , 0))
 
-	draw_str(frame,(width-200, height - 40), "elBraian perspective")
+	#draw_str(frame,(width-200, height - 40), "elBraian perspective")

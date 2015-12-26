@@ -11,8 +11,12 @@ from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
 import logging
 import json
+
 from utils.poolsockets import PoolWebSocketHandler
 from time import sleep
+import cv2
+import redis, numpy as np
+from tornado import gen
 
 config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
@@ -28,11 +32,12 @@ file_handler.setFormatter(formatter)
 log.addHandler(file_handler)
 
 sockets =  PoolWebSocketHandler()
+socketsVigilante = PoolWebSocketHandler()
 
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
-		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
-		self.render('index.jade', pic_url=pic_url)
+		home = config.get("web","home")
+		self.render('index.jade', host_url = home)
 
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
@@ -138,13 +143,6 @@ class RobotHandler(tornado.websocket.WebSocketHandler):
 				self.ROBOT.move_head_vertical(message_obj["payload"]["head_vertical"])
 
 
-class CameraHandler(tornado.websocket.WebSocketHandler):
-	def open(self):
-		self.write_message("connected to de camera")
-
-	def start_transmitVideo(self):
-		pass
-
 class ConsoleHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('console.jade', code='')
@@ -170,8 +168,32 @@ class ScratchConsole(tornado.web.RequestHandler):
 		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('scratch.jade', pic_url=pic_url)
 
+class StreamHandler(tornado.web.RequestHandler):
+	def initialize(self, redis_client):
+		self._redis_client = redis_client
+
+	@tornado.web.asynchronous
+	@gen.coroutine
+	def get(self):
+		loop = tornado.ioloop.IOLoop.current()
+		my_boundary = "vigilante"
+		self.set_status(200)
+		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
+		while True:
+			data = self._redis_client.get("vigilante_screenshot")
+			self.write( '--'+ my_boundary + '\r\n')
+			self.write("Content-type: image/jpeg\r\n")
+			self.write("Content-length: %s\r\n\r\n" % len(str(data)))
+			self.write(data)
+			self.write('\r\n')
+			self.write('--' + my_boundary + '\r\n')
+			sleep(0.2)
+			yield gen.Task(self.flush)
+
+
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
+	redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 	app = tornado.web.Application(
 		handlers=[
 			(r"/",IndexHandler),
@@ -180,6 +202,7 @@ if __name__ == '__main__':
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
 			(r"/consola", WrongConsole),
+			(r"/stream", StreamHandler, dict(redis_client=redis_client)),
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
