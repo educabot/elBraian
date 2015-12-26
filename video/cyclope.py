@@ -144,7 +144,7 @@ class Cyclope(object):
 
 		#circles
 
-		#self._circleTracker.update(frame)
+		self._circleTracker.update(frame)
 		circles = self._circleTracker.elements
 		if len(circles) > 0 :
 			log.debug("Balls tracked: " + str(len(circles)))
@@ -171,7 +171,7 @@ class Cyclope(object):
 	def _proccess_on_pi(self):
 		"""Event loop for actual production environment aka, PI"""
 
-		for image in self._pi_camera.capture_continuous(self._pi_capture, format="bgr", use_video_port=True):
+		for image in self._pi_camera.capture_continuous(self._pi_capture, format="jpeg", use_video_port=True, quality=20):
 			frame = image.array
 			self._track(frame)
 			self._send_to_redis(frame)
