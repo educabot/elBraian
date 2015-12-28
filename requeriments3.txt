@@ -1,0 +1,15 @@
+Pygments
+pudb
+pyjade
+tornado
+urwids
+PyYAML
+argh
+numpy
+pathtools
+#picamera
+scipy
+Pillow
+websocket-client
+#RPi.GPIO==0.5.3a
+#RPIO==0.10.0
