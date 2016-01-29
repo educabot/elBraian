@@ -1,8 +1,8 @@
-import configparser, os
+import ConfigParser, os
 import logging
 from time import sleep
 
-config = configparser.ConfigParser()
+config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
 env = config.get("system","env")
 
@@ -183,7 +183,7 @@ class Robot(object):
 	def move(self, speed=None, arc=None):
 		
 		if (speed and arc):
-			print("Error: speed and arc could not be setted up at the same time")
+			print "Error: speed and arc could not be setted up at the same time"
 			return
 
 		if env == "prod":

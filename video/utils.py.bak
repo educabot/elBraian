@@ -1,7 +1,7 @@
 import cv2
 import numpy
 import scipy.interpolate
-from . import rects
+import rects
 
 
 def createCurveFunc(points):
@@ -11,7 +11,7 @@ def createCurveFunc(points):
 	numPoints = len(points)
 	if numPoints < 2:
 		return None
-	xs, ys = list(zip(*points))
+	xs, ys = zip(*points)
 
 	if numPoints < 4:
 		kind = 'linear'
@@ -68,8 +68,7 @@ def widthHeightDivideBy(image, divisor):
 	return (w/divisor, h/divisor)
 
 
-def draw_str(dst, xxx_todo_changeme, s):
-    (x, y) = xxx_todo_changeme
+def draw_str(dst, (x, y), s):
     cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 1, lineType=cv2.CV_AA)
     cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
 

@@ -1,12 +1,12 @@
 import cv2
-from .managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
-from . import filters
-from .trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
+from managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
+import filters
+from trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
 import utils, rects, sys, time, numpy as np, redis, sys
 from redis.exceptions import ConnectionError
 from datetime import datetime
 import logging, math
-import configparser
+import ConfigParser
 from time import sleep
 from braianDriver.robot import Robot
 try:
@@ -16,7 +16,7 @@ except ImportError as e:
 	PiCamera = None
 	PiRGBArray = None
 
-config = configparser.ConfigParser()
+config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
 env = config.get("system","env")
 
@@ -93,7 +93,7 @@ class Cyclope(object):
 		if len(faces) > 0:
 			log.debug("Faces tracked: " + str(len(faces)))
 			for face in faces:
-				print(face.faceRect)
+				print face.faceRect
 
 		self._arrowTracker.update(frame)
 		arrows = self._arrowTracker.elements
@@ -101,7 +101,7 @@ class Cyclope(object):
 			self._forward_counter = self._forward_counter + 1
 			log.debug("Arrows tracked: " + str(len(arrows)))
 			for arrow in arrows:
-				print(arrow.rect)
+				print arrow.rect
 		else:
 			self._forward_counter = 0
 
@@ -113,7 +113,7 @@ class Cyclope(object):
 			self._turn_left_counter = self._turn_left_counter + 1
 			log.debug("Turn Left detected " + str(len(turns_left)))
 			for turn in turns_left:
-				print(turn.rect)
+				print turn.rect
 		else:
 			self._turn_left_counter = 0
 
@@ -124,7 +124,7 @@ class Cyclope(object):
 			self._turn_right_counter = self._turn_right_counter + 1
 			log.debug("Turn Right detected " + str(len(turns_right)))
 			for turn in turns_right:
-				print(turn.rect)
+				print turn.rect
 		else:
 			self._turn_right_counter = 0
 
@@ -140,7 +140,7 @@ class Cyclope(object):
 		if len(balls) > 0:
 			log.debug("Turn Right detected " + str(len(balls)))
 			for ball in balls:
-				print(ball.rect)
+				print ball.rect
 
 		#circles
 
@@ -149,7 +149,7 @@ class Cyclope(object):
 		if len(circles) > 0 :
 			log.debug("Balls tracked: " + str(len(circles)))
 			for circle in circles:
-				print(circle.rect)
+				print circle.rect
 		self._draw_on_image(frame, faces, arrows, circles)
 
 

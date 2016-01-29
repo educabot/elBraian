@@ -1,6 +1,6 @@
 import cv2
 import numpy
-from . import utils
+import utils
 
 
 def recolorRC(src, dst):
