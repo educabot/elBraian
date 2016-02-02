@@ -31,7 +31,7 @@ log.addHandler(file_handler)
 log.addHandler(console_handler)
 
 
-class Cyclope(object):
+class Ocula(object):
 
 	def __init__(self, type):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
@@ -301,4 +301,4 @@ class Cyclope(object):
 
 
 if __name__ == "__main__":
-	Cyclope(sys.argv[1]).run()
+	Ocula(sys.argv[1]).run()

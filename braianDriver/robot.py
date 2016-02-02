@@ -18,7 +18,7 @@ elif logger_level == "WARNING":
 
 handler = logging.StreamHandler()
 file_handler = logging.FileHandler('/var/tmp/braian.log')
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s") 
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 if env == 'prod':
 	file_handler.setFormatter(formatter)
@@ -33,9 +33,10 @@ if env == "prod":
 	import RPi.GPIO as gpio
 	import RPIO.PWM as pwm
 
+exciting_matrix = [(0,0,0,0),(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)]
 
 class Robot(object):
-	SPEED_HIGH = int(config.get("robot.speed","speed_high"))  
+	SPEED_HIGH = int(config.get("robot.speed","speed_high"))
 	SPEED_MEDIUM = int(config.get("robot.speed","speed_medium"))
 	SPEED_LOW = int(config.get("robot.speed","speed_low"))
 
@@ -47,32 +48,44 @@ class Robot(object):
 	RIGHT_ARC_OPEN = eval(config.get("robot.speed","right_arc_open"))
 
 	#Pin pair left
-	FORWARD_LEFT_PIN = int(config.get("robot.gpio","forward_left_pin"))
-	BACKWARD_LEFT_PIN = int(config.get("robot.gpio","backward_left_pin"))
+	FORWARD_LEFT_PIN = int(config.get("robot.board.v1","forward_left_pin"))
+	BACKWARD_LEFT_PIN = int(config.get("robot.board.v1","backward_left_pin"))
 
 	#Pin pair right
-	FORWARD_RIGHT_PIN = int(config.get("robot.gpio","forward_right_pin"))
-	BACKWARD_RIGHT_PIN = int(config.get("robot.gpio","backward_right_pin"))
+	FORWARD_RIGHT_PIN = int(config.get("robot.board.v1","forward_right_pin"))
+	BACKWARD_RIGHT_PIN = int(config.get("robot.board.v1","backward_right_pin"))
 
 	#PWM PINS
-	PWM_LEFT_PIN = int(config.get("robot.gpio","pwm_left_pin"))
-	PWM_RIGHT_PIN = int(config.get("robot.gpio","pwm_right_pin"))
+	PWM_LEFT_PIN = int(config.get("robot.board.v1","pwm_left_pin"))
+	PWM_RIGHT_PIN = int(config.get("robot.board.v1","pwm_right_pin"))
 
 	#Frecuency by hertz
-	FRECUENCY = int(config.get("robot.gpio","frecuency"))
+	FRECUENCY = int(config.get("robot.board.v1","frecuency"))
 
 	# Cycles fits for pwm cycles
-	LEFT_CYCLES_FIT = int(config.get("robot.gpio","left_cycles_fit"))
-	RIGHT_CYCLES_FIT = int(config.get("robot.gpio","right_cycles_fit"))
+	LEFT_CYCLES_FIT = int(config.get("robot.board.v1","left_cycles_fit"))
+	RIGHT_CYCLES_FIT = int(config.get("robot.board.v1","right_cycles_fit"))
 
 	#Pin settings for head control
-	HEAD_HORIZONTAL_PIN = int(config.get("robot.gpio","head_pwm_pin_horizontal_axis"))
-	HEAD_VERTICAL_PIN = int(config.get("robot.gpio","head_pwm_pin_vertical_axis"))
-	HEAD_HORIZONTAL_RANGE = config.get("robot.gpio","head_horizontal_range").split(",")
-	HEAD_VERTICAL_RANGE = config.get("robot.gpio","head_vertical_range").split(",")
+	HEAD_HORIZONTAL_PIN = int(config.get("robot.board.v1","head_pwm_pin_horizontal_axis"))
+	HEAD_VERTICAL_PIN = int(config.get("robot.board.v1","head_pwm_pin_vertical_axis"))
+	HEAD_HORIZONTAL_RANGE = config.get("robot.board.v1","head_horizontal_range").split(",")
+	HEAD_VERTICAL_RANGE = config.get("robot.board.v1","head_vertical_range").split(",")
 
-	RIGHT_WHEEL_SENSOR = int(config.get("robot.gpio","right_wheel_sensor"))
-	LEFT_WHEEL_SENSOR = int(config.get("robot.gpio", "left_wheel_sensor"))
+	RIGHT_WHEEL_SENSOR = int(config.get("robot.board.v1","right_wheel_sensor"))
+	LEFT_WHEEL_SENSOR = int(config.get("robot.board.v1", "left_wheel_sensor"))
+
+	CONTROLLER_BOARD = config.get("robot.controller", "board")
+	WHEEL_LEFT_COIL1 = int(config.get("robot.board.v2", "wheel_left_pin1"))
+	WHEEL_LEFT_COIL2 = int(config.get("robot.board.v2", "wheel_left_pin2"))
+	WHEEL_LEFT_COIL3 = int(config.get("robot.board.v2", "wheel_left_pin3"))
+	WHEEL_LEFT_COIL4 = int(config.get("robot.board.v2", "wheel_left_pin4"))
+
+	WHEEL_RIGHT_COIL1 = int(config.get("robot.board.v2", "wheel_right_pin1"))
+	WHEEL_RIGHT_COIL2 = int(config.get("robot.board.v2", "wheel_right_pin1"))
+	WHEEL_RIGHT_COIL3 = int(config.get("robot.board.v2", "wheel_right_pin1"))
+	WHEEL_RIGHT_COIL4 = int(config.get("robot.board.v2", "wheel_right_pin1"))
+
 
 	SERVO = None
 
@@ -85,19 +98,32 @@ class Robot(object):
 
 			gpio.setmode(gpio.BOARD)
 
-			##Left Side
-			gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
-			gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
-			## Setting both to True to force stopping wheels
-			gpio.output(self.FORWARD_LEFT_PIN,True)
-			gpio.output(self.BACKWARD_LEFT_PIN,True)
+			if self.CONTROLLER_BOARD == "v1":
 
-			##Right Side
-			gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
-			gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
-			## Setting both to True to force stopping wheels
-			gpio.output(self.FORWARD_RIGHT_PIN,True)
-			gpio.output(self.BACKWARD_RIGHT_PIN,True)
+				##Left Side
+				gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
+				gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
+				## Setting both to True to force stopping wheels
+				gpio.output(self.FORWARD_LEFT_PIN,True)
+				gpio.output(self.BACKWARD_LEFT_PIN,True)
+
+				##Right Side
+				gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
+				gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
+				## Setting both to True to force stopping wheels
+				gpio.output(self.FORWARD_RIGHT_PIN,True)
+				gpio.output(self.BACKWARD_RIGHT_PIN,True)
+
+			if self.CONTROLLER_BOARD == "v2":
+				gpio.setup(sef.WHEEL_LEFT_COIL1, gpio.OUT)
+				gpio.setup(sef.WHEEL_LEFT_COIL2, gpio.OUT)
+				gpio.setup(sef.WHEEL_LEFT_COIL3, gpio.OUT)
+				gpio.setup(sef.WHEEL_LEFT_COIL4, gpio.OUT)
+
+				gpio.setup(sef.WHEEL_RIGHT_COIL1, gpio.OUT)
+				gpio.setup(sef.WHEEL_RIGHT_COIL2, gpio.OUT)
+				gpio.setup(sef.WHEEL_RIGHT_COIL3, gpio.OUT)
+				gpio.setup(sef.WHEEL_RIGHT_COIL4, gpio.OUT)
 
 			#PWM
 			gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
@@ -109,12 +135,13 @@ class Robot(object):
 			# head
 			self.SERVO = pwm.Servo(pulse_incr_us=1)
 
-				
+
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
 		self.center_head()
 		self._counting_steps = 0
 		self._current_steps = 0
+		self._stepper_current_step = 0
 
 	def _set_left_forward(self):
 		gpio.output(self.FORWARD_LEFT_PIN, True)
@@ -151,13 +178,13 @@ class Robot(object):
 		if env == "prod":
 			self._set_left_forward()
 			self._set_right_forward()
-		
+
 
 	def set_backward(self):
 		log.debug("setting movement to backward")
 		if env == "prod":
 			self._set_left_backward()
-			self._set_right_backward() 
+			self._set_right_backward()
 
 
 	def set_rotate_left(self):
@@ -180,8 +207,14 @@ class Robot(object):
 			self.pwm_left.stop()
 			self.pwm_right.stop()
 
-	def move(self, speed=None, arc=None):
-		
+	def move(self, speed=None, arc=None, steps=None, delay=None):
+		if self.CONTROLLER_BOARD == "v1":
+			self._move_dc(speed, arc)
+		elif self.CONTROLLER_BOARD == "v2":
+			self._move_steppers(steps, delay)
+
+	def _move_dc(self, speed, arc):
+		log.debug("Moving using DC motors")
 		if (speed and arc):
 			print("Error: speed and arc could not be setted up at the same time")
 			return
@@ -208,9 +241,40 @@ class Robot(object):
 				self.pwm_right.ChangeDutyCycle(cycle_right)
 
 
+	def _move_steppers(self, steps, delay, heading):
+		"""
+		Currently it would take 4 steps to complete a whole wheel turn
+		"""
+		log.debug("Moving steppers . Steps" + str(steps) + " delay " + str(delay))
+		steps_left = steps
+
+		while(steps_left>0):
+			if self._stepper_current_step == 3
+				self._stepper_current_step = 0
+			else:
+				self._stepper_current_step += 1
+
+			log.debug("Current step: " + self._stepper_current_step)
+
+			c1, c2, c3, c4 = exciting_matrix[self._stepper_current_step]
+			if env == "prod"
+				gpio.output(self.WHEEL_LEFT_COIL1, c1)
+				gpio.output(self.WHEEL_RIGHT_COIL1, c1)
+				sleep(delay)
+				gpio.output(self.WHEEL_LEFT_COIL1, c2)
+				gpio.output(self.WHEEL_RIGHT_COIL1, c2)
+				sleep(delay)
+				gpio.output(self.WHEEL_LEFT_COIL1, c3)
+				sleep(delay)
+				gpio.output(self.WHEEL_LEFT_COIL1, c4)
+				gpio.output(self.WHEEL_RIGHT_COIL1, c4)
+				sleep(delay)
+			steps_left -= 1
+
+
 	def center_head(self):
 		log.debug("centering head")
-		self.head_horizontal_current_position = 0 
+		self.head_horizontal_current_position = 0
 		self.head_vertical_current_position = 0
 		if env == "prod":
 			self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(0))
@@ -240,6 +304,7 @@ class Robot(object):
 			if env == "prod":
 				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(angle))
 
+	#Used for encoders
 	def steps(self, counting):
 		self._current_steps = counting
 		self.move(speed=self.SPEED_HIGH)
@@ -254,4 +319,3 @@ class Robot(object):
 			self._counting_steps = 0
 			self._current_steps = 0
 			rpio.stop_waiting_for_interrupts()
-
