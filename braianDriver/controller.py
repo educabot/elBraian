@@ -19,4 +19,5 @@ class Board(object):
         pass
 
 class V1(Board):
+    
 class V2(Board):

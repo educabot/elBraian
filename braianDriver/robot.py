@@ -249,10 +249,13 @@ class Robot(object):
 		steps_left = steps
 
 		while(steps_left>0):
-			if self._stepper_current_step == 3
-				self._stepper_current_step = 0
-			else:
-				self._stepper_current_step += 1
+			if heading == "FORWARD":
+				if self._stepper_current_step == 3
+					self._stepper_current_step = 0
+				else:
+					self._stepper_current_step += 1
+			elif heading == "BACKWARD":
+				if
 
 			log.debug("Current step: " + self._stepper_current_step)
 
