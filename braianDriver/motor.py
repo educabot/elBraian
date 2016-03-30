@@ -1,5 +1,5 @@
 class Motor(object):
-    def __init__(gpio,pin_set_left, pin_set_right):
+    def __init__(self,gpio,pin_set_left, pin_set_right):
         """
         Motor constructor
         Args:
@@ -12,21 +12,36 @@ class Motor(object):
         self.pin_set_left = pin_set_left
         self.pin_set_right = pin_set_right
 
-    def move_forward(self):
+    def move_forward(self, units):
         """
         Set pins to move motor and wheel forward
+        Args:
+            units: magnitude used to perform de movement
+        Returns:
+            Units moved.
         """
         pass
 
-    def move_backward(self):
+    def move_backward(self, units):
         """
-        set pins to move motor and whell backward
+        Set pins to move motor and wheel forward
+        Args:
+            units: magnitude used to perform de movement
+        Returns:
+            Units moved.
         """
         pass
 
 
 class MotorDC(Motor):
-    pass
+    def __init__(self,gpio,pin_set_left, pin_set_right):
+        super().__init__(gpio,pin_set_left, pin_set_right)
+
+    def move_forward(self, units):
+
+
+
 
 class Stepper(Motor):
-    pass
+    def __init__(self,gpio,pin_set_left, pin_set_right):
+        super().__init__(gpio,pin_set_left, pin_set_right)

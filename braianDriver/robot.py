@@ -268,6 +268,7 @@ class Robot(object):
 				gpio.output(self.WHEEL_RIGHT_COIL1, c2)
 				sleep(delay)
 				gpio.output(self.WHEEL_LEFT_COIL1, c3)
+				gpio.output(self.WHEEL_RIGHT_COIL1, c3)
 				sleep(delay)
 				gpio.output(self.WHEEL_LEFT_COIL1, c4)
 				gpio.output(self.WHEEL_RIGHT_COIL1, c4)
