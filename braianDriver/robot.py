@@ -211,7 +211,7 @@ class Robot(object):
 		if self.CONTROLLER_BOARD == "v1":
 			self._move_dc(speed, arc)
 		elif self.CONTROLLER_BOARD == "v2":
-			self._move_steppers(steps, delay)
+			self._move_steppers(steps=steps, delay=1)
 
 	def _move_dc(self, speed, arc):
 		log.debug("Moving using DC motors")
@@ -241,26 +241,31 @@ class Robot(object):
 				self.pwm_right.ChangeDutyCycle(cycle_right)
 
 
-	def _move_steppers(self, steps, delay, heading):
+	def _move_steppers(self, steps, delay):
 		"""
 		Currently it would take 4 steps to complete a whole wheel turn
 		"""
-		log.debug("Moving steppers . Steps" + str(steps) + " delay " + str(delay))
-		steps_left = steps
+		log.debug("Moving steppers . Steps " + str(steps) + " delay " + str(delay))
+		steps_left = abs(steps)
 
-		while(steps_left>0):
-			if heading == "FORWARD":
-				if self._stepper_current_step == 3
+		while(steps_left!=0):
+			if steps > 0 :
+				#forward
+				if self._stepper_current_step == 3:
 					self._stepper_current_step = 0
 				else:
 					self._stepper_current_step += 1
-			elif heading == "BACKWARD":
-				if
+			elif steps < 0:
+				#backward
+				if self._stepper_current_step == 0:
+					self._stepper_current_step = 3
+				else:
+					self._stepper_current_step -= 1
 
-			log.debug("Current step: " + self._stepper_current_step)
+			log.debug("Current step: " + str(self._stepper_current_step))
 
 			c1, c2, c3, c4 = exciting_matrix[self._stepper_current_step]
-			if env == "prod"
+			if env == "prod":
 				gpio.output(self.WHEEL_LEFT_COIL1, c1)
 				gpio.output(self.WHEEL_RIGHT_COIL1, c1)
 				sleep(delay)
