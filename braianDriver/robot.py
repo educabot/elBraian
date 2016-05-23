@@ -82,9 +82,9 @@ class Robot(object):
 	WHEEL_LEFT_COIL4 = int(config.get("robot.board.v2", "wheel_left_pin4"))
 
 	WHEEL_RIGHT_COIL1 = int(config.get("robot.board.v2", "wheel_right_pin1"))
-	WHEEL_RIGHT_COIL2 = int(config.get("robot.board.v2", "wheel_right_pin1"))
-	WHEEL_RIGHT_COIL3 = int(config.get("robot.board.v2", "wheel_right_pin1"))
-	WHEEL_RIGHT_COIL4 = int(config.get("robot.board.v2", "wheel_right_pin1"))
+	WHEEL_RIGHT_COIL2 = int(config.get("robot.board.v2", "wheel_right_pin2"))
+	WHEEL_RIGHT_COIL3 = int(config.get("robot.board.v2", "wheel_right_pin3"))
+	WHEEL_RIGHT_COIL4 = int(config.get("robot.board.v2", "wheel_right_pin4"))
 
 
 	SERVO = None
@@ -268,15 +268,12 @@ class Robot(object):
 			if env == "prod":
 				gpio.output(self.WHEEL_LEFT_COIL1, c1)
 				gpio.output(self.WHEEL_RIGHT_COIL1, c1)
-				sleep(delay)
-				gpio.output(self.WHEEL_LEFT_COIL1, c2)
-				gpio.output(self.WHEEL_RIGHT_COIL1, c2)
-				sleep(delay)
-				gpio.output(self.WHEEL_LEFT_COIL1, c3)
-				gpio.output(self.WHEEL_RIGHT_COIL1, c3)
-				sleep(delay)
-				gpio.output(self.WHEEL_LEFT_COIL1, c4)
-				gpio.output(self.WHEEL_RIGHT_COIL1, c4)
+				gpio.output(self.WHEEL_LEFT_COIL2, c2)
+				gpio.output(self.WHEEL_RIGHT_COIL2, c2)
+				gpio.output(self.WHEEL_LEFT_COIL3, c3)
+				gpio.output(self.WHEEL_RIGHT_COIL3, c3)
+				gpio.output(self.WHEEL_LEFT_COIL4, c4)
+				gpio.output(self.WHEEL_RIGHT_COIL4, c4)
 				sleep(delay)
 			steps_left -= 1
 
