@@ -86,6 +86,15 @@ class Robot(object):
 	WHEEL_RIGHT_COIL3 = int(config.get("robot.board.v2", "wheel_right_pin3"))
 	WHEEL_RIGHT_COIL4 = int(config.get("robot.board.v2", "wheel_right_pin4"))
 
+	#v3
+	WHEEL_LEFT_ENABLED = int(config.get("robot.board.v3", "wheel_left_enabled"))
+	WHEEL_LEFT_HEADING = int(config.get("robot.board.v3", "wheel_left_heading"))
+	WHEEL_LEFT_STEP = int(config.get("robot.board.v3", "wheel_left_step"))
+
+	WHEEL_RIGHT_ENABLED = int(config.get("robot.board.v3", "wheel_right_enabled"))
+	WHEEL_RIGHT_HEADING = int(config.get("robot.board.v3", "wheel_right_heading"))
+	WHEEL_RIGHT_STEP = int(config.get("robot.board.v3", "wheel_right_step"))
+
 
 	SERVO = None
 
@@ -124,6 +133,16 @@ class Robot(object):
 				gpio.setup(sef.WHEEL_RIGHT_COIL2, gpio.OUT)
 				gpio.setup(sef.WHEEL_RIGHT_COIL3, gpio.OUT)
 				gpio.setup(sef.WHEEL_RIGHT_COIL4, gpio.OUT)
+
+			if self.CONTROLLER_BOARD == "v3":
+				gpio.setup(self.WHEEL_LEFT_ENABLED, gpio.OUT)
+				gpio.setup(self.WHEEL_LEFT_HEADING, gpio.OUT)
+				gpio.setup(self.WHEEL_LEFT_STEP, gpio.OUT)
+
+				gpio.setup(self.WHEEL_RIGHT_ENABLED, gpio.OUT)
+				gpio.setup(self.WHEEL_RIGHT_HEADING, gpio.OUT)
+				gpio.setup(self.WHEEL_RIGHT_STEP, gpio.OUT)
+
 
 			#PWM
 			gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
@@ -207,11 +226,13 @@ class Robot(object):
 			self.pwm_left.stop()
 			self.pwm_right.stop()
 
-	def move(self, speed=None, arc=None, steps=None, delay=None):
+	def move(self, speed=None, arc=None, steps=None, delay=None, heading=None):
 		if self.CONTROLLER_BOARD == "v1":
 			self._move_dc(speed, arc)
 		elif self.CONTROLLER_BOARD == "v2":
-			self._move_steppers(steps=steps, delay=1)
+			self._move_steppers_unipolar(steps=steps, delay=1)
+		elif self.CONTROLLER_BOARD == "v3":
+			self._move_steppers_bipolar(steps=steps, delay=delay, heading=heading)
 
 	def _move_dc(self, speed, arc):
 		log.debug("Moving using DC motors")
@@ -241,7 +262,7 @@ class Robot(object):
 				self.pwm_right.ChangeDutyCycle(cycle_right)
 
 
-	def _move_steppers(self, steps, delay):
+	def _move_steppers_unipolar(self, steps, delay):
 		"""
 		Currently it would take 4 steps to complete a whole wheel turn
 		"""
@@ -276,6 +297,29 @@ class Robot(object):
 				gpio.output(self.WHEEL_RIGHT_COIL4, c4)
 				sleep(delay)
 			steps_left -= 1
+
+	def _move_steppers_bipolar(self, steps, heading, delay):
+		"""
+		Currently it would take 4 steps to complete a whole wheel turn
+		"""
+		log.debug("Moving steppers bipolars . Steps " + str(steps) + " delay " + str(delay))
+		steps_left = abs(steps)
+
+		if env == "prod":
+			gpio.output(self.WHEEL_LEFT_ENABLED, gpio.HIGH)
+
+		while(steps_left!=0):
+			log.debug("Current step: " + str(steps_left))
+			if env == "prod":
+				gpio.output(self.WHEEL_LEFT_HEADING, heading)
+				gpio.output(self.WHEEL_LEFT_STEP, gpio.LOW)
+				sleep(delay/1000)
+				gpio.output(self.WHEEL_LEFT_STEP, gpio.HIGH)
+				sleep(delay/1000)
+			steps_left -= 1
+
+		if env == "prod":
+			gpio.output(self.WHEEL_LEFT_ENABLED, gpio.LOW)
 
 
 	def center_head(self):
