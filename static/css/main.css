@@ -169,8 +169,8 @@ body {
 }
 .wrapper {
   height: 100%;
-  background: url("/static/img/bg-main.jpg");
-  width: 1024px;
+  background: url("/static/img/fondo.png");
+  width: 1280px;
   margin: 0 auto;
   padding: 10px 30px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
@@ -238,7 +238,7 @@ div.console {
   font: 16px "Courier New";
   color: #BBB;
   overflow: scroll;
-  height: 115px;
+  height: 90px;
 }
 div.remote {
   border-radius: 5px;

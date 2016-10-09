@@ -30,8 +30,7 @@ log.addHandler(handler)
 log.info("using "+ env +" configuration ")
 
 if env == "prod":
-	import RPi.GPIO as gpio
-	import RPIO.PWM as pwm
+	from gpiozero import PWMOutputDevice, DigitalOutputDevice, AngularServo
 
 exciting_matrix = [(0,0,0,0),(1,0,0,0),(0,1,0,0),(0,0,1,0),(0,0,0,1)]
 
@@ -76,83 +75,63 @@ class Robot(object):
 	LEFT_WHEEL_SENSOR = int(config.get("robot.board.v1", "left_wheel_sensor"))
 
 	CONTROLLER_BOARD = config.get("robot.controller", "board")
-	WHEEL_LEFT_COIL1 = int(config.get("robot.board.v2", "wheel_left_pin1"))
-	WHEEL_LEFT_COIL2 = int(config.get("robot.board.v2", "wheel_left_pin2"))
-	WHEEL_LEFT_COIL3 = int(config.get("robot.board.v2", "wheel_left_pin3"))
-	WHEEL_LEFT_COIL4 = int(config.get("robot.board.v2", "wheel_left_pin4"))
 
-	WHEEL_RIGHT_COIL1 = int(config.get("robot.board.v2", "wheel_right_pin1"))
-	WHEEL_RIGHT_COIL2 = int(config.get("robot.board.v2", "wheel_right_pin2"))
-	WHEEL_RIGHT_COIL3 = int(config.get("robot.board.v2", "wheel_right_pin3"))
-	WHEEL_RIGHT_COIL4 = int(config.get("robot.board.v2", "wheel_right_pin4"))
+	#v2
+	WHEEL_LEFT_ENABLED = int(config.get("robot.board.v2", "wheel_left_enabled"))
+	WHEEL_LEFT_HEADING = int(config.get("robot.board.v2", "wheel_left_heading"))
+	WHEEL_LEFT_STEP = int(config.get("robot.board.v2", "wheel_left_step"))
 
-	#v3
-	WHEEL_LEFT_ENABLED = int(config.get("robot.board.v3", "wheel_left_enabled"))
-	WHEEL_LEFT_HEADING = int(config.get("robot.board.v3", "wheel_left_heading"))
-	WHEEL_LEFT_STEP = int(config.get("robot.board.v3", "wheel_left_step"))
-
-	WHEEL_RIGHT_ENABLED = int(config.get("robot.board.v3", "wheel_right_enabled"))
-	WHEEL_RIGHT_HEADING = int(config.get("robot.board.v3", "wheel_right_heading"))
-	WHEEL_RIGHT_STEP = int(config.get("robot.board.v3", "wheel_right_step"))
+	WHEEL_RIGHT_ENABLED = int(config.get("robot.board.v2", "wheel_right_enabled"))
+	WHEEL_RIGHT_HEADING = int(config.get("robot.board.v2", "wheel_right_heading"))
+	WHEEL_RIGHT_STEP = int(config.get("robot.board.v2", "wheel_right_step"))
 
 
-	SERVO = None
+	SERVO_V = None
+	SERVO_H = None
 
 	head_vertical_current_position = None
 	head_horizontal_current_position = None
 
 	def __init__(self):
 		if env == "prod":
-			gpio.cleanup()
 
-			gpio.setmode(gpio.BOARD)
+			log.debug("Using %s configuration" % self.CONTROLLER_BOARD )
+
+			self.SERVO_H = AngularServo(self.HEAD_HORIZONTAL_PIN, min_angle=-80, max_angle=80)
+			self.SERVO_V = AngularServo(self.HEAD_VERTICAL_PIN, min_angle=-80, max_angle=80)
+
+			##Digital devices
+			self.forward_left_device = None
+			self.forward_right_device = None
+			self.backward_left_device = None
+			self.backward_right_device = None
+
+			self.wheel_right_step = None
+			self.wheel_left_step = None
+			self.wheel_right_heading = None
+			self.wheel_left_heading = None
+			self.wheel_right_enabled = None
+			self.wheel_left_enabled = None
+
+			self.pwm_left = None
+			self.pwm_right = None
 
 			if self.CONTROLLER_BOARD == "v1":
+				self.forward_left_device = DigitalOutputDevice(self.FORWARD_LEFT_PIN, True, False)
+				self.forward_right_device = DigitalOutputDevice(self.FORWARD_RIGHT_PIN, True, False)
+				self.backward_left_device = DigitalOutputDevice(self.BACKWARD_LEFT_PIN, True, False)
+				self.backward_right_device = DigitalOutputDevice(self.BACKWARD_RIGHT_PIN, True, False)
+				self.pwm_left = PWMOutputDevice(self.PWM_LEFT_PIN, True, False, self.FRECUENCY)
+				self.pwm_right = PWMOutputDevice(self.PWM_RIGHT_PIN, True, False, self.FRECUENCY)
 
-				##Left Side
-				gpio.setup(self.FORWARD_LEFT_PIN,gpio.OUT)
-				gpio.setup(self.BACKWARD_LEFT_PIN,gpio.OUT)
-				## Setting both to True to force stopping wheels
-				gpio.output(self.FORWARD_LEFT_PIN,True)
-				gpio.output(self.BACKWARD_LEFT_PIN,True)
-
-				##Right Side
-				gpio.setup(self.FORWARD_RIGHT_PIN,gpio.OUT)
-				gpio.setup(self.BACKWARD_RIGHT_PIN,gpio.OUT)
-				## Setting both to True to force stopping wheels
-				gpio.output(self.FORWARD_RIGHT_PIN,True)
-				gpio.output(self.BACKWARD_RIGHT_PIN,True)
 
 			if self.CONTROLLER_BOARD == "v2":
-				gpio.setup(sef.WHEEL_LEFT_COIL1, gpio.OUT)
-				gpio.setup(sef.WHEEL_LEFT_COIL2, gpio.OUT)
-				gpio.setup(sef.WHEEL_LEFT_COIL3, gpio.OUT)
-				gpio.setup(sef.WHEEL_LEFT_COIL4, gpio.OUT)
-
-				gpio.setup(sef.WHEEL_RIGHT_COIL1, gpio.OUT)
-				gpio.setup(sef.WHEEL_RIGHT_COIL2, gpio.OUT)
-				gpio.setup(sef.WHEEL_RIGHT_COIL3, gpio.OUT)
-				gpio.setup(sef.WHEEL_RIGHT_COIL4, gpio.OUT)
-
-			if self.CONTROLLER_BOARD == "v3":
-				gpio.setup(self.WHEEL_LEFT_ENABLED, gpio.OUT)
-				gpio.setup(self.WHEEL_LEFT_HEADING, gpio.OUT)
-				gpio.setup(self.WHEEL_LEFT_STEP, gpio.OUT)
-
-				gpio.setup(self.WHEEL_RIGHT_ENABLED, gpio.OUT)
-				gpio.setup(self.WHEEL_RIGHT_HEADING, gpio.OUT)
-				gpio.setup(self.WHEEL_RIGHT_STEP, gpio.OUT)
-
-
-			#PWM
-			gpio.setup(self.PWM_LEFT_PIN,gpio.OUT)
-			gpio.setup(self.PWM_RIGHT_PIN,gpio.OUT)
-
-			self.pwm_left = gpio.PWM(self.PWM_LEFT_PIN, self.FRECUENCY)
-			self.pwm_right = gpio.PWM(self.PWM_RIGHT_PIN, self.FRECUENCY)
-
-			# head
-			self.SERVO = pwm.Servo(pulse_incr_us=1)
+				self.wheel_right_step = DigitalOutputDevice(self.WHEEL_RIGHT_STEP, True, False)
+				self.wheel_left_step = DigitalOutputDevice(self.WHEEL_LEFT_STEP, True, False)
+				self.wheel_right_heading = DigitalOutputDevice(self.WHEEL_RIGHT_HEADING, True, False)
+				self.wheel_left_heading = DigitalOutputDevice(self.WHEEL_LEFT_HEADING, True, False)
+				self.wheel_right_enabled = DigitalOutputDevice(self.WHEEL_RIGHT_ENABLED, True, False)
+				self.wheel_left_enabled = DigitalOutputDevice(self.WHEEL_LEFT_ENABLED, True, False)
 
 
 		self.current_horizontal_head_pos = 0
@@ -163,34 +142,35 @@ class Robot(object):
 		self._stepper_current_step = 0
 
 	def _set_left_forward(self):
-		gpio.output(self.FORWARD_LEFT_PIN, True)
-		gpio.output(self.BACKWARD_LEFT_PIN, False)
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_left_device.on()
+			self.backward_left_device.off()
 
 
 	def _set_left_backward(self):
-		gpio.output(self.FORWARD_LEFT_PIN, False)
-		gpio.output(self.BACKWARD_LEFT_PIN, True)
-
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_left_device.off()
+			self.backward_left_device.on()
 
 	def _set_left_stop(self):
-		gpio.output(self.FORWARD_LEFT_PIN, True)
-		gpio.output(self.BACKWARD_LEFT_PIN, True)
-
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_left_device.on()
+			self.backward_left_device.on()
 
 	def _set_right_forward(self):
-		gpio.output(self.FORWARD_RIGHT_PIN, True)
-		gpio.output(self.BACKWARD_RIGHT_PIN, False)
-
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_right_device.on()
+			self.backward_right_device.off()
 
 	def _set_right_backward(self):
-		gpio.output(self.FORWARD_RIGHT_PIN, False)
-		gpio.output(self.BACKWARD_RIGHT_PIN, True)
-
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_right_device.off()
+			self.backward_right_device.on()
 
 	def _set_right_stop(self):
-		gpio.output(self.FORWARD_RIGHT_PIN, True)
-		gpio.output(self.BACKWARD_RIGHT_PIN, True)
-
+		if self.CONTROLLER_BOARD == "v1":
+			self.forward_right_device.on()
+			self.backward_right_device.on()
 
 	def set_forward(self):
 		log.debug("setting movement to forward")
@@ -221,17 +201,14 @@ class Robot(object):
 	def stop(self):
 		log.debug("stopping")
 		if env == "prod":
-			self._set_right_stop()
-			self._set_left_stop()
-			self.pwm_left.stop()
-			self.pwm_right.stop()
+			if self.CONTROLLER_BOARD == "v1":
+				self.pwm_left.off()
+				self.pwm_right.off()
 
-	def move(self, speed=None, arc=None, steps=None, delay=None, heading=None):
+	def move(self, speed=None, arc=None, steps=100, delay=0.7, heading=1):
 		if self.CONTROLLER_BOARD == "v1":
 			self._move_dc(speed, arc)
 		elif self.CONTROLLER_BOARD == "v2":
-			self._move_steppers_unipolar(steps=steps, delay=1)
-		elif self.CONTROLLER_BOARD == "v3":
 			self._move_steppers_bipolar(steps=steps, delay=delay, heading=heading)
 
 	def _move_dc(self, speed, arc):
@@ -241,62 +218,27 @@ class Robot(object):
 			return
 
 		if env == "prod":
-			self.pwm_left.start(0)
-			self.pwm_right.start(0)
+			self.pwm_left.on()
+			self.pwm_right.on()
 
 		if (speed):
 			log.debug("moving on " + str(speed))
 			log.debug("aplying fit: left " + str(self.LEFT_CYCLES_FIT) + " right " + str(self.RIGHT_CYCLES_FIT))
-			aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100) else 0
-			aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100) else 0
+			aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100.00) else 0.00
+			aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100.00) else 0.00
 
 			if env == "prod":
-				self.pwm_left.ChangeDutyCycle(speed+aditional_left_clycles)
-				self.pwm_right.ChangeDutyCycle(speed+aditional_right_clycles)
+				self.pwm_left.value = (speed + aditional_left_clycles) / 100.00
+				self.pwm_right.value = (speed + aditional_right_clycles) / 100.00
 
 		if (arc):
 			cycle_left, cycle_right = arc
 			log.debug("turning -> left wheel: " + str(cycle_left) + " right wheel: " + str(cycle_right))
 			if env == "prod":
-				self.pwm_left.ChangeDutyCycle(cycle_left)
-				self.pwm_right.ChangeDutyCycle(cycle_right)
+				self.pwm_left.value = cycle_left / 100.00
+				self.pwm_right.value = cycle_right / 100.00
 
 
-	def _move_steppers_unipolar(self, steps, delay):
-		"""
-		Currently it would take 4 steps to complete a whole wheel turn
-		"""
-		log.debug("Moving steppers . Steps " + str(steps) + " delay " + str(delay))
-		steps_left = abs(steps)
-
-		while(steps_left!=0):
-			if steps > 0 :
-				#forward
-				if self._stepper_current_step == 3:
-					self._stepper_current_step = 0
-				else:
-					self._stepper_current_step += 1
-			elif steps < 0:
-				#backward
-				if self._stepper_current_step == 0:
-					self._stepper_current_step = 3
-				else:
-					self._stepper_current_step -= 1
-
-			log.debug("Current step: " + str(self._stepper_current_step))
-
-			c1, c2, c3, c4 = exciting_matrix[self._stepper_current_step]
-			if env == "prod":
-				gpio.output(self.WHEEL_LEFT_COIL1, c1)
-				gpio.output(self.WHEEL_RIGHT_COIL1, c1)
-				gpio.output(self.WHEEL_LEFT_COIL2, c2)
-				gpio.output(self.WHEEL_RIGHT_COIL2, c2)
-				gpio.output(self.WHEEL_LEFT_COIL3, c3)
-				gpio.output(self.WHEEL_RIGHT_COIL3, c3)
-				gpio.output(self.WHEEL_LEFT_COIL4, c4)
-				gpio.output(self.WHEEL_RIGHT_COIL4, c4)
-				sleep(delay)
-			steps_left -= 1
 
 	def _move_steppers_bipolar(self, steps, heading, delay):
 		"""
@@ -306,20 +248,30 @@ class Robot(object):
 		steps_left = abs(steps)
 
 		if env == "prod":
-			gpio.output(self.WHEEL_LEFT_ENABLED, gpio.HIGH)
+			self.wheel_left_enabled.off()
+			self.wheel_right_enabled.off()
 
 		while(steps_left!=0):
 			log.debug("Current step: " + str(steps_left))
 			if env == "prod":
-				gpio.output(self.WHEEL_LEFT_HEADING, heading)
-				gpio.output(self.WHEEL_LEFT_STEP, gpio.LOW)
-				sleep(delay/1000)
-				gpio.output(self.WHEEL_LEFT_STEP, gpio.HIGH)
-				sleep(delay/1000)
+				if heading:
+					self.wheel_left_heading.on()
+					self.wheel_right_heading.off()
+				else:
+					self.wheel_left_heading.off()
+					self.wheel_right_heading.on()
+
+				self.wheel_left_step.off()
+				self.wheel_right_step.off()
+				sleep(delay/1000.00)
+				self.wheel_left_step.on()
+				self.wheel_right_step.on()
+				sleep(delay/1000.00)
 			steps_left -= 1
 
 		if env == "prod":
-			gpio.output(self.WHEEL_LEFT_ENABLED, gpio.LOW)
+			self.wheel_left_enabled.on()
+			self.wheel_right_enabled.on()
 
 
 	def center_head(self):
@@ -327,8 +279,11 @@ class Robot(object):
 		self.head_horizontal_current_position = 0
 		self.head_vertical_current_position = 0
 		if env == "prod":
-			self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(0))
-			self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(0))
+			self.SERVO_H.mid()
+			self.SERVO_V.mid()
+			sleep(0.2)
+			self.SERVO_H.detach()
+			self.SERVO_V.detach()
 
 
 	def _angle_to_ms(self,angle):
@@ -342,8 +297,9 @@ class Robot(object):
 			log.debug("moving head horizontal to angle: " + str(angle))
 			self.head_horizontal_current_position = angle
 			if env == "prod":
-				self.SERVO.set_servo(self.HEAD_HORIZONTAL_PIN, self._angle_to_ms(angle))
-
+				self.SERVO_H.angle = angle
+				sleep(0.2)
+				self.SERVO_H.detach()
 
 	def move_head_vertical(self, angle):
 		log.debug("vertical limits: " + self.HEAD_VERTICAL_RANGE[0] +" "+ self.HEAD_VERTICAL_RANGE[1])
@@ -352,7 +308,9 @@ class Robot(object):
 			log.debug("moving head vertical to angle: " + str(angle))
 			self.head_vertical_current_position = angle
 			if env == "prod":
-				self.SERVO.set_servo(self.HEAD_VERTICAL_PIN, self._angle_to_ms(angle))
+				self.SERVO_V.angle = angle
+				sleep(0.2)
+				self.SERVO_V.detach()
 
 	#Used for encoders
 	def steps(self, counting):

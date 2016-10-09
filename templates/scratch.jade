@@ -12,32 +12,31 @@ block scripts
 block styles
   link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
 block main
-  .page-header
-    .row
-      .container-fluid
-        .col-md-5
-          .well-console#counter
-            h3.console >: cantidad de astronautas
-        .col-md-2
-          img.img-rounded(src="/static/img/roboluna.jpg", height="170", width="150", style ="float: left")
-
-        .col-md-5
-          .well-console 
-            h3.console elbraian >_ Debo rescatar a mi amigo el satelite!
-            img(src="/static/img/prompt.gif", width="50", height="25")
+  .container-fluid
+    .col-md-5
+  
   .container-fluid
     .row
       .col-md-4
         .container-fluid
           .row
             .col-md-12
+              img(src=pic_url, height="250", width="350", style="position: relative; float: right;")
+          .row
+            .col-md-12
               br
               button.btn.btn-success.pull-right#execute(data-loading-text="en progreso...") comezar mision
+          .row
+            .col-md-12
+              br
+              .well-console#counter
+                h3.console >: usuarios
+          
           .row
             .col-md-12#panel-control
               br
       .col-md-8
-        div#blocklyDiv(style="height: 430px; width: 600px")
+        div#blocklyDiv(style="height: 650px; width: 800px")
         xml#toolbox(style="display: none")
           block(type="start")
           block(type="braian_movement_forward")
@@ -54,7 +53,7 @@ block final_scripts
     toolbox: document.getElementById('toolbox'),
     grid:
          {spacing: 20,
-          length: 3,
+          length: 4,
           colour: '#ccc',
           snap: true},
     trashcan: true});
