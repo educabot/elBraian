@@ -18,7 +18,7 @@ autostart=true
 command=/home/pi/mjpg-streamer/mjpg-streamer/mjpg_streamer -i "/home/pi/mjpg-streamer/mjpg-streamer/plugins/input_file/input_file.so -r -n pic.jpg -f /home/pi/tmp/stream" -o "/home/pi/mjpg-streamer/mjpg-streamer/plugins/output_http/output_http.so -p 8095 -w ./www"
 autostart=true
 directory=/home/pi/mjpg-streamer/mjpg-streamer
-environment=LD_LIBRARY_PATH="/home/pi/mjpg-streamer/mjpg-streamer/plugins"	
+environment=LD_LIBRARY_PATH="/home/pi/mjpg-streamer/mjpg-streamer/plugins"
 
 
 This approach is quite easy because we can use the "python" command shell defined inside the pre set virtual environment for the web and socket server.
@@ -42,14 +42,14 @@ update.rc-d mjpg-streamer defaults
 
 11/12/2013
 
-It was the same for the braianserver. The symtom was that during a large script execution from console mode, tha application hangs and responde code error happens. 
+It was the same for the braianserver. The symtom was that during a large script execution from console mode, tha application hangs and responde code error happens.
 So, i did the same workaround:
 
 #!/bin/bash
 cd /home/pi/elBraian
 /home/pi/virtualenvs/elBraian/bin/python /home/pi/elBraian/app-braianbot.py
 
-on 
+on
 
 /etc/init.d/braianserver
 
@@ -67,9 +67,7 @@ LD_LIBRARY_PATH=/home/pi/mjpg-streamer/mjpg-streamer-experimental/ /home/pi/mjpg
 
 
 [program:mjpg-streamer]
-command=/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i "input_raspicam.so -x 640 -y 480 -fps 15 -quality 20 -ex night" -o "output_http.so -p 8095 -w ./www"
+command=mjpg_streamer -i "input_raspicam.so -x 640 -y 480 -fps 15 -quality 20 -ex night -vf" -o "output_http.so -p 8095 -w ./www"
 autostart=true
 directory=/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/
 environment=LD_LIBRARY_PATH="/home/pi/newstream/mjpg-streamer/mjpg-streamer-experimental/"
-
-

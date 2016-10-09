@@ -94,7 +94,7 @@ class CaptureManagerOpenCV(ICaptureManager):
 		self._videoEncoding = None
 		self._videoWriter = None
 		self._startTime = None
-		self._framesElapsed = int(0)
+		self._framesElapsed = long(0)
 		self._fpsEstimate = None
 		if size is None:
 			self._size = (int(capture.get(3)), int(capture.get(4)))

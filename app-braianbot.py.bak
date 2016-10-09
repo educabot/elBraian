@@ -4,7 +4,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.websocket
-import configparser, os
+import ConfigParser, os
 from tornado.options import define,options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
@@ -18,7 +18,7 @@ import cv2
 import redis, numpy as np
 from tornado import gen
 
-config = configparser.ConfigParser()
+config = ConfigParser.ConfigParser()
 config.read('config/application.cfg')
 env = config.get("system","env")
 

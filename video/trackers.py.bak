@@ -1,6 +1,6 @@
 import cv2
-from . import rects
-from . import utils
+import rects
+import utils
 import numpy as np
 
 
