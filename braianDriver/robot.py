@@ -130,9 +130,9 @@ class Robot(object):
 				self.wheel_left_step = DigitalOutputDevice(self.WHEEL_LEFT_STEP, True, False)
 				self.wheel_right_heading = DigitalOutputDevice(self.WHEEL_RIGHT_HEADING, True, False)
 				self.wheel_left_heading = DigitalOutputDevice(self.WHEEL_LEFT_HEADING, True, False)
-				self.wheel_right_enabled = DigitalOutputDevice(self.WHEEL_RIGHT_ENABLED, True, False)
-				self.wheel_left_enabled = DigitalOutputDevice(self.WHEEL_LEFT_ENABLED, True, False)
-
+				self.wheel_right_enabled = DigitalOutputDevice(self.WHEEL_RIGHT_ENABLED, False, False)
+				self.wheel_left_enabled = DigitalOutputDevice(self.WHEEL_LEFT_ENABLED, False, False)
+				self._move_status = 0
 
 		self.current_horizontal_head_pos = 0
 		self.current_vertical_head_pos = 0
@@ -145,32 +145,44 @@ class Robot(object):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_left_device.on()
 			self.backward_left_device.off()
+		else:
+			self.wheel_left_heading.on()
 
 
 	def _set_left_backward(self):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_left_device.off()
 			self.backward_left_device.on()
+		else:
+			self.wheel_left_heading.off()
 
 	def _set_left_stop(self):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_left_device.on()
 			self.backward_left_device.on()
+		else:
+			self.wheel_left_enabled.off()
 
 	def _set_right_forward(self):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_right_device.on()
 			self.backward_right_device.off()
+		else:
+			self.wheel_right_heading.off()
 
 	def _set_right_backward(self):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_right_device.off()
 			self.backward_right_device.on()
+		else:
+			self.wheel_right_heading.on()
 
 	def _set_right_stop(self):
 		if self.CONTROLLER_BOARD == "v1":
 			self.forward_right_device.on()
 			self.backward_right_device.on()
+		else:
+			self.wheel_right_enabled.off()
 
 	def set_forward(self):
 		log.debug("setting movement to forward")
@@ -204,12 +216,19 @@ class Robot(object):
 			if self.CONTROLLER_BOARD == "v1":
 				self.pwm_left.off()
 				self.pwm_right.off()
+			else:
+				self.wheel_left_enabled.off()
+				self.wheel_right_enabled.off()
+		self._move_status = 0
 
-	def move(self, speed=None, arc=None, steps=100, delay=0.7, heading=1):
+	def move(self, speed=None, arc=None, steps=100, delay=0.7):
 		if self.CONTROLLER_BOARD == "v1":
 			self._move_dc(speed, arc)
 		elif self.CONTROLLER_BOARD == "v2":
-			self._move_steppers_bipolar(steps=steps, delay=delay, heading=heading)
+			self._move_status = 1
+			# TODO there should be a way to establish continuos movement and just
+			# a steps numbers as a sigle block
+			self._move_steppers_bipolar(steps=steps, delay=delay)
 
 	def _move_dc(self, speed, arc):
 		log.debug("Moving using DC motors")
@@ -240,7 +259,7 @@ class Robot(object):
 
 
 
-	def _move_steppers_bipolar(self, steps, heading, delay):
+	def _move_steppers_bipolar(self, steps, delay):
 		"""
 		Currently it would take 4 steps to complete a whole wheel turn
 		"""
@@ -248,30 +267,25 @@ class Robot(object):
 		steps_left = abs(steps)
 
 		if env == "prod":
-			self.wheel_left_enabled.off()
-			self.wheel_right_enabled.off()
+			self.wheel_left_enabled.on()
+			self.wheel_right_enabled.on()
 
-		while(steps_left!=0):
+		while(steps_left>=0):
 			log.debug("Current step: " + str(steps_left))
 			if env == "prod":
-				if heading:
-					self.wheel_left_heading.on()
-					self.wheel_right_heading.off()
-				else:
-					self.wheel_left_heading.off()
-					self.wheel_right_heading.on()
 
-				self.wheel_left_step.off()
-				self.wheel_right_step.off()
-				sleep(delay/1000.00)
 				self.wheel_left_step.on()
 				self.wheel_right_step.on()
 				sleep(delay/1000.00)
+				self.wheel_left_step.off()
+				self.wheel_right_step.off()
+				sleep(delay/1000.00)
+
 			steps_left -= 1
 
 		if env == "prod":
-			self.wheel_left_enabled.on()
-			self.wheel_right_enabled.on()
+			self.wheel_left_enabled.off()
+			self.wheel_right_enabled.off()
 
 
 	def center_head(self):

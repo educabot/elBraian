@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var lastkey;
-	var host = "ws://"+ window.location.hostname +":9001/robot";
+	var host = "ws://"+ window.location.hostname +"/robot";
 
 	console.log("url socket: " + document.domain);
 
@@ -270,7 +270,7 @@ $(document).ready(function(){
 							heading: "FORWARD"
 						}
 					});
-					lastkey = 38;
+					//lastkey = 38;
 				}
 				break;
 			//down
@@ -283,7 +283,7 @@ $(document).ready(function(){
 							heading: "BACKWARD"
 						}
 					});
-					lastkey = 40;
+					//lastkey = 40;
 				}
 				break;
 			case 37:
@@ -295,7 +295,7 @@ $(document).ready(function(){
 							heading : "ROTATE-LEFT"
 						}
 					});
-					lastkey = 37;
+					//lastkey = 37;
 				}
 				break;
 			case 39:
@@ -307,7 +307,7 @@ $(document).ready(function(){
 							heading: "ROTATE-RIGHT"
 						}
 					});
-					lastkey = 39;
+					//lastkey = 39;
 				}
 				break;
 
