@@ -1,33 +1,186 @@
-doctype 5
-html(lang="en") 
-    head
-        meta(charset="utf-8")
-        meta(name="description", content="ElBraian MVP")
-        meta(name="author", content="Diego Ramirez")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0" )
-        link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
-        link(rel="stylesheet", href="/static/css/main.css")
-
-    block scripts
-        script(src="/static/js/jquery-1.8.3.min.js")
-        script(src="/static/components/jqueryui/ui/jquery-ui.js")
-        script(src="/static/js/common.js")
-    body
-        div.wrapper#main
-            div.wrapper-in
-                header
-                    h1 Aprend&eacute a programar!
-                .row.cf
-                    a.button.red(href="/newconsole", style="position: relative; right: -30px") BLOQUES
-                div.main.cf
-                    div.row.cf
-                        div.left
-                            div.panel.video
-                                div.row.cf
-                                    .vertical-slide#head-vertical
-                                    div(style="position:relative; float: right;")
-                                        img(src=host_url, height="400", width="620", style="position: relative; float: right;")
-                                .horizontal-slide#head-horizontal
-                    div.row.cf
-                        div.left
-                            div.panel.console
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', href='img/favicon.png')
+    title Educablocks
+    link(rel='stylesheet', href='static/components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='static/dashboard-modules/material-dashboard.css')
+    link(rel='stylesheet', href='static/dashboard-modules/bootstrap-toggle.min.css')
+  body
+    .container
+      nav.navbar.navbar-info.navbar-fixed-top(role='navigation')
+        .container-fluid
+          .navbar-header
+            a.navbar-brand(href='../index.html') Educablocks
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.dropdown.active
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Programas
+                  b  
+                ul.dropdown-menu
+                  li
+                    a(href='../index.html') Programación por bloques
+                  li
+                    a(href='robots.html') Control de robots
+                  li.active
+                    a(href='dashboard.html') Panel IOT
+      .content
+        .row
+          .col-lg-12.col-md-6.col-sm-6
+            .card.card-stats
+              .card-header(data-background-color='blue')
+                i.material-icons wifi
+              .card-content
+                p.category
+                  i.material-icons network_check
+                  |  Dirección IP del dispositivo
+                  br
+              .card-footer
+                .stats
+                  .col-md-12
+                    input#device_address(type='text', name='fname', placeholder=' localhost:4000/serial')
+                    button#validate.btn.btn-info(type='button') Conectar
+              //
+        .row
+          .col-lg-4.col-md-6.col-sm-6
+            .card.card-stats
+              .card-header(data-background-color='blue')
+                i.material-icons cloud
+              .card-content
+                p.category Pin analógico A0:
+                h3.title
+                  span#A0
+                  small grados
+              .card-footer
+                .stats
+                  i.material-icons show_chart
+                  |  Sensor de Humedad
+          .col-md-8
+            .card
+              .card-header.card-chart(data-background-color='blue')
+                #container.ct-chart
+              .card-footer
+                .stats
+                  i.material-icons access_time
+                  |  actualizando cada 5 segundos
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons brightness_5
+          .card-content
+            p.category Pin analógico A1:
+            h3.title
+              span#A1
+              small grados
+          .card-footer
+            .stats
+              i.material-icons show_chart
+              |  Sensor LDR
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons surround_sound
+          .card-content
+            p.category Pin analógico A2:
+            h3.title
+              span#A2
+              small grados
+          .card-footer
+            .stats
+              i.material-icons show_chart
+              |  Sensor de sonido
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons replay
+          .card-content
+            p.category Pin analógico A3:
+            h3.title
+              span#A3
+              small grados
+          .card-footer
+            .stats
+              i.material-icons show_chart
+              |  Potenciómetro
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons replay
+          .card-content
+            p.category Pin analógico A3:
+            h3.title
+              span#A3
+              small grados
+          .card-footer
+            .stats
+              i.material-icons show_chart
+              |  Potenciómetro
+    .row
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons lightbulb_outline
+          .card-content
+            p.category
+              i.material-icons highlight
+              |  Pin digital 10:
+            br
+            br
+          .card-footer
+            .stats
+              //
+                <button id='on' class='btn btn-info ' type="button">Prender</button>
+                <button id='off' class='btn btn-danger' type="button">Apagar</button>
+              input#toggle-10(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons lightbulb_outline
+          .card-content
+            p.category
+              i.material-icons highlight
+              |  Pin digital 11:
+            br
+            br
+          .card-footer
+            .stats
+              input#toggle-11(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons lightbulb_outline
+          .card-content
+            p.category
+              i.material-icons highlight
+              |  Pin digital 12:
+            br
+            br
+          .card-footer
+            .stats
+              input#toggle-12(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+      .col-lg-3.col-md-6.col-sm-6
+        .card.card-stats
+          .card-header(data-background-color='blue')
+            i.material-icons lightbulb_outline
+          .card-content
+            p.category
+              i.material-icons highlight
+              |  Pin digital 13:
+            br
+            br
+          .card-footer
+            .stats
+              input#toggle-13(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+    // js
+    script(src='static/dashboard-modules/jquery-3.1.0.min.js')
+    script(src='static/dashboard-modules/bootstrap.min.js')
+    script(src='static/dashboard-modules/bootstrap-toggle.min.js')
+    script(src='static/dashboard-modules/highcharts.js')
+    script(src='static/dashboard-modules/exporting.js')
+    script(src='static/dashboard-modules/ajaxq.js')
+    script(src='static/dashboard-modules/arest.js')
+    script(src='static/dashboard-modules/index.js')
