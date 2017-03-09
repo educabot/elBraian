@@ -10,5 +10,6 @@ pathtools
 scipy
 Pillow
 websocket-client
+redis==2.10.5
 #RPi.GPIO==0.5.3a
 #RPIO==0.10.0
