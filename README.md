@@ -1,6 +1,9 @@
 elBraian
 ======
+# Run
+python app-braianbot.py --port=9000
 
+======
 This is my awesome proyect about robotics and programming applied to education matters.
 
 Basically is a RasbberryPi robot based which acts as its own Access Point providing connectivity for every known wifi device.
