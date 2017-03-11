@@ -1,38 +1,54 @@
 doctype 5
-html(lang="en")
-	head
-		meta(charset="utf-8")
-		meta(name="description", content="ElBraian MVP")
-		meta(name="author", content="Diego Ramirez")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0" )
-		link(rel="stylesheet", href="/static/components/bootstrap/dist/css/bootstrap.css")
-		link(rel="stylesheet", href="/static/css/newconsole.css")
-		script(src="static/components/jquery/dist/jquery.js")
-		script(src="/static/components/jqueryui/ui/jquery-ui.js")
-		block styles
-		block scripts
-	body
+html
+  head
+    meta(charset="utf-8")
+    meta(name="description", content="ElBraian MVP")
+    meta(name="author", content="Diego Ramirez")
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', href='img/favicon.png')
+    link(rel='stylesheet', href='static/components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='static/dashboard-modules/material-dashboard.css')
+    block head
 
-		 
+  body
+    .container
+      nav.navbar.navbar-info.navbar-fixed-top(role='navigation')
+        .container-fluid
+          .navbar-header
+            a.navbar-brand(href='../') Educablocks
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.dropdown.active
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Arduino & IoT
+                  b  
+                ul.dropdown-menu
+                  li
+                    a(href='../bloques') Programación por bloques
+                  li
+                    a(href='/robot') Control de robots
+                  li.active
+                    a(href='/dashboard') Panel IOT
+            ul.nav.navbar-nav
+              li.dropdown.active
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | AimaraBot
+                  b  
+                ul.dropdown-menu
+                  li
+                    a(href='/newconsole') BLOQUES
+                  li
+                    a(href='/') opcion1
+                  li.active
+                    a(href='/') opcion2 
+    
+    block content
+    script(src='static/dashboard-modules/jquery-3.1.0.min.js')
+    script(src='static/dashboard-modules/bootstrap.min.js')
+    block foot
 
-		//- nav.navbar.navbar-inverse
-		//- 	.container-fluid
-		//- 		.navbar-header
-		//- 			a.navbar-brand.console(href="#") misi&oacute;n > Rescate Lunar
-		//- 		.collapse.navbar-collapse
-		//- 			ul.nav.navbar-nav
-		//- 				li
-		//- 					a(href="/") inicio
-		//- 				li
-		//- 					a(href="/consola") consola de prueba
-		//- block main
-		//- block footer
-		//- block final_scripts
+    block scripts
+    block styles
+    block main
 
-
-
-//-   include ../includes/head
-//-   include ../includes/header
-//-     block content
-//-   include ../includes/footer
-//- include ../includes/foot

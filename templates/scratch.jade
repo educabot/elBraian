@@ -1,4 +1,4 @@
-extends layout
+extends layout.jade
 
 block scripts
   script(src="static/js/newconsole.js")
@@ -11,6 +11,7 @@ block scripts
 
 block styles
   link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
+  
 block main
   .container-fluid
     .col-md-5
@@ -49,6 +50,7 @@ block main
             
 block final_scripts
   script
+    | console.log("jhkjh");
     | var workspace = Blockly.inject('blocklyDiv',{media: 'static/blockly/media/',
     | toolbox: document.getElementById('toolbox'),
     | grid:

@@ -34,9 +34,9 @@ sockets =  PoolWebSocketHandler()
 socketsVigilante = PoolWebSocketHandler()
 
 class IndexHandler(tornado.web.RequestHandler):
-	def get(self):
-		home = config.get("web","home")
-		self.render('layout.jade', host_url = home)
+  def get(self):
+    home = config.get("web","home")
+    self.render('index.jade', host_url=home)
 
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
@@ -155,6 +155,10 @@ class NewConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('new_console.jade')
 
+class Dashboard(tornado.web.RequestHandler):
+	def get(self):
+		self.render('dashboard.jade')
+
 class WrongConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('wrong_console.jade')
@@ -162,6 +166,7 @@ class WrongConsole(tornado.web.RequestHandler):
 class FixConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('fix_console.jade')
+
 class ScratchConsole(tornado.web.RequestHandler):
 	def get(self):
 		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
@@ -200,6 +205,7 @@ if __name__ == '__main__':
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
+			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
 			(r"/stream", StreamHandler, dict(redis_client=redis_client)),
 		],
