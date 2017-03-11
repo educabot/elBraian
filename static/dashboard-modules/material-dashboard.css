@@ -50,7 +50,7 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
-@font-face { font-family: roboto; src: url('./Roboto/Roboto-regular.ttf'); }
+@font-face { font-family: roboto; src: url('Roboto-regular.ttf'); }
 
 .noUi-target,
 .noUi-target * {

@@ -5,7 +5,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.websocket
 import configparser, os
-from tornado.options import define,options
+from tornado.options import define, options
 from tornado import template, websocket
 from pyjade.ext.tornado import patch_tornado
 from braianDriver.robot import Robot
@@ -36,7 +36,7 @@ socketsVigilante = PoolWebSocketHandler()
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		home = config.get("web","home")
-		self.render('index.jade', host_url = home)
+		self.render('layout.jade', host_url = home)
 
 class RobotHandler(tornado.websocket.WebSocketHandler):
 	ROBOT = Robot()
