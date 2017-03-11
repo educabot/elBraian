@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='static/components/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='static/dashboard-modules/material-dashboard.css')
     block head
+    block styles
 
   body
     .container
@@ -37,18 +38,17 @@ html
                   b  
                 ul.dropdown-menu
                   li
-                    a(href='/newconsole') BLOQUES
+                    a(href='/consola') BLOQUES
                   li
                     a(href='/') opcion1
                   li.active
                     a(href='/') opcion2 
     
-    block content
+      block content
+    block main
     script(src='static/dashboard-modules/jquery-3.1.0.min.js')
     script(src='static/dashboard-modules/bootstrap.min.js')
     block foot
 
     block scripts
-    block styles
-    block main
 
