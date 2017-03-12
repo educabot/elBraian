@@ -159,6 +159,10 @@ class Dashboard(tornado.web.RequestHandler):
 	def get(self):
 		self.render('dashboard.jade')
 
+class Bloques101(tornado.web.RequestHandler):
+	def get(self):
+		self.render('bloques-101.jade')
+
 class WrongConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('wrong_console.jade')
@@ -205,6 +209,7 @@ if __name__ == '__main__':
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/newconsole",ScratchConsole),
+			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
 			(r"/stream", StreamHandler, dict(redis_client=redis_client)),
