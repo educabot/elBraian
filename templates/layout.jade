@@ -29,7 +29,7 @@ html
                     a(href='/bloques') Programación por bloques
                   li
                     a(href='/robot') Control de robots
-                  li.active
+                  li
                     a(href='/dashboard') Panel IOT
             ul.nav.navbar-nav
               li.dropdown.active
@@ -38,14 +38,15 @@ html
                   b  
                 ul.dropdown-menu
                   li
-                    a(href='/consola') BLOQUES
+                    a(href='/consola') page
                   li
                     a(href='/') opcion1
-                  li.active
+                  li
                     a(href='/') opcion2 
               block extra-nav
 
-    block content
+      block content
+    block bloques101
 
     block main
     script(src='static/dashboard-modules/jquery-3.1.0.min.js')
