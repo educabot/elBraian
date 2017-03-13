@@ -1,10 +1,8 @@
 Blockly.Blocks['braian_movement_forward'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("mover adelante")
+        .appendField(new Blockly.FieldImage("static/img/adelante.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("1"), "stars")
-        .appendField(new Blockly.FieldImage("static/img/stars.png", 15, 15, "*"))
-        .appendField("estrellas");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(330);
@@ -22,12 +20,11 @@ Blockly.JavaScript['braian_movement_forward'] = function(block) {
 Blockly.Blocks['braian_movement_back'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("atras")
-        .appendField(new Blockly.FieldImage("static/img/stars.png", 15, 15, "*"))
+        .appendField(new Blockly.FieldImage("static/img/atras.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("1"), "stars")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(230);
+    this.setColour(330);
     this.setTooltip('');
   }
 };
@@ -42,15 +39,12 @@ Blockly.JavaScript['braian_movement_back'] = function(block) {
 Blockly.Blocks['turn_left'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("girar izquierda")
-        .appendField(new Blockly.FieldImage("static/img/turn-left.png", 15, 15, "*"))
+        .appendField(new Blockly.FieldImage("static/img/izquierda.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("2"), "stars")
-        .appendField("estrellas");
     this.setColour(330);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
-    this.setHelpUrl('http://www.example.com/');
   }
 };
 
@@ -63,10 +57,8 @@ Blockly.JavaScript['turn_left'] = function(block) {
 Blockly.Blocks['turn_right'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("girar derecha")
-        .appendField(new Blockly.FieldImage("static/img/turn-right.png", 15, 15, "*"))
+        .appendField(new Blockly.FieldImage("static/img/derecha.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("2"), "stars")
-        .appendField("estrellas");
     this.setColour(330);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
