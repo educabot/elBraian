@@ -22,10 +22,9 @@ Blockly.JavaScript['braian_movement_forward'] = function(block) {
 Blockly.Blocks['braian_movement_back'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("mover atras")
-        .appendField(new Blockly.FieldTextInput("1"), "stars")
+        .appendField("atras")
         .appendField(new Blockly.FieldImage("static/img/stars.png", 15, 15, "*"))
-        .appendField("estrellas");
+        .appendField(new Blockly.FieldTextInput("1"), "stars")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(230);

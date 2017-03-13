@@ -126,7 +126,7 @@ you can use the generic selector below, but it's slower:
   text-align: center;
 }
 .button.red {
-  background: none repeat scroll 0 0 #933235;
+  background: none repeat scroll 0 0 #ff1744;
   color: #ffffff;
 }
 .button.red:hover {
@@ -281,7 +281,7 @@ div.horizontal-slide .ui-slider-range {
 
 div.horizontal-slide .ui-slider-handle {
   border-color: #2196f3;
-  background: #933235;
+  background: #ff1744;
   width: 8px;
   height: 8px;
   border-radius: 3px;
@@ -294,7 +294,7 @@ div.vertical-slide .ui-slider-range {
 
 div.vertical-slide .ui-slider-handle {
   border-color: #2196f3;
-  background: #933235;
+  background: #ff1744;
   width: 8px;
   height: 8px;
   border-radius: 3px;

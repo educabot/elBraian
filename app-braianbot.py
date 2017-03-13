@@ -213,7 +213,7 @@ if __name__ == '__main__':
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/visor",VisorHandler),
-			(r"/newconsole",ScratchConsole),
+			(r"/scratch",ScratchConsole),
 			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
