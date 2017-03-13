@@ -157,13 +157,13 @@ Blockly.parseOptions_ = function(options) {
     grid['length'] = parseFloat(grid['length']);
   }
   grid['snap'] = grid['spacing'] > 0 && !!grid['snap'];
-  var pathToMedia = 'https://blockly-demo.appspot.com/static/media/';
-  if (options['media']) {
-    pathToMedia = options['media'];
-  } else if (options['path']) {
-    // 'path' is a deprecated option which has been replaced by 'media'.
-    pathToMedia = options['path'] + 'media/';
-  }
+  var pathToMedia = './media';
+  // if (options['media']) {
+  //   pathToMedia = options['media'];
+  // } else if (options['path']) {
+  //   // 'path' is a deprecated option which has been replaced by 'media'.
+  //   pathToMedia = options['path'] + 'media/';
+  // }
   var enableRealtime = !!options['realtime'];
   var realtimeOptions = enableRealtime ? options['realtimeOptions'] : undefined;
 
