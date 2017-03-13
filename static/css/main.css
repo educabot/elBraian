@@ -142,7 +142,7 @@ you can use the generic selector below, but it's slower:
   color: #ffffff;
 }
 .button.green {
-  background: none repeat scroll 0 0 #929947;
+  background: none repeat scroll 0 0 #2196f3;
   color: #ffffff;
 }
 .button.green:hover {
@@ -165,19 +165,19 @@ body {
   height: 100%;
 }
 body {
-  background: url("/static/img/fondo.png");
+  /*background: url("/static/img/fondo.png");*/
 }
 .wrapper {
   height: 100%;
-  background: url("/static/img/fondo.png");
+  /*background: url("/static/img/fondo.png");*/
   width: 1280px;
   margin: 0 auto;
-  padding: 10px 30px;
+  padding: 10px ;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
 .wrapper-in {
-  width: 900px;
-  margin: 0 auto;
+  width: 640px;
+  margin: auto;
 }
 header h1 {
   font: 48px 'Prosto One', sans-serif;
@@ -189,7 +189,8 @@ div.panel {
 }
 div.row {
   width: 100%;
-  margin: 15px 0 0 0;
+  padding-top: 30px;
+  margin: auto;
 }
 div.left {
   width: 640px;
@@ -274,12 +275,12 @@ div.horizontal-slide {
 }
 
 div.horizontal-slide .ui-slider-range {
-  background: #929947;
+  background: #2196f3;
   border-radius: 0px;
 }
 
 div.horizontal-slide .ui-slider-handle {
-  border-color: #929947;
+  border-color: #2196f3;
   background: #933235;
   width: 8px;
   height: 8px;
@@ -287,12 +288,12 @@ div.horizontal-slide .ui-slider-handle {
 }
 
 div.vertical-slide .ui-slider-range {
-  background: #929947;
+  background: #2196f3;
   border-radius: 0px;
 }
 
 div.vertical-slide .ui-slider-handle {
-  border-color: #929947;
+  border-color: #2196f3;
   background: #933235;
   width: 8px;
   height: 8px;

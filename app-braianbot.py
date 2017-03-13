@@ -159,6 +159,10 @@ class Dashboard(tornado.web.RequestHandler):
 	def get(self):
 		self.render('dashboard.jade')
 
+class VisorHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.render('visor.jade')
+
 class Bloques101(tornado.web.RequestHandler):
 	def get(self):
 		self.render('bloques-101.jade')
@@ -208,6 +212,7 @@ if __name__ == '__main__':
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
+			(r"/visor",VisorHandler),
 			(r"/newconsole",ScratchConsole),
 			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
