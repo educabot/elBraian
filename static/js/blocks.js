@@ -5,7 +5,7 @@ Blockly.Blocks['braian_movement_forward'] = {
         .appendField(new Blockly.FieldTextInput("1"), "stars")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(330);
+    this.setColour(207);
     this.setTooltip('');
   }
 };
@@ -24,7 +24,7 @@ Blockly.Blocks['braian_movement_back'] = {
         .appendField(new Blockly.FieldTextInput("1"), "stars")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(330);
+    this.setColour(207);
     this.setTooltip('');
   }
 };
@@ -41,7 +41,7 @@ Blockly.Blocks['turn_left'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage("static/img/izquierda.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("2"), "stars")
-    this.setColour(330);
+    this.setColour(207);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -59,7 +59,7 @@ Blockly.Blocks['turn_right'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage("static/img/derecha.png", 80, 75, "*"))
         .appendField(new Blockly.FieldTextInput("2"), "stars")
-    this.setColour(330);
+    this.setColour(207);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -78,7 +78,7 @@ Blockly.Blocks['start'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage("static/img/flag.svg", 15, 15, "*"))
         .appendField("Inicio");
-    this.setColour(20);
+    this.setColour(160);
     this.setTooltip('');
     this.setDeletable(false);
     this.setNextStatement(true);

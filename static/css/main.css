@@ -165,7 +165,10 @@ body {
   height: 100%;
 }
 body {
-  /*background: url("/static/img/fondo.png");*/
+  background-image: url("/static/img/fondo.jpg");
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-size: 100%;
 }
 .wrapper {
   height: 100%;
