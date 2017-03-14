@@ -161,7 +161,8 @@ class Dashboard(tornado.web.RequestHandler):
 
 class VisorHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('visor.jade')
+		home = config.get('web','home')
+		self.render('visor.jade', host_url=home+':8095/?action=stream')
 
 class Bloques101(tornado.web.RequestHandler):
 	def get(self):
@@ -209,7 +210,7 @@ class StreamHandler(tornado.web.RequestHandler):
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
-	redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
+	#redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 	app = tornado.web.Application(
 		handlers=[
 			(r"/",IndexHandler),
@@ -221,7 +222,7 @@ if __name__ == '__main__':
 			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
-			(r"/stream", StreamHandler, dict(redis_client=redis_client)),
+			#(r"/stream", StreamHandler, dict(redis_client=redis_client)),
 		],
 		template_path=os.path.join(os.path.dirname(__file__),"templates"),
 		static_path=os.path.join(os.path.dirname(__file__),"static"),
