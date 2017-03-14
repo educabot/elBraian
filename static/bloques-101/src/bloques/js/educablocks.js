@@ -134,7 +134,7 @@
                 LANG_ENTRADAS_ULTRASONIDO: 'Ultrasonic Sensor',
                 LANG_ENTRADAS_ULTRASONIDO_RED_PIN: 'ECHO PIN#',
                 LANG_ENTRADAS_ULTRASONIDO_BLUE_PIN: 'TRIGGER PIN#',
-                LANG_ENTRADAS_ULTRASONIDO_TOOLTIP: 'Returns the distance measured by the ultrasonic sensor.',
+                LANG_ENTRADAS_ULTRASONIDO_TOOLTIP: 'Returns the distancia measured by the ultrasonic sensor.',
                 LANG_SALIDAS_BUTTON: 'Button',
                 LANG_SALIDAS_BUTTON_PIN: 'PIN#',
                 LANG_SALIDAS_BUTTON_TOOLTIP: 'Button',
@@ -767,7 +767,7 @@
                 LANG_ADVANCED_CONVERSION_BINARY: 'Binario',
                 LANG_ADVANCED_CONVERSION_VALUE: 'valor',
                 LANG_ADVANCED_CONVERSION_TOOLTIP: 'Convertir la base de un número.',
-                LANG_ADVANCED_INOUT_ANALOG_READ: 'Leer el pin analógico PIN#',
+                LANG_ADVANCED_INOUT_ANALOG_READ: 'Leer el pin analógico PIN',
                 LANG_ADVANCED_INOUT_ANALOG_READ_TOOLTIP: 'Lee el valor de un pin analógico específico.',
                 LANG_ADVANCED_INOUT_ANALOG_WRITE: 'Escribir en PIN digital',
                 LANG_ADVANCED_INOUT_ANALOG_WRITE_VALUE: 'el valor analógico',
@@ -780,7 +780,7 @@
                 LANG_ADVANCED_INOUT_DIGITAL_READ: 'Leer el pin digital PIN#',
                 LANG_ADVANCED_INOUT_DIGITAL_READ_TOOLTIP: 'Lee el valor desde un pin digital específico.',
                 LANG_ADVANCED_INOUT_DIGITAL_WRITE: 'Escribir en el pin digital',
-                LANG_ADVANCED_INOUT_DIGITAL_WRITE_PIN: 'PIN#',
+                LANG_ADVANCED_INOUT_DIGITAL_WRITE_PIN: 'PIN',
                 LANG_ADVANCED_INOUT_DIGITAL_WRITE_STATE: 'estado',
                 LANG_ADVANCED_INOUT_DIGITAL_WRITE_HIGH: 'ALTO',
                 LANG_ADVANCED_INOUT_DIGITAL_WRITE_LOW: 'BAJO',
@@ -850,8 +850,8 @@
                 //ENTRADAS blocks :
                 LANG_CATEGORY_ENTRADAS: 'Entradas',
                 LANG_ENTRADAS_ULTRASONIDO: 'Sensor de Ultrasonidos',
-                LANG_ENTRADAS_ULTRASONIDO_RED_PIN: 'ECHO PIN#',
-                LANG_ENTRADAS_ULTRASONIDO_BLUE_PIN: 'TRIGGER PIN#',
+                LANG_ENTRADAS_ULTRASONIDO_RED_PIN: 'ECHO PIN',
+                LANG_ENTRADAS_ULTRASONIDO_BLUE_PIN: 'TRIGGER PIN',
                 LANG_ENTRADAS_ULTRASONIDO_TOOLTIP: 'Devuelve la distancia medida por el sensor.',
                 LANG_ENTRADAS_GYRO: 'Giroscopio Genuino 101',
                 LANG_ENTRADAS_GYRO_EJE: 'Eje',
@@ -864,7 +864,7 @@
                 LANG_ENTRADAS_ACE_EJE_Y: 'y',
                 LANG_ENTRADAS_ACE_EJE_Z: 'z',
                 LANG_ENTRADAS_BUTTON: 'Botón',
-                LANG_ENTRADAS_BUTTON_PIN: 'PIN#',
+                LANG_ENTRADAS_BUTTON_PIN: 'PIN',
                 LANG_ENTRADAS_BUTTON_TOOLTIP: 'Botón ',
                 LANG_ENTRADAS_FOLLOWER: 'Seguidor de líneas',
                 LANG_ENTRADAS_FOLLOWER_PIN_LEFT: 'PIN IZQUIERDA#',
@@ -873,13 +873,13 @@
                 LANG_ENTRADAS_FOLLOWER_RIGHT: 'Derecha',
                 LANG_ENTRADAS_FOLLOWER_TOOLTIP: 'Devuelve el valor digital de los sensores ópticos y crea un condicional para cada uno',
                 LANG_ENTRADAS_INFRARED: 'Sensor óptico',
-                LANG_ENTRADAS_INFRARED_PIN: 'PIN#',
+                LANG_ENTRADAS_INFRARED_PIN: 'PIN',
                 LANG_ENTRADAS_INFRARED_TOOLTIP: 'Devuelve el valor digital del sensor óptico',
                 LANG_ENTRADAS_PHOTORESISTOR: 'Sensor de Luz',
-                LANG_ENTRADAS_PHOTORESISTOR_PIN: 'PIN#',
+                LANG_ENTRADAS_PHOTORESISTOR_PIN: 'PIN',
                 LANG_ENTRADAS_PHOTORESISTOR_TOOLTIP: 'Devuelve el valor analógico del sensor de luz (fotorresistencia).',
                 LANG_SALIDAS_PIEZO_BUZZER: 'Zumbador',
-                LANG_SALIDAS_PIEZO_BUZZER_PIN: 'PIN#',
+                LANG_SALIDAS_PIEZO_BUZZER_PIN: 'PIN',
                 LANG_SALIDAS_PIEZO_BUZZER_TONE: 'TONO',
                 LANG_SALIDAS_PIEZO_BUZZER_DO: 'DO',
                 LANG_SALIDAS_PIEZO_BUZZER_RE: 'RE',
@@ -891,7 +891,7 @@
                 LANG_SALIDAS_PIEZO_BUZZER_DURATION: 'Duración [ms]',
                 LANG_SALIDAS_PIEZO_BUZZER_TOOLTIP: 'Zumbador piezoeléctrico',
                 LANG_ENTRADAS_POTENTIOMETER: 'Potenciómetro',
-                LANG_ENTRADAS_POTENTIOMETER_PIN: 'PIN#',
+                LANG_ENTRADAS_POTENTIOMETER_PIN: 'PIN',
                 LANG_ENTRADAS_POTENTIOMETER_TOOLTIP: 'Potenciómetro',
                 LANG_ENTRADAS_LLUVIA: 'Sensor de humedad suelo',
                 LANG_ENTRADAS_LLUVIA_PIN: 'PIN#',
@@ -902,9 +902,11 @@
                 LANG_ENTRADAS_SONIDO: 'Sensor de sonido',
                 LANG_ENTRADAS_SONIDO_PIN: 'PIN#',
                 LANG_ENTRADAS_SONIDO_TOOLTIP: 'Devuelve el valor analógico medido por el sensor de sonido.',
-                LANG_ENTRADAS_TEMPERATURA: 'Sensor de temperatura',
-                LANG_ENTRADAS_TEMPERATURA_PIN: 'PIN#',
-                LANG_ENTRADAS_TEMPERATURA_TOOLTIP: 'Devuelve los grados celsius del sensor de temperatura',
+                LANG_ENTRADAS_TEMPERATURA: 'DHT11',
+                LANG_ENTRADAS_TEMPERATURA_PIN: 'V. PIN',
+                LANG_ENTRADAS_TEMPERATURA_TEMP: 'V. TEMP',
+                LANG_ENTRADAS_TEMPERATURA_HUM: 'V. HUM',
+                LANG_ENTRADAS_TEMPERATURA_TOOLTIP: 'Devuelve los grados celcius y el porcentaje de humedad',
                 //servo blocks :
                 LANG_CATEGORY_SERVO: 'Servo',
                 LANG_SERVO_CONT: 'Servo rotación continua',
@@ -1229,18 +1231,18 @@
             return __p
         };
 
-        this["JST"]["SALIDAS_gyro_definitions_distance"] = function(obj) {
+        this["JST"]["SALIDAS_gyro_definitions_distancia"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += 'long Distance(int trigger_pin, int echo_pin)\n{\n  long microseconds = TP_init(trigger_pin, echo_pin);\n  long distance;\n  distance = microseconds/29/2;\n  if (distance == 0){\n    distance = 999;\n  }\n  return distance;\n}\n';
+                __p += 'long distancia(int trigger_pin, int echo_pin)\n{\n  long microseconds = tiempo(trigger_pin, echo_pin);\n  long distancia;\n  distancia = microseconds/29/2;\n  if (distancia == 0){\n    distancia = 999;\n  }\n  return distancia;\n}\n';
 
             }
             return __p
         };
 
-        this["JST"]["SALIDAS_gyro_definitions_tp_init"] = function(obj) {
+        this["JST"]["SALIDAS_gyro_definitions_tiempo"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
@@ -1280,18 +1282,18 @@
             return __p
         };
 
-        this["JST"]["SALIDAS_ace_definitions_distance"] = function(obj) {
+        this["JST"]["SALIDAS_ace_definitions_distancia"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += 'long Distance(int trigger_pin, int echo_pin)\n{\n  long microseconds = TP_init(trigger_pin, echo_pin);\n  long distance;\n  distance = microseconds/29/2;\n  if (distance == 0){\n    distance = 999;\n  }\n  return distance;\n}\n';
+                __p += 'long distancia(int trigger_pin, int echo_pin)\n{\n  long microseconds = tiempo(trigger_pin, echo_pin);\n  long distancia;\n  distancia = microseconds/29/2;\n  if (distancia == 0){\n    distancia = 999;\n  }\n  return distancia;\n}\n';
 
             }
             return __p
         };
 
-        this["JST"]["SALIDAS_ace_definitions_tp_init"] = function(obj) {
+        this["JST"]["SALIDAS_ace_definitions_tiempo"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
@@ -1324,7 +1326,7 @@
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-             __p += 'Distance(' +
+             __p += 'distancia(' +
                     ((__t = (trigger_pin)) == null ? '' : __t) +
                     ',' +
                     ((__t = (echo_pin)) == null ? '' : __t) +
@@ -1334,23 +1336,23 @@
             return __p
         };
 
-        this["JST"]["SALIDAS_bat_definitions_distance"] = function(obj) {
+        this["JST"]["SALIDAS_bat_definitions_distancia"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += 'long Distance(int trigger_pin, int echo_pin)\n{\n  long microseconds = TP_init(trigger_pin, echo_pin);\n  long distance;\n  distance = microseconds/29/2;\n  if (distance == 0){\n    distance = 999;\n  }\n  return distance;\n}\n';
+                __p += 'long distancia(int trigger_pin, int echo_pin)\n{\n  long microseconds = tiempo(trigger_pin, echo_pin);\n  long distancia;\n  distancia = microseconds/29/2;\n  if (distancia == 0){\n    distancia = 999;\n  }\n  return distancia;\n}\n';
 
             }
             return __p
         };
 
-        this["JST"]["SALIDAS_bat_definitions_tp_init"] = function(obj) {
+        this["JST"]["SALIDAS_bat_definitions_tiempo"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += '//sensor de ultrasonido\nlong TP_init(int trigger_pin, int echo_pin)\n{\n  digitalWrite(trigger_pin, LOW);\n  delayMicroseconds(2);\n  digitalWrite(trigger_pin, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trigger_pin, LOW);\n  long microseconds = pulseIn(echo_pin ,HIGH);\n  return microseconds;\n}\n';
+                __p += '//sensor de ultrasonido\nlong tiempo(int trigger_pin, int echo_pin)\n{\n  digitalWrite(trigger_pin, LOW);\n  delayMicroseconds(2);\n  digitalWrite(trigger_pin, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trigger_pin, LOW);\n  long microseconds = pulseIn(echo_pin ,HIGH);\n  return microseconds;\n}\n';
 
             }
             return __p
@@ -1616,7 +1618,6 @@
             return __p
         };
 
-
           
 
         this["JST"]["SALIDAS_photoresistor"] = function(obj) {
@@ -1632,7 +1633,24 @@
             return __p
         };
 
-        this["JST"]["SALIDAS_piezo_buzzer"] = function(obj) {
+this["JST"]["SALIDAS_ledrgb_definitions"] = function(obj) {
+            obj || (obj = {});
+            var __t, __p = '',
+                __e = _.escape;
+            with(obj) {
+                __p += 'void color(int R, int G, int B)\n\n analogWrite(' +                    
+                    ((__t = (dropdown_pinrojo)) == null ? '' : __t) +  ' , R);\nanalogWrite(' +                    
+                    ((__t = (dropdown_pinverde)) == null ? '' : __t) +  ' , G);\nanalogWrite(' +                    
+                    ((__t = (dropdown_pinazul)) == null ? '' : __t) +  ' , B);\n\n';
+            }
+            return __p
+        };
+
+
+
+
+
+        this["JST"]["SALIDAS_ledrgb"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
@@ -1646,7 +1664,7 @@
             }
             return __p
         };
- this["JST"]["SALIDAS_piezo_buzzer_setups"] = function(obj) {
+ this["JST"]["SALIDAS_ledrgb_setups"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
@@ -1657,10 +1675,7 @@
                     ((__t = (dropdown_pinverde)) == null ? '' : __t) +          
                     ',OUTPUT);\npinMode(' +
                     ((__t = (dropdown_pinazul)) == null ? '' : __t) +          
-                    ',OUTPUT);\n}\nvoid color(int R, int G, int B)\n{\nanalogWrite(' +                    
-                    ((__t = (dropdown_pinrojo)) == null ? '' : __t) +  ' , R);\nanalogWrite(' +                    
-                    ((__t = (dropdown_pinverde)) == null ? '' : __t) +  ', G);\nanalogWrite(' +                    
-                    ((__t = (dropdown_pinazul)) == null ? '' : __t) +  ', B);\n\n';
+                    ',OUTPUT);\n';
             }
             return __p
         };
@@ -1689,17 +1704,38 @@
             return __p
         };
  
- 
-        this["JST"]["SALIDAS_potentiometer"] = function(obj) {
+
+this["JST"]["Entradas_temperatura_definitions"] = function(obj) {
             obj || (obj = {});
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += '( 5.0 * analogRead(' +
-                    ((__t = (dropdown_pin)) == null ? '' : __t) +
-                    ')* 100.0) / 1024.0';
-
+                __p += 'DHT11 dht11\n\n';
             }
+            return __p
+        };
+
+this["JST"]["define_temperatura"] = function(obj) {
+            obj || (obj = {});
+            var __t, __p = '',
+                __e = _.escape;
+            with(obj) {
+                __p += '#include <DHT11.h>\n\n';
+            }
+            return __p
+        };
+
+ 
+        this["JST"]["Entradas_temperatura"] = function(obj) {
+            obj || (obj = {});
+            var __t, __p = '',
+                __e = _.escape;
+             with(obj) {
+            __p +='dht11.read(' +                    
+                    ((__t = (dropdown_pin_temp)) == null ? '' : __t) +          
+                    ',' +
+                    ((__t = (dropdown_pin_hum)) == null ? '' : __t) +          
+                    ')'            }
             return __p
         };
 
@@ -1989,7 +2025,7 @@
             var __t, __p = '',
                 __e = _.escape;
             with(obj) {
-                __p += '#include <Wire.h>\n#include <LiquidCrystal_I2C.h>';
+                __p += '#include <Wire.h>\n#include <LiquidCrystal_I2C.h>\n';
 
             }
             return __p
@@ -3204,7 +3240,7 @@
             code += a['code'];
             trigger_pin = a['pin'];
 
-            Blockly.Arduino.definitions_['define_SALIDAS_gyro_tp_init'] = JST['SALIDAS_gyro_definitions_tp_init']({});
+            Blockly.Arduino.definitions_['define_SALIDAS_gyro_tiempo'] = JST['SALIDAS_gyro_definitions_tiempo']({});
             if (RoboBlocks.isVariable(dropdown_stat)) {
                 code += JST['SALIDAS_bat_setups_echo']({
                     'dropdown_stat': dropdown_stat
@@ -3240,7 +3276,7 @@
             code += a['code'];
             trigger_pin = a['pin'];
 
-            Blockly.Arduino.definitions_['define_SALIDAS_ace_tp_init'] = JST['SALIDAS_ace_definitions_tp_init']({});
+            Blockly.Arduino.definitions_['define_SALIDAS_ace_tiempo'] = JST['SALIDAS_ace_definitions_tiempo']({});
             if (RoboBlocks.isVariable(dropdown_stat)) {
                 code += JST['SALIDAS_bat_setups_echo']({
                     'dropdown_stat': dropdown_stat
@@ -3285,8 +3321,8 @@
             code += a['code'];
             trigger_pin = a['pin'];
 
-            Blockly.Arduino.definitions_['define_SALIDAS_bat_tp_init'] = JST['SALIDAS_bat_definitions_tp_init']({});
-            Blockly.Arduino.definitions_['define_SALIDAS_bat_distance'] = JST['SALIDAS_bat_definitions_distance']({});
+            Blockly.Arduino.definitions_['define_SALIDAS_bat_tiempo'] = JST['SALIDAS_bat_definitions_tiempo']({});
+            Blockly.Arduino.definitions_['define_SALIDAS_bat_distancia'] = JST['SALIDAS_bat_definitions_distancia']({});
             if (RoboBlocks.isVariable(echo_pin)) {
                 code += JST['SALIDAS_bat_setups_echo']({
                     'echo_pin': echo_pin
@@ -3928,13 +3964,18 @@
          */
 
         //rgb 
-        Blockly.Arduino.SALIDAS_piezo_buzzer = function() {
+        Blockly.Arduino.SALIDAS_ledrgb = function() {
 
             var dropdown_pinrojo = Blockly.Arduino.valueToCode(this, 'PINROJO', Blockly.Arduino.ORDER_ATOMIC) || '';
             var dropdown_pinverde = Blockly.Arduino.valueToCode(this, 'PINVERDE', Blockly.Arduino.ORDER_ATOMIC) || '';
             var dropdown_pinazul = Blockly.Arduino.valueToCode(this, 'PINAZUL', Blockly.Arduino.ORDER_ATOMIC) || '';
             var dropdown_stat = this.getFieldValue('STAT') || '';
             var delay_time = Blockly.Arduino.valueToCode(this, 'DURA', Blockly.Arduino.ORDER_ATOMIC);
+            Blockly.Arduino.definitions_['declare_ledrgb'] = JST['SALIDAS_ledrgb_definitions']({
+                'dropdown_pinrojo': dropdown_pinrojo,
+                'dropdown_pinverde': dropdown_pinverde,
+                'dropdown_pinazul': dropdown_pinazul
+            });
             var code = '';
             var a = RoboBlocks.findPinMode(dropdown_pinrojo);
             code += a['code'];
@@ -3953,7 +3994,7 @@
             delay_time = a['pin'];
            
             if (RoboBlocks.isVariable(dropdown_pinrojo)) {
-                code += JST['SALIDAS_piezo_buzzer_setups']({
+                code += JST['SALIDAS_ledrgb_setups']({
                     'dropdown_pinrojo': dropdown_pinrojo,
                     'dropdown_pinverde': dropdown_pinverde,
                     'dropdown_pinazul': dropdown_pinazul,
@@ -3961,7 +4002,7 @@
                     'delay_time': delay_time
                 });
             } else {
-                Blockly.Arduino.setups_['SALIDAS_piezo_buzzer' + dropdown_pinrojo] = JST['SALIDAS_piezo_buzzer_setups']({
+                Blockly.Arduino.setups_['SALIDAS_ledrgb'] = JST['SALIDAS_ledrgb_setups' ]({
                     'dropdown_pinrojo': dropdown_pinrojo,
                     'dropdown_pinverde': dropdown_pinverde,
                     'dropdown_pinazul': dropdown_pinazul,
@@ -3970,7 +4011,7 @@
                 });
             }
           
-            code += JST['SALIDAS_piezo_buzzer']({
+            code += JST['SALIDAS_ledrgb']({
                 'dropdown_pinrojo': dropdown_pinrojo,
                 'dropdown_pinverde': dropdown_pinverde,
                 'dropdown_pinazul': dropdown_pinazul,
@@ -3984,15 +4025,14 @@
 
 
         /**
-         * SALIDAS_piezo_buzzer block definition
-         * @type {Object}
+         * LED RGB
          */
-        Blockly.Blocks.SALIDAS_piezo_buzzer = {
+        Blockly.Blocks.SALIDAS_ledrgb = {
             category: RoboBlocks.locales.getKey('LANG_CATEGORY_SALIDAS'),
-            tags: ['buzzer'],
-            helpUrl: RoboBlocks.URL_BUZZER,
+            tags: ['ledrgb'],
+            helpUrl: RoboBlocks.URL_ledrgb,
             /**
-             * SALIDAS_piezo_buzzer initialization
+             * LED RGB
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
@@ -4015,24 +4055,24 @@
                 this.appendDummyInput('')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_COLOR'))
                     .appendField(new Blockly.FieldDropdown([
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_ROJO') || 'ROJO', '255, 0, 0'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_VERDE') || 'VERDE', '0, 255, 0'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_AZUL') || 'AZUL', '0, 0, 255'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_AMARILLO') || 'AMARILLO', '255, 255, 0'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_VIOLETA') || 'VIOLETA', '153, 51, 255'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_NARANJA') || 'NARANJA', '255, 128, 0'],
-                        [RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_APAGADO') || 'APAGADO', '0, 0, 0'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_ROJO') || 'ROJO', '255, 0, 0'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_VERDE') || 'VERDE', '0, 255, 0'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_AZUL') || 'AZUL', '0, 0, 255'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_AMARILLO') || 'AMARILLO', '255, 255, 0'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_VIOLETA') || 'VIOLETA', '153, 51, 255'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_NARANJA') || 'NARANJA', '255, 128, 0'],
+                        [RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_APAGADO') || 'APAGADO', '0, 0, 0'],
                     ]), 'STAT') //523
                     .setAlign(Blockly.ALIGN_RIGHT);
 
                 this.appendValueInput('DURA', Number)
                     .setCheck(Number)
                     .setAlign(Blockly.ALIGN_RIGHT)
-                    .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_DURATION'));
+                    .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_DURATION'));
 
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
-                this.setTooltip(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_TOOLTIP'));
+                this.setTooltip(RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_TOOLTIP'));
             }
         };
 
@@ -4046,38 +4086,66 @@
          * SALIDAS_potentiometer code generation
          * @return {String} Code generated with block parameters
          */
-        Blockly.Arduino.SALIDAS_potentiometer = function() {
-            var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
+
+
+
+
+        Blockly.Arduino.Entradas_temperatura = function() {
+            var dropdown_pin_temp = Blockly.Arduino.valueToCode(this, 'TEMP', Blockly.Arduino.ORDER_ATOMIC) || '';
+            var dropdown_pin_hum = Blockly.Arduino.valueToCode(this, 'HUM', Blockly.Arduino.ORDER_ATOMIC) || '';
+            var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC) || '';
+
             var code = '';
-            var a = RoboBlocks.findPinMode(dropdown_pin);
+            
+            a = RoboBlocks.findPinMode(dropdown_pin_temp);
+            code += a['code'];
+            dropdown_pin_temp = a['pin'];
+
+            a = RoboBlocks.findPinMode(dropdown_pin_hum);
+            code += a['code'];
+            dropdown_pin_hum = a['pin'];
+
+            a = RoboBlocks.findPinMode(dropdown_pin);
             code += a['code'];
             dropdown_pin = a['pin'];
 
-            code += JST['SALIDAS_potentiometer']({
-                'dropdown_pin': dropdown_pin
+
+            code += JST['Entradas_temperatura']({
+                'dropdown_pin': dropdown_pin,
+                'dropdown_pin_temp': dropdown_pin_temp,
+                'dropdown_pin_hum': dropdown_pin_hum
             });
 
-            return [code, Blockly.Arduino.ORDER_ATOMIC];
+              return code;
         };
 
         /**
-         * SALIDAS_potentiometer block definition
-         * @type {Object}
+         * temperatura
          */
-        Blockly.Blocks.SALIDAS_potentiometer = {
+        Blockly.Blocks.Entradas_temperatura = {
             category: RoboBlocks.locales.getKey('LANG_CATEGORY_ENTRADAS'),
-            tags: ['potentiometer'],
-            helpUrl: RoboBlocks.URL_POTENTIOMETER,
-            /**
-             * SALIDAS_potentiometer initialization
-             */
+            tags: ['temperatura'],
+            helpUrl: RoboBlocks.URL_temperatura,
+
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendValueInput('PIN')
+                this.appendDummyInput('IMG')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA'))
                     .appendField(new Blockly.FieldImage('img/blocks/06.png', 208 * options.zoom, 139 * options.zoom))
-                    .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_PIN'))
-                    .setCheck(Number);
+                    this.appendValueInput('TEMP')
+                    .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_TEMP'))                    
+                    .setCheck(Number)
+                    .setAlign(Blockly.ALIGN_RIGHT);
+                this.setOutput(true, Number);    
+                    this.appendValueInput('HUM')
+                    .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_HUM'))                    
+                    .setCheck(Number)
+                    .setAlign(Blockly.ALIGN_RIGHT);
+                this.setOutput(true, Number);
+                    this.appendValueInput('PIN')
+                    .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_PIN'))                    
+                    .setCheck(Number)
+                    .setAlign(Blockly.ALIGN_RIGHT);
                 this.setOutput(true, Number);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_TOOLTIP'));
             }
@@ -5479,60 +5547,7 @@
 
 
 
-//segundo caras inicio
-     Blockly.Arduino.matriz_caras_def = function() {
-            var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC) || '';
-            var dropdown_stat = this.getFieldValue('STAT') || '';
-            Blockly.Arduino.definitions_['declare_matriz_caras'] = JST['matriz_caras_definitions']({});
-            var code = '';
-            var a = RoboBlocks.findPinMode(dropdown_pin);
-            code += a['code'];
-            dropdown_pin = a['pin'];
 
-            if (RoboBlocks.isVariable(dropdown_pin)) {
-                code += JST['caras_setups']({
-                    'dropdown_pin': dropdown_pin,
-                    'dropdown_stat': dropdown_stat
-
-                });
-            } else {
-                Blockly.Arduino.setups_['matriz_caras' + dropdown_pin] = JST['caras_setups']({
-                    'dropdown_pin': dropdown_pin,
-                    'dropdown_stat': dropdown_stat
-
-                });
-            }
-            code += JST['matriz_caras']({
-                'dropdown_pin': dropdown_pin,
-                'dropdown_stat': dropdown_stat
-
-            });
-            return code;
-        };
-        /**
-         * servo_cont block definition
-         * @type {Object}
-         */
-        Blockly.Blocks.matriz_caras_def = {
-            category: RoboBlocks.locales.getKey('LANG_CATEGORY_LCD'),
-            tags: ['servo'],
-            helpUrl: RoboBlocks.URL_CONTINUOUS_ROTATION_SERVO,
-            init: function() {
-                this.setColour(RoboBlocks.LANG_COLOUR_LCD);
-                this.appendDummyInput()
-                    .appendField(RoboBlocks.locales.getKey('LANG_matriz_caras_estado'))
-                    .appendField(new Blockly.FieldDropdown([
-                        [RoboBlocks.locales.getKey('LANG_matriz_caras_feliz') || 'Feliz', '0'],
-                        [RoboBlocks.locales.getKey('LANG_matriz_caras_sorprendido') || 'Sorprendido', '1'],
-                        [RoboBlocks.locales.getKey('LANG_matriz_caras_enojado') || 'Enojado', '2'],
-                    ]), 'STAT')
-            this.setInputsInline(false);
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setTooltip(RoboBlocks.locales.getKey('LANG_matriz_caras_DEF_TOOLTIP'));
-            }
-        };
-//segundo caras final
 
 
         Blockly.Arduino.lcd_i2c = function() {
@@ -5707,6 +5722,60 @@
 
 //matriz final
 
+//segundo caras inicio
+     Blockly.Arduino.matriz_caras_def = function() {
+            var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC) || '';
+            var dropdown_stat = this.getFieldValue('STAT') || '';
+            Blockly.Arduino.definitions_['declare_matriz_caras'] = JST['matriz_caras_definitions']({});
+            var code = '';
+            var a = RoboBlocks.findPinMode(dropdown_pin);
+            code += a['code'];
+            dropdown_pin = a['pin'];
+
+            if (RoboBlocks.isVariable(dropdown_pin)) {
+                code += JST['caras_setups']({
+                    'dropdown_pin': dropdown_pin,
+                    'dropdown_stat': dropdown_stat
+
+                });
+            } else {
+                Blockly.Arduino.setups_['matriz_caras' + dropdown_pin] = JST['caras_setups']({
+                    'dropdown_pin': dropdown_pin,
+                    'dropdown_stat': dropdown_stat
+
+                });
+            }
+            code += JST['matriz_caras']({
+                'dropdown_pin': dropdown_pin,
+                'dropdown_stat': dropdown_stat
+
+            });
+            return code;
+        };
+        /**
+         * servo_cont block definition
+         * @type {Object}
+         */
+        Blockly.Blocks.matriz_caras_def = {
+            category: RoboBlocks.locales.getKey('LANG_CATEGORY_LCD'),
+            tags: ['servo'],
+            helpUrl: RoboBlocks.URL_CONTINUOUS_ROTATION_SERVO,
+            init: function() {
+                this.setColour(RoboBlocks.LANG_COLOUR_LCD);
+                this.appendDummyInput()
+                    .appendField(RoboBlocks.locales.getKey('LANG_matriz_caras_estado'))
+                    .appendField(new Blockly.FieldDropdown([
+                        [RoboBlocks.locales.getKey('LANG_matriz_caras_feliz') || 'Feliz', '0'],
+                        [RoboBlocks.locales.getKey('LANG_matriz_caras_sorprendido') || 'Sorprendido', '1'],
+                        [RoboBlocks.locales.getKey('LANG_matriz_caras_enojado') || 'Enojado', '2'],
+                    ]), 'STAT')
+            this.setInputsInline(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setTooltip(RoboBlocks.locales.getKey('LANG_matriz_caras_DEF_TOOLTIP'));
+            }
+        };
+//segundo caras final
 
 //matriz print
 

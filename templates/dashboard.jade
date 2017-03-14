@@ -7,6 +7,8 @@ block head
 
 block content
   .content
+    br
+    br
     .row
       .col-lg-12.col-md-6.col-sm-6
         .card.card-stats
@@ -20,9 +22,11 @@ block content
           .card-footer
             .stats
               .col-md-12
-                input#device_address(type='text', name='fname', placeholder=' localhost:4000/serial')
+                .form-group.label-floating
+                  label.control-label [ip del gateway]:4000/serial
+                  input#device_address.form-control(type='text')
                 button#validate.btn.btn-info(type='button') Conectar
-          //
+
     .row
       .col-lg-4.col-md-6.col-sm-6
         .card.card-stats
@@ -110,10 +114,9 @@ block content
             br
           .card-footer
             .stats
-              //
-                <button id='on' class='btn btn-info ' type="button">Prender</button>
-                <button id='off' class='btn btn-danger' type="button">Apagar</button>
-              input#toggle-10(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+              button#on.btn.btn-info(type='button') On
+              button#off.btn.btn-danger(type='button') Off
+              //-input#toggle-10(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
       .col-lg-3.col-md-6.col-sm-6
         .card.card-stats
           .card-header(data-background-color='blue')
@@ -126,7 +129,7 @@ block content
             br
           .card-footer
             .stats
-              input#toggle-11(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+              input#toggle-11(type='checkbox', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
       .col-lg-3.col-md-6.col-sm-6
         .card.card-stats
           .card-header(data-background-color='blue')
@@ -139,7 +142,7 @@ block content
             br
           .card-footer
             .stats
-              input#toggle-12(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+              input#toggle-12(type='checkbox', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
       .col-lg-3.col-md-6.col-sm-6
         .card.card-stats
           .card-header(data-background-color='blue')
@@ -152,7 +155,7 @@ block content
             br
           .card-footer
             .stats
-              input#toggle-13(type='checkbox', data-size='large', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
+              input#toggle-13(type='checkbox', data-on='Prendido', data-off='Apagado', data-toggle='toggle', data-onstyle='success', data-offstyle='danger')
   
 block scripts
   script(src='static/dashboard-modules/bootstrap-toggle.min.js')
@@ -161,3 +164,4 @@ block scripts
   script(src='static/dashboard-modules/ajaxq.js')
   script(src='static/dashboard-modules/arest.js')
   script(src='static/dashboard-modules/index.js')
+  script(src='static/dashboard-modules/material.min.js')
