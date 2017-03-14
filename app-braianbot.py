@@ -14,7 +14,7 @@ import json
 
 from utils.poolsockets import PoolWebSocketHandler
 from time import sleep
-import redis, numpy as np
+#import redis, numpy as np
 from tornado import gen
 
 config = configparser.ConfigParser()
