@@ -168,7 +168,7 @@ class Bloques101(tornado.web.RequestHandler):
 	def get(self):
 		self.render('bloques-101.jade')
 
-class RobotsHandler(tornado.web.RequestHandler):
+class FlechasRobotHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('robots.jade')
 
@@ -215,7 +215,8 @@ if __name__ == '__main__':
 		handlers=[
 			(r"/",IndexHandler),
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
-			(r"/robots",RobotsHandler),
+			(r"/flechasrobot",FlechasRobotHandler),
+			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/visor",VisorHandler),
 			(r"/scratch",ScratchConsole),
