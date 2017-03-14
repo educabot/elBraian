@@ -164,7 +164,10 @@ html,
 body {
   height: 100%;
 }
-body {
+
+.index-background{
+  height: 100vh;
+  background-color: #ffffff;
   background-image: url("/static/img/fondo.jpg");
   background-repeat:no-repeat;
   background-position: center center;
