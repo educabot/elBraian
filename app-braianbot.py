@@ -182,7 +182,7 @@ class FixConsole(tornado.web.RequestHandler):
 
 class ScratchConsole(tornado.web.RequestHandler):
 	def get(self):
-		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
+		pic_url = "http://educablocks.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('scratch.jade', pic_url=pic_url)
 
 class StreamHandler(tornado.web.RequestHandler):
