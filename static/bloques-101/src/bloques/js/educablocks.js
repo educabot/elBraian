@@ -3357,7 +3357,7 @@ this["JST"]["define_temperatura"] = function(obj) {
             helpUrl: RoboBlocks.URL_US,
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ULTRASONIDO')).appendField(new Blockly.FieldImage('img/blocks/09.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ULTRASONIDO')).appendField(new Blockly.FieldImage('static/img/blocks/09.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('RED PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ULTRASONIDO_RED_PIN')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendValueInput('BLUE PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ULTRASONIDO_BLUE_PIN')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.setInputsInline(false);
@@ -3373,7 +3373,7 @@ this["JST"]["define_temperatura"] = function(obj) {
             helpUrl: RoboBlocks.URL_US,
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_GYRO')).appendField(new Blockly.FieldImage('img/blocks/31.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_GYRO')).appendField(new Blockly.FieldImage('static/img/blocks/31.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendDummyInput('')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_GYRO_EJE'))
                     .appendField(new Blockly.FieldDropdown([
@@ -3394,7 +3394,7 @@ this["JST"]["define_temperatura"] = function(obj) {
             helpUrl: RoboBlocks.URL_US,
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ACE')).appendField(new Blockly.FieldImage('img/blocks/31.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_ACE')).appendField(new Blockly.FieldImage('static/img/blocks/31.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendDummyInput('')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_GYRO_EJE'))
                     .appendField(new Blockly.FieldDropdown([
@@ -3460,7 +3460,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_COMMUNICATION);
-                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BLUETOOTH_DEF')).appendField(new Blockly.FieldImage('img/blocks/03.png', 208 * options.zoom, 100 * options.zoom));
+                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BLUETOOTH_DEF')).appendField(new Blockly.FieldImage('static/img/blocks/03.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendValueInput('BAUD_RATE').setCheck(Number).appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BLUETOOTH_DEF_BAUD_RATE')).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendDummyInput().appendField('ENTRADAS?').appendField(new Blockly.FieldCheckbox('FALSE'), 'TOGGLE').setAlign(Blockly.ALIGN_RIGHT);
                 this.checkBT();
@@ -3521,7 +3521,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_COMMUNICATION);
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BLUETOOTH_RECEIVE'));
-                // .appendField(new Blockly.FieldImage('img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
 
                 this.setInputsInline(false);
 
@@ -3570,7 +3570,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_COMMUNICATION);
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BLUETOOTH_SEND'));
-                // .appendField(new Blockly.FieldImage('img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
 
                 this.appendValueInput('SNT')
                     .setAlign(Blockly.ALIGN_RIGHT)
@@ -3627,7 +3627,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              **/
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_LLUVIA')).appendField(new Blockly.FieldImage('img/blocks/05.png', 336 * options.zoom, 176 * options.zoom)).setCheck(Number).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_LLUVIA_PIN')).setAlign(Blockly.ALIGN_RIGHT);
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_LLUVIA')).appendField(new Blockly.FieldImage('static/img/blocks/05.png', 336 * options.zoom, 176 * options.zoom)).setCheck(Number).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_LLUVIA_PIN')).setAlign(Blockly.ALIGN_RIGHT);
                 this.setOutput(true, Boolean);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_LLUVIA_TOOLTIP'));
             }
@@ -3701,7 +3701,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BUTTONS'))
-                    .appendField(new Blockly.FieldImage('img/blocks/10.png', 336 * options.zoom, 176 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/10.png', 336 * options.zoom, 176 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_BUTTONS_PIN'))
                     .setCheck(Number);
                 this.appendStatementInput('BUTN1')
@@ -3766,7 +3766,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PIR')).appendField(new Blockly.FieldImage('img/blocks/04.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PIR_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PIR')).appendField(new Blockly.FieldImage('static/img/blocks/04.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PIR_PIN')).setCheck(Number);
                 this.setOutput(true);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_PIR_TOOLTIP'));
             }
@@ -3836,7 +3836,7 @@ this["JST"]["define_temperatura"] = function(obj) {
            
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
-                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_JOYSTICK')).appendField(new Blockly.FieldImage('img/blocks/11.png', 209 * options.zoom, 277 * options.zoom));
+                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_JOYSTICK')).appendField(new Blockly.FieldImage('static/img/blocks/11.png', 209 * options.zoom, 277 * options.zoom));
                 // this.appendValueInput('POS')
                 //     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_JOYSTICK_POSITION'))
                 //     .setAlign(Blockly.ALIGN_RIGHT)
@@ -3897,7 +3897,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                
 
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
-                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_MOTOR')).appendField(new Blockly.FieldImage('img/blocks/02.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_MOTOR')).appendField(new Blockly.FieldImage('static/img/blocks/02.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('PIN1').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_MOTOR_PIN1')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendValueInput('PIN2').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_MOTOR_PIN2')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.setPreviousStatement(true, null);
@@ -3946,7 +3946,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_SONIDO'))
-                    .appendField(new Blockly.FieldImage('img/blocks/01.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/01.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_SONIDO_PIN'))
                     .setCheck(Number);
                 this.setOutput(true, Number);
@@ -4038,7 +4038,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
                 this.appendDummyInput('')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB'))
-                    .appendField(new Blockly.FieldImage('img/blocks/07.png', 208 * options.zoom, 140 * options.zoom));
+                    .appendField(new Blockly.FieldImage('static/img/blocks/07.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('PINROJO')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LEDRGB_PINROJO'))
                     .setCheck(Number)
@@ -4131,7 +4131,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
                 this.appendDummyInput('IMG')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA'))
-                    .appendField(new Blockly.FieldImage('img/blocks/06.png', 208 * options.zoom, 139 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/06.png', 208 * options.zoom, 139 * options.zoom))
                     this.appendValueInput('TEMP')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_TEMPERATURA_TEMP'))                    
                     .setCheck(Number)
@@ -5446,7 +5446,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_LCD);
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_LCD_CLEAR'));
-                // .appendField(new Blockly.FieldImage('img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
 
 
 
@@ -5491,7 +5491,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_LCD);
-                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_LCD_DEF')).appendField(new Blockly.FieldImage('img/blocks/12.png', 208 * options.zoom, 100 * options.zoom));
+                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_LCD_DEF')).appendField(new Blockly.FieldImage('static/img/blocks/12.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_LCD_PINS'))
                     .appendField(new Blockly.FieldTextInput('11'), 'LCD_1')
@@ -5534,7 +5534,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                         ['HIGH', 'HIGH']
                     ]), 'STATE')
                     .appendField(RoboBlocks.locales.getKey('LANG_LCD_SETBACKLIGHT_CLOSE'));
-                // .appendField(new Blockly.FieldImage('img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
 
 
                 this.setInputsInline(false);
@@ -5571,7 +5571,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_LCD);
-                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_LCD_I2C')).appendField(new Blockly.FieldImage('img/blocks/30.png', 208 * options.zoom, 100 * options.zoom));
+                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_LCD_I2C')).appendField(new Blockly.FieldImage('static/img/blocks/30.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_LCD_DIRECCION'))
                     .appendField(new Blockly.FieldTextInput('0x25'), 'LCD_DIRECCION')
@@ -5635,7 +5635,7 @@ this["JST"]["define_temperatura"] = function(obj) {
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_LCD);
                 this.appendValueInput('VAL').appendField(RoboBlocks.locales.getKey('LANG_LCD_PRINT'));
-                // .appendField(new Blockly.FieldImage('img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/SALIDASmod03.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_LCD_PRINT_POSITION')).appendField(new Blockly.FieldCheckbox('TRUE'), 'POS').setAlign(Blockly.ALIGN_RIGHT);
                 this.last_pos = this.getFieldValue('POS');
                 this.getPosition();
@@ -5707,7 +5707,7 @@ this["JST"]["define_temperatura"] = function(obj) {
 
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_LCD);
-                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_matriz_DEF')).appendField(new Blockly.FieldImage('img/blocks/33.png', 300 * options.zoom, 200 * options.zoom));
+                this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_matriz_DEF')).appendField(new Blockly.FieldImage('static/img/blocks/33.png', 300 * options.zoom, 200 * options.zoom));
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_matriz_din')).appendField(new Blockly.FieldTextInput('12'), 'matriz_1')
                     .appendField(RoboBlocks.locales.getKey('LANG_matriz_clk')).appendField(new Blockly.FieldTextInput('11'), 'matriz_2')
@@ -7910,7 +7910,7 @@ this["JST"]["define_temperatura"] = function(obj) {
             helpUrl: RoboBlocks.URL_CONTINUOUS_ROTATION_SERVO,
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_SERVO);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SERVO_CONT')).appendField(new Blockly.FieldImage('img/blocks/13.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SERVO_CONT_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SERVO_CONT')).appendField(new Blockly.FieldImage('static/img/blocks/13.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SERVO_CONT_PIN')).setCheck(Number);
                 this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SERVO_CONT_ROT')).setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown([
                     [RoboBlocks.locales.getKey('LANG_SERVO_CONT_TURN_CLOCKWISE') || 'CLOCKWISE', '0'],
                     [RoboBlocks.locales.getKey('LANG_SERVO_CONT_TURN_COUNTERCLOCKWISE') || 'ANTICLOCKWISE', '180'],
@@ -7993,7 +7993,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_SERVO);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SERVO_MOVE')).appendField(new Blockly.FieldImage('img/blocks/14.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SERVO_MOVE_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SERVO_MOVE')).appendField(new Blockly.FieldImage('static/img/blocks/14.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SERVO_MOVE_PIN')).setCheck(Number);
                 this.appendValueInput('DEGREE', Number).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT).appendField(RoboBlocks.locales.getKey('LANG_SERVO_MOVE_DEGREES'));
                 this.setPreviousStatement(true);
                 this.setNextStatement(true);
@@ -9131,7 +9131,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_BUTTON')).appendField(new Blockly.FieldImage('img/blocks/16.png', 212 * options.zoom, 139 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_BUTTON_PIN'));
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_BUTTON')).appendField(new Blockly.FieldImage('static/img/blocks/16.png', 212 * options.zoom, 139 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_BUTTON_PIN'));
                 this.setOutput(true, Boolean);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_BUTTON_TOOLTIP'));
             }
@@ -9198,7 +9198,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_FOLLOWER')).appendField(new Blockly.FieldImage('img/blocks/20.png', 203 * options.zoom, 165 * options.zoom));
+                this.appendDummyInput('').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_FOLLOWER')).appendField(new Blockly.FieldImage('static/img/blocks/20.png', 203 * options.zoom, 165 * options.zoom));
                 this.appendValueInput('PIN').setAlign(Blockly.ALIGN_RIGHT).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_FOLLOWER_PIN_LEFT'));
                 this.appendValueInput('PIN2').setAlign(Blockly.ALIGN_RIGHT).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_FOLLOWER_PIN_RIGHT'));
                 this.appendStatementInput('SENS1').setAlign(Blockly.ALIGN_RIGHT).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_FOLLOWER_LEFT'));
@@ -9249,7 +9249,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_INFRARED')).appendField(new Blockly.FieldImage('img/blocks/21.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_INFRARED_PIN'));
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_INFRARED')).appendField(new Blockly.FieldImage('static/img/blocks/21.png', 208 * options.zoom, 126 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_INFRARED_PIN'));
                 this.setOutput(true);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_INFRARED_TOOLTIP'));
             }
@@ -9298,7 +9298,7 @@ this["JST"]["define_temperatura"] = function(obj) {
              */
             init: function() {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
-                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LED')).appendField(new Blockly.FieldImage('img/blocks/18.png', 208 * options.zoom, 140 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LED_PIN'));
+                this.appendValueInput('PIN').appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LED')).appendField(new Blockly.FieldImage('static/img/blocks/18.png', 208 * options.zoom, 140 * options.zoom)).appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LED_PIN'));
                 this.appendDummyInput().appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_LED_STATE')).setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown([
                     [RoboBlocks.locales.getKey('LANG_SALIDAS_LED_ON') || 'ON', 'HIGH'],
                     [RoboBlocks.locales.getKey('LANG_SALIDAS_LED_OFF') || 'OFF', 'LOW']
@@ -9348,7 +9348,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PHOTORESISTOR'))
-                    .appendField(new Blockly.FieldImage('img/blocks/19.png', 208 * options.zoom, 126 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/19.png', 208 * options.zoom, 126 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_PHOTORESISTOR_PIN'));
                 this.setOutput(true, Number);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_PHOTORESISTOR_TOOLTIP'));
@@ -9402,7 +9402,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_SALIDAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/15.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/15.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_PIN'));
                 this.appendDummyInput()
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZER_TONE'))
@@ -9478,7 +9478,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZERAV'))
-                    .appendField(new Blockly.FieldImage('img/blocks/15.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/15.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_SALIDAS_PIEZO_BUZZERAV_PIN'));
                 this.appendValueInput('TONE', Number)
                     .setCheck(Number)
@@ -9533,7 +9533,7 @@ this["JST"]["define_temperatura"] = function(obj) {
                 this.setColour(RoboBlocks.LANG_COLOUR_ENTRADAS);
                 this.appendValueInput('PIN')
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_POTENTIOMETER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/17.png', 208 * options.zoom, 139 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/17.png', 208 * options.zoom, 139 * options.zoom))
                     .appendField(RoboBlocks.locales.getKey('LANG_ENTRADAS_POTENTIOMETER_PIN'));
                 this.setOutput(true, Number);
                 this.setTooltip(RoboBlocks.locales.getKey('LANG_ENTRADAS_POTENTIOMETER_TOOLTIP'));
