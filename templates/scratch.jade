@@ -45,12 +45,12 @@ block scripts
   script(src="static/js/blocks.js")
             
 block final_scripts
-  script
-    | var workspace = Blockly.inject('blocklyDiv',{media: 'static/blockly/media/',
-    | toolbox: document.getElementById('toolbox'),
-    | grid:
-    |     {spacing: 20,
-    |      length: 4,
-    |      colour: '#ccc',
-    |      snap: true},
-    |trashcan: true});
+  script.
+    var workspace = Blockly.inject('blocklyDiv',{media: 'static/blockly/media/',
+    toolbox: document.getElementById('toolbox'),
+    grid:
+      {spacing: 20,
+      length: 4,
+      colour: '#ccc',
+      snap: true},
+    trashcan: true});
