@@ -4,6 +4,24 @@ block  head
   title Robots
   link(rel='stylesheet', href='static/bloques-101/src/bloques/css/educablocks.css')
 
+block menu-extra
+  li.dropdown
+    a.dropdown-toggle(href='#', data-toggle='dropdown')
+      i.material-icons save
+      p.hidden-lg.hidden-md Archivo
+    ul.dropdown-menu
+      li
+        a(href='#', onclick='toogleCode()') Ver/Ocultar el codigo
+      li
+        a(href='#', onclick='uploadClick()') Cargar en Genuino 101
+      li
+        a(href='#', onclick='saveCode()') Guardar codigo Arduino
+      li
+        a(href='#', onclick='save()') Guardar Bloques
+      li
+        a(href='#', onclick='fakeload') Cargar Bloques
+      input#load(type='file', style='display: none;')
+
 block bloques
   xml#startBlocks(style='display: none')
     block(type='controls_setupLoop', deletable='false')
