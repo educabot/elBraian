@@ -167,6 +167,10 @@ class Bloques101(tornado.web.RequestHandler):
 	def get(self):
 		self.render('bloques-101.jade')
 
+class RobotsHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.render('robots.jade')
+
 class WrongConsole(tornado.web.RequestHandler):
 	def get(self):
 		self.render('wrong_console.jade')
@@ -210,7 +214,7 @@ if __name__ == '__main__':
 		handlers=[
 			(r"/",IndexHandler),
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
-			(r"/robot",RobotHandler),
+			(r"/robots",RobotsHandler),
 			(r"/console",ConsoleHandler),
 			(r"/visor",VisorHandler),
 			(r"/scratch",ScratchConsole),

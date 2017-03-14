@@ -1,18 +1,16 @@
 extends layout
 
-block head
-  title Educablocks
-  link(rel='stylesheet', href='static/bloques-101/src/highlight/styles/default.css')
+block  head
+  title Robots
   link(rel='stylesheet', href='static/bloques-101/src/bloques/css/educablocks.css')
 
-block bloques  
+block bloques
   xml#startBlocks(style='display: none')
     block(type='controls_setupLoop', deletable='false')
   #wrap
-    #blockly(style='float: left; width: 66%;')
-    #code(style='float: right; width: 32%;')
+    #blockly(style='height: 500px; width: 100%;')
 
-block scripts      
+block scripts  
   script(src='static/bloques-101/js/Blob.js')
   script(src='static/bloques-101/js/spin.js')
   script(src='static/bloques-101/js/FileSaver.min.js')
@@ -21,14 +19,13 @@ block scripts
   script(src='static/bloques-101/src/bloques/js/blockly-bq/blockly_compressed.js')
   script(src='static/bloques-101/src/bloques/js/blockly-bq/blocks_compressed.js')
   script(src='static/bloques-101/src/bloques/js/blockly-bq/arduino_compressed.js')
-  script(src='static/bloques-101/src/bloques/js/educablocks.js')
-  script(src='static/bloques-101/src/highlight/highlight.pack.js')
+  script(src='static/bloques-101/src/bloques/js/educablocks2.js')
   script.
-    if (window.roboblocksLanguage === undefined ||
-    window.roboblocksLanguage == null) {
-    var roboblocksLanguage = 'es-ES';
+    if (window.RoboblocksLanguage === undefined ||
+    window.RoboblocksLanguage == null) {
+    var RoboblocksLanguage = 'es-ES';
     }
-    RoboBlocks.load({
+    Roboblocks2.load({
     zoom: 0.5
     });
     // New workspace for each test case
@@ -43,29 +40,29 @@ block scripts
     $('.blocklySvg').width('100%');
     var colors = [
     "",
-    RoboBlocks.LANG_COLOUR_PROCEDURES,
-    RoboBlocks.LANG_COLOUR_CONTROL,
-    RoboBlocks.LANG_COLOUR_LOGIC,
-    RoboBlocks.LANG_COLOUR_MATH,
-    RoboBlocks.LANG_COLOUR_VARIABLES,
-    RoboBlocks.LANG_COLOUR_TEXT,
-    RoboBlocks.LANG_COLOUR_COMMUNICATION,
-    RoboBlocks.LANG_COLOUR_ZUM,
-    RoboBlocks.LANG_COLOUR_BQ,
-    RoboBlocks.LANG_COLOUR_ADVANCED,
-    RoboBlocks.LANG_COLOUR_LCD,
-    RoboBlocks.LANG_COLOUR_SERVO,
+    Roboblocks2.LANG_COLOUR_PROCEDURES,
+    Roboblocks2.LANG_COLOUR_CONTROL,
+    Roboblocks2.LANG_COLOUR_LOGIC,
+    Roboblocks2.LANG_COLOUR_MATH,
+    Roboblocks2.LANG_COLOUR_VARIABLES,
+    Roboblocks2.LANG_COLOUR_TEXT,
+    Roboblocks2.LANG_COLOUR_COMMUNICATION,
+    Roboblocks2.LANG_COLOUR_ZUM,
+    Roboblocks2.LANG_COLOUR_BQ,
+    Roboblocks2.LANG_COLOUR_ADVANCED,
+    Roboblocks2.LANG_COLOUR_LCD,
+    Roboblocks2.LANG_COLOUR_SERVO,
     ];
-    $('.blocklyTreeRow').each( function (i,e) {
+    $('.blocklyTreeRow').each(function(i, e) {
     $(e).prepend('<span class="treeLabelBlock" style="background-color:' + colors[i] + '"></span>');
     });
     // Update code
-    Blockly.addChangeListener(function () {
-    $('#code').html('<code class="c++"><pre>'
-    + escapeCode(Blockly.Arduino.workspaceToCode())
-    + '</pre></code>');
+    Blockly.addChangeListener(function() {
+    $('#code').html('<code class="c++"><pre>' +
+    escapeCode(Blockly.Arduino.workspaceToCode()) +
+    '</pre></code>');
     // Highlight
-    $("pre").each(function (i, e) {
+    $("pre").each(function(i, e) {
     hljs.highlightBlock(e);
     });
     });
@@ -73,11 +70,11 @@ block scripts
     function toogleCode() {
     if ($('#code').css('display') == 'none') {
     // Show
-    $('#code').show('');
+    $('#code').show();
     $('#blockly').width('66%');
     } else {
     // Hide
-    $('#code').hide('');
+    $('#code').hide();
     $('#blockly').width('100%');
     }
     // Resize workspace
@@ -94,3 +91,4 @@ block scripts
     Blockly.Xml.domToWorkspace(Blockly.getMainWorkspace(),
     document.getElementById('startBlocks'));
     }
+

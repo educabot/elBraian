@@ -17,38 +17,71 @@ html
       nav.navbar.navbar-info.navbar-fixed-top(role='navigation')
         .container-fluid
           .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
             a.navbar-brand(href='../') Educablocks
-          #bs-example-navbar-collapse-1.collapse.navbar-collapse
-            ul.nav.navbar-nav
-              li.dropdown.active
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  | Arduino & IoT
-                  b  
+                  i.material-icons code
+                  p.hidden-lg.hidden-md Programas
                 ul.dropdown-menu
+                  li.active
+                    a(href='/bloques') Bloques
                   li
-                    a(href='/bloques') Programación por bloques
-                  li
-                    a(href='/robot') Control de robots
+                    a(href='/robots') Robots
                   li
                     a(href='/dashboard') Panel IOT
-            ul.nav.navbar-nav
-              li.dropdown.active
+
+              li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  | AimaraBot
-                  b  
+                  i.material-icons videocam
+                  p.hidden-lg.hidden-md Tango
                 ul.dropdown-menu
                   li
                     a(href='/visor') visor
                   li
                     a(href='/scratch') scratch 
-              block extra-nav
+
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  i.material-icons save
+                  p.hidden-lg.hidden-md Archivo
+                ul.dropdown-menu
+                  li
+                    a(href='#', onclick='toogleCode()') Ver/Ocultar el código
+                  li
+                    a(href='#', onclick='uploadClick()') Cargar en Genuino 101
+                  li
+                    a(href='#', onclick='saveCode()') Guardar código Arduino
+                  li
+                    a(href='#', onclick='save()') Guardar Bloques
+                  li
+                    a(href='#', onclick='fakeload') Cargar Bloques
+                  input#load(type='file', style='display: none;')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  i.material-icons crop_free
+                  p.hidden-lg.hidden-md Configuración
+                ul.dropdown-menu
+                  li
+                    a#view-fullscreen(href='#') Pantalla Completa
+                  li
+                    a#cancel-fullscreen(href='#') Salir de pantalla completa
 
       block content
-    block bloques101
+    block bloques
 
     block main
     script(src='static/dashboard-modules/jquery-3.1.0.min.js')
     script(src='static/dashboard-modules/bootstrap.min.js')
+    script(src='static/dashboard-modules/base.js')
+    script(src='static/dashboard-modules/material-dashboard.js')
+
     block scripts
     block final_scripts
 
