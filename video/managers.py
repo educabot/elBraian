@@ -42,9 +42,9 @@ class ICaptureManager(object):
 	def writeImage(self,filename):
 		self._imageFileName = filename
 
-	def startWritingVideo(self, filename, encoding = cv2.cv.CV_FOURCC('H','2','6','4')):
-		self._videoFileName = filename
-		self._videoEncoding = encoding
+	#def startWritingVideo(self, filename, encoding = cv2.CV_FOURCC('H','2','6','4')):
+	#	self._videoFileName = filename
+	#	self._videoEncoding = encoding
 
 	def stopWritingVideo(self):
 		self._videoFileName = None
@@ -117,7 +117,7 @@ class CaptureManagerOpenCV(ICaptureManager):
 	@property
 	def frame(self):
 		if self._enteredFrame and self._frame is None:
-			_, self._frame = self._capture.retrieve(channel = self.channel)
+			_, self._frame = self._capture.read()
 		return self._frame
 
 
@@ -166,14 +166,15 @@ class WindowManager(object):
 		return self._isWindowCreated
 
 	def createWindow(self):
-		cv2.namedWindow(self._windowName)
+		#cv2.namedWindow(self._windowName)
 		self._isWindowCreated = True
 
 	def show(self, frame):
-		cv2.imshow(self._windowName, frame)
+		#cv2.imshow(self._windowName, frame)
+		pass
 
 	def destroyWindow(self):
-		cv2.destroyWindow(self._windowName)
+		#cv2.destroyWindow(self._windowName)
 		self._isWindowCreated = False
 
 	def processEvents(self):

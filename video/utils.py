@@ -65,20 +65,20 @@ def createFlatView(array):
 
 def widthHeightDivideBy(image, divisor):
 	h, w = image.shape[:2]
-	return (w/divisor, h/divisor)
+	return (int(w/divisor), int(h/divisor))
 
 
 def draw_str(dst, xxx_todo_changeme, s):
     (x, y) = xxx_todo_changeme
-    cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 1, lineType=cv2.CV_AA)
-    cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
+    cv2.putText(dst, s, (x+1, y+1), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 1, lineType=cv2.LINE_AA)
+    cv2.putText(dst, s, (x, y), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.LINE_AA)
 
 
 def drawCameraFrame(frame, size):
 	#Cross in the middle
 	width, height = size
-	rects.outlineRect(frame, (width/2, height/3, 0, height/3) ,(0, 255 , 0))
-	rects.outlineRect(frame, (width/3, height/2, width/3, 0) ,(0, 255 , 0))
+	rects.outlineRect(frame, (int(width/2), int(height/3), 0, int(height/3)) ,(0, 255 , 0))
+	rects.outlineRect(frame, (int(width/3), int(height/2), int(width/3), 0) ,(0, 255 , 0))
 
 	rects.outlineRect(frame, (20, 20, 0, 60) ,(0, 255 , 0))
 	rects.outlineRect(frame, (20, 20, 60, 0) ,(0, 255 , 0))

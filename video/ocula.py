@@ -1,8 +1,8 @@
 import cv2
 from .managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamera
-from . import filters
+from . import filters, rects, utils
 from .trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
-import utils, rects, sys, time, numpy as np, redis, sys
+import sys, time, numpy as np, redis, sys
 from redis.exceptions import ConnectionError
 from datetime import datetime
 import logging, math
