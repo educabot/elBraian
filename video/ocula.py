@@ -299,6 +299,5 @@ class Ocula(object):
 		elif keycode == 27: # escape
 			self._windowManager.destroyWindow()
 
-
 if __name__ == "__main__":
 	Ocula(sys.argv[1]).run()
