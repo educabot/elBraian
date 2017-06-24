@@ -1,4 +1,4 @@
-extends layout.jade
+extends layout
 
 block styles
   link(rel="stylesheet", href="/static/components/jqueryui/themes/smoothness/jquery-ui.css")
@@ -26,7 +26,7 @@ block content
             img(src=pic_url, height="250", width="350", style="position: relative; float: right;")
           .row
             br
-            button.btn.btn-info.pull-right#execute(data-loading-text="en progreso...") comezar
+            button.btn.btn-info.pull-right#execute(data-loading-text="en progreso...") comenzar
           .row
             br
             .well-console#counter
@@ -36,13 +36,12 @@ block content
         br
 
 block scripts
-  script(src="static/js/newconsole.js")
-  //-script(src="static/components/bootstrap/dist/js/bootstrap.js")
   script(src="static/blockly/blockly_compressed.js")
   script(src="static/blockly/blocks_compressed.js")
   script(src="static/blockly/javascript_compressed.js")    
   script(src="static/blockly/msg/js/es.js")
   script(src="static/js/blocks.js")
+  script(src="static/js/newconsole.js")
             
 block final_scripts
   script.

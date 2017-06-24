@@ -14,7 +14,7 @@ import json
 
 from utils.poolsockets import PoolWebSocketHandler
 from time import sleep
-import redis, numpy as np
+#import redis, numpy as np
 from tornado import gen
 
 config = configparser.ConfigParser()
@@ -168,7 +168,7 @@ class Bloques101(tornado.web.RequestHandler):
 	def get(self):
 		self.render('bloques-101.jade')
 
-class RobotsHandler(tornado.web.RequestHandler):
+class FlechasRobotHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('robots.jade')
 
@@ -182,7 +182,7 @@ class FixConsole(tornado.web.RequestHandler):
 
 class ScratchConsole(tornado.web.RequestHandler):
 	def get(self):
-		pic_url = "http://elbraian.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
+		pic_url = "http://educablocks.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
 		self.render('scratch.jade', pic_url=pic_url)
 
 class StreamHandler(tornado.web.RequestHandler):
@@ -215,7 +215,8 @@ if __name__ == '__main__':
 		handlers=[
 			(r"/",IndexHandler),
 			(r"/favicon.ico", tornado.web.StaticFileHandler,{'path':'static'}),
-			(r"/robots",RobotsHandler),
+			(r"/flechasrobot",FlechasRobotHandler),
+			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/visor",VisorHandler),
 			(r"/scratch",ScratchConsole),

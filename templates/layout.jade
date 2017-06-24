@@ -33,7 +33,7 @@ html
                   li
                     a(href='/bloques') Bloques
                   li
-                    a(href='/robots') Robots
+                    a(href='/flechasrobot') Robots
                   li
                     a(href='/dashboard') Panel IOT
 
@@ -46,27 +46,11 @@ html
                     a(href='/visor') visor
                   li
                     a(href='/scratch') scratch 
-
-              li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  i.material-icons save
-                  p.hidden-lg.hidden-md Archivo
-                ul.dropdown-menu
-                  li
-                    a(href='#', onclick='toogleCode()') Ver/Ocultar el código
-                  li
-                    a(href='#', onclick='uploadClick()') Cargar en Genuino 101
-                  li
-                    a(href='#', onclick='saveCode()') Guardar código Arduino
-                  li
-                    a(href='#', onclick='save()') Guardar Bloques
-                  li
-                    a(href='#', onclick='fakeload') Cargar Bloques
-                  input#load(type='file', style='display: none;')
+              block menu-extra
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.material-icons crop_free
-                  p.hidden-lg.hidden-md Configuración
+                  p.hidden-lg.hidden-md Configuracion
                 ul.dropdown-menu
                   li
                     a#view-fullscreen(href='#') Pantalla Completa
@@ -79,8 +63,9 @@ html
     block main
     script(src='static/dashboard-modules/jquery-3.1.0.min.js')
     script(src='static/dashboard-modules/bootstrap.min.js')
-    script(src='static/dashboard-modules/base.js')
+    script(src='static/dashboard-modules/material.min.js')
     script(src='static/dashboard-modules/material-dashboard.js')
+    script(src='static/dashboard-modules/base.js')
 
     block scripts
     block final_scripts

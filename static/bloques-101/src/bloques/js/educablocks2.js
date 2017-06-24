@@ -2411,7 +2411,7 @@ this["JST"]["ESPERAR"] = function(obj) {
             helpUrl: Roboblocks2.URL_US,
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
-                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_BQ_BAT')).appendField(new Blockly.FieldImage('img/blocks/bqmod09.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_BQ_BAT')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod09.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('RED PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_BAT_RED_PIN')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendValueInput('BLUE PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_BAT_BLUE_PIN')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.setInputsInline(false);
@@ -2471,7 +2471,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_COMMUNICATION);
-                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_BLUETOOTH_DEF')).appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_BLUETOOTH_DEF')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendValueInput('BAUD_RATE').setCheck(Number).appendField(Roboblocks2.locales.getKey('LANG_BQ_BLUETOOTH_DEF_BAUD_RATE')).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendDummyInput().appendField('zum?').appendField(new Blockly.FieldCheckbox('FALSE'), 'TOGGLE').setAlign(Blockly.ALIGN_RIGHT);
                 this.checkBT();
@@ -2532,7 +2532,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_COMMUNICATION);
                 this.appendDummyInput()
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_BLUETOOTH_RECEIVE'));
-                // .appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
 
                 this.setInputsInline(false);
 
@@ -2581,7 +2581,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_COMMUNICATION);
                 this.appendDummyInput()
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_BLUETOOTH_SEND'));
-                // .appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
 
                 this.appendValueInput('SNT')
                     .setAlign(Blockly.ALIGN_RIGHT)
@@ -2638,7 +2638,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              **/
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTON')).appendField(new Blockly.FieldImage('img/blocks/bqmod05.png', 336 * options.zoom, 176 * options.zoom)).setCheck(Number).appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTON_PIN')).setAlign(Blockly.ALIGN_RIGHT);
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTON')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod05.png', 336 * options.zoom, 176 * options.zoom)).setCheck(Number).appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTON_PIN')).setAlign(Blockly.ALIGN_RIGHT);
                 this.setOutput(true, Boolean);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_BQ_BUTTON_TOOLTIP'));
             }
@@ -2712,7 +2712,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTONS'))
-                    .appendField(new Blockly.FieldImage('img/blocks/bqmod10.png', 336 * options.zoom, 176 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/bqmod10.png', 336 * options.zoom, 176 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_BUTTONS_PIN'))
                     .setCheck(Number);
                 this.appendStatementInput('BUTN1')
@@ -2777,7 +2777,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_INFRARED')).appendField(new Blockly.FieldImage('img/blocks/bqmod04.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_BQ_INFRARED_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_BQ_INFRARED')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod04.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_BQ_INFRARED_PIN')).setCheck(Number);
                 this.setOutput(true);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_BQ_INFRARED_TOOLTIP'));
             }
@@ -2847,7 +2847,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
-                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_JOYSTICK')).appendField(new Blockly.FieldImage('img/blocks/bqmod11.png', 209 * options.zoom, 277 * options.zoom));
+                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_JOYSTICK')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod11.png', 209 * options.zoom, 277 * options.zoom));
                 // this.appendValueInput('POS')
                 //     .appendField(Roboblocks2.locales.getKey('LANG_BQ_JOYSTICK_POSITION'))
                 //     .setAlign(Blockly.ALIGN_RIGHT)
@@ -2908,7 +2908,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                
 
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
-                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_BQ_LED')).appendField(new Blockly.FieldImage('img/blocks/bqmod02.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_BQ_LED')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod02.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('PIN1').appendField(Roboblocks2.locales.getKey('LANG_BQ_LED_PIN1')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.appendValueInput('PIN2').appendField(Roboblocks2.locales.getKey('LANG_BQ_LED_PIN2')).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT);
                 this.setPreviousStatement(true, null);
@@ -2957,7 +2957,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_PHOTORESISTOR'))
-                    .appendField(new Blockly.FieldImage('img/blocks/bqmod01.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/bqmod01.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_PHOTORESISTOR_PIN'))
                     .setCheck(Number);
                 this.setOutput(true, Number);
@@ -3043,7 +3043,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
                 this.appendDummyInput('')
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_PIEZO_BUZZER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/bqmod07.png', 208 * options.zoom, 140 * options.zoom));
+                    .appendField(new Blockly.FieldImage('static/img/blocks/bqmod07.png', 208 * options.zoom, 140 * options.zoom));
                 this.appendValueInput('PINROJO')
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_PIEZO_BUZZER_PINROJO'))
                     .setCheck(Number)
@@ -3128,7 +3128,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
-                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_PIEZO_BUZZERAV')).appendField(new Blockly.FieldImage('img/blocks/bqmod20.png', 336 * options.zoom, 176 * options.zoom))
+                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_BQ_PIEZO_BUZZERAV')).appendField(new Blockly.FieldImage('static/img/blocks/bqmod20.png', 336 * options.zoom, 176 * options.zoom))
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);               
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_BQ_PIEZO_BUZZERAV_TOOLTIP'));
@@ -3173,7 +3173,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_BQ);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_POTENTIOMETER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/bqmod06.png', 208 * options.zoom, 139 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/bqmod06.png', 208 * options.zoom, 139 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_BQ_POTENTIOMETER_PIN'))
                     .setCheck(Number);
                 this.setOutput(true, Number);
@@ -4476,7 +4476,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                 this.setColour(Roboblocks2.LANG_COLOUR_LCD);
                 this.appendDummyInput()
                     .appendField(Roboblocks2.locales.getKey('LANG_LCD_CLEAR'));
-                // .appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
 
 
 
@@ -4521,7 +4521,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_LCD);
-                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_LCD_DEF')).appendField(new Blockly.FieldImage('img/blocks/lcd.png', 208 * options.zoom, 100 * options.zoom));
+                this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_LCD_DEF')).appendField(new Blockly.FieldImage('static/img/blocks/lcd.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendDummyInput()
                     .appendField(Roboblocks2.locales.getKey('LANG_LCD_PINS'))
                     .appendField(new Blockly.FieldTextInput('11'), 'LCD_1')
@@ -4590,7 +4590,7 @@ this["JST"]["ESPERAR"] = function(obj) {
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_LCD);
                 this.appendValueInput('VAL').appendField(Roboblocks2.locales.getKey('LANG_LCD_PRINT'));
-                // .appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
                 this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_LCD_PRINT_POSITION')).appendField(new Blockly.FieldCheckbox('TRUE'), 'POS').setAlign(Blockly.ALIGN_RIGHT);
                 this.last_pos = this.getFieldValue('POS');
                 this.getPosition();
@@ -4669,7 +4669,7 @@ this["JST"]["ESPERAR"] = function(obj) {
                         ['HIGH', 'HIGH']
                     ]), 'STATE')
                     .appendField(Roboblocks2.locales.getKey('LANG_LCD_SETBACKLIGHT_CLOSE'));
-                // .appendField(new Blockly.FieldImage('img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
+                // .appendField(new Blockly.FieldImage('static/img/blocks/bqmod03.png', 208 * options.zoom, 100 * options.zoom));
 
 
                 this.setInputsInline(false);
@@ -6754,7 +6754,7 @@ this["JST"]["ESPERAR"] = function(obj) {
             helpUrl: Roboblocks2.URL_CONTINUOUS_ROTATION_SERVO,
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_SERVO_CONT')).appendField(new Blockly.FieldImage('img/blocks/bqservo03.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_SERVO_CONT_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_SERVO_CONT')).appendField(new Blockly.FieldImage('static/img/blocks/bqservo03.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_SERVO_CONT_PIN')).setCheck(Number);
                 this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_SERVO_CONT_ROT')).setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown([
                     [Roboblocks2.locales.getKey('LANG_SERVO_CONT_TURN_CLOCKWISE') || 'CLOCKWISE', '0'],
                     [Roboblocks2.locales.getKey('LANG_SERVO_CONT_TURN_COUNTERCLOCKWISE') || 'ANTICLOCKWISE', '180'],
@@ -6838,7 +6838,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE')).appendField(new Blockly.FieldImage('img/blocks/bqservo01.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE_PIN')).setCheck(Number);
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE')).appendField(new Blockly.FieldImage('static/img/blocks/bqservo01.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE_PIN')).setCheck(Number);
                 this.appendValueInput('DEGREE', Number).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT).appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE_DEGREES'));
                 this.appendValueInput('DELAY_TIME', Number).setCheck(Number).setAlign(Blockly.ALIGN_RIGHT).appendField(Roboblocks2.locales.getKey('LANG_SERVO_MOVE_DELAY'));
                 this.setPreviousStatement(true);
@@ -7977,7 +7977,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_ZUM_BUTTON')).appendField(new Blockly.FieldImage('img/blocks/zum02.png', 212 * options.zoom, 139 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_ZUM_BUTTON_PIN'));
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_ZUM_BUTTON')).appendField(new Blockly.FieldImage('static/img/blocks/zum02.png', 212 * options.zoom, 139 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_ZUM_BUTTON_PIN'));
                 this.setOutput(true, Boolean);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ZUM_BUTTON_TOOLTIP'));
             }
@@ -8044,7 +8044,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
-                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_ZUM_FOLLOWER')).appendField(new Blockly.FieldImage('img/blocks/zum06.png', 203 * options.zoom, 165 * options.zoom));
+                this.appendDummyInput('').appendField(Roboblocks2.locales.getKey('LANG_ZUM_FOLLOWER')).appendField(new Blockly.FieldImage('static/img/blocks/zum06.png', 203 * options.zoom, 165 * options.zoom));
                 this.appendValueInput('PIN').setAlign(Blockly.ALIGN_RIGHT).appendField(Roboblocks2.locales.getKey('LANG_ZUM_FOLLOWER_PIN_LEFT'));
                 this.appendValueInput('PIN2').setAlign(Blockly.ALIGN_RIGHT).appendField(Roboblocks2.locales.getKey('LANG_ZUM_FOLLOWER_PIN_RIGHT'));
                 this.appendStatementInput('SENS1').setAlign(Blockly.ALIGN_RIGHT).appendField(Roboblocks2.locales.getKey('LANG_ZUM_FOLLOWER_LEFT'));
@@ -8095,7 +8095,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
-                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_ZUM_INFRARED')).appendField(new Blockly.FieldImage('img/blocks/zum07.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_ZUM_INFRARED_PIN'));
+                this.appendValueInput('PIN').appendField(Roboblocks2.locales.getKey('LANG_ZUM_INFRARED')).appendField(new Blockly.FieldImage('static/img/blocks/zum07.png', 208 * options.zoom, 126 * options.zoom)).appendField(Roboblocks2.locales.getKey('LANG_ZUM_INFRARED_PIN'));
                 this.setOutput(true);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ZUM_INFRARED_TOOLTIP'));
             }
@@ -8145,7 +8145,7 @@ this["JST"]["ESPERAR"] = function(obj) {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod20.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod20.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8191,7 +8191,7 @@ Blockly.Arduino.DERECHA = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod21.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod21.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8237,7 +8237,7 @@ Blockly.Arduino.IZQUIERDA = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod22.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod22.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8281,7 +8281,7 @@ Blockly.Arduino.ATRAS = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod23.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod23.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8328,7 +8328,7 @@ Blockly.Arduino.ATRAS = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod20.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod20.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8374,7 +8374,7 @@ Blockly.Arduino.DERECHA2 = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod21.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod21.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8420,7 +8420,7 @@ Blockly.Arduino.IZQUIERDA2 = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod22.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod22.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8464,7 +8464,7 @@ Blockly.Arduino.ATRAS2 = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod23.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod23.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8507,7 +8507,7 @@ Blockly.Arduino.ATRAS2 = function() {
    
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod24.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod24.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8552,7 +8552,7 @@ Blockly.Arduino.ATRAS2 = function() {
             /**
 init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/bqmod25.png', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/bqmod25.png', 208 * options.zoom, 140 * options.zoom));
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ADELANTE_TOOLTIP'));
@@ -8596,7 +8596,7 @@ Blockly.Arduino.ESPERAR = function() {
              */
             init: function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_SERVO);
-                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('img/blocks/esperar.gif', 208 * options.zoom, 140 * options.zoom));
+                this.appendDummyInput('PIN').appendField(new Blockly.FieldImage('static/img/blocks/esperar.gif', 208 * options.zoom, 140 * options.zoom));
                 this.appendDummyInput().appendField(Roboblocks2.locales.getKey('LANG_ZUM_LED_STATE')).setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown([
                     [Roboblocks2.locales.getKey('LANG_ESPERAR_1') || '1', '1000'],
                     [Roboblocks2.locales.getKey('LANG_ESPERAR_2') || '2', '2000'],
@@ -8658,7 +8658,7 @@ Blockly.Arduino.ESPERAR = function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PHOTORESISTOR'))
-                    .appendField(new Blockly.FieldImage('img/blocks/zum05.png', 208 * options.zoom, 126 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/zum05.png', 208 * options.zoom, 126 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PHOTORESISTOR_PIN'));
                 this.setOutput(true, Number);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ZUM_PHOTORESISTOR_TOOLTIP'));
@@ -8712,7 +8712,7 @@ Blockly.Arduino.ESPERAR = function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PIEZO_BUZZER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/zum01.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/zum01.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PIEZO_BUZZER_PIN'));
                 this.appendDummyInput()
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PIEZO_BUZZER_TONE'))
@@ -8788,7 +8788,7 @@ Blockly.Arduino.ESPERAR = function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PIEZO_BUZZERAV'))
-                    .appendField(new Blockly.FieldImage('img/blocks/zum01.png', 208 * options.zoom, 140 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/zum01.png', 208 * options.zoom, 140 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_PIEZO_BUZZERAV_PIN'));
                 this.appendValueInput('TONE', Number)
                     .setCheck(Number)
@@ -8843,7 +8843,7 @@ Blockly.Arduino.ESPERAR = function() {
                 this.setColour(Roboblocks2.LANG_COLOUR_ZUM);
                 this.appendValueInput('PIN')
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_POTENTIOMETER'))
-                    .appendField(new Blockly.FieldImage('img/blocks/zum03.png', 208 * options.zoom, 139 * options.zoom))
+                    .appendField(new Blockly.FieldImage('static/img/blocks/zum03.png', 208 * options.zoom, 139 * options.zoom))
                     .appendField(Roboblocks2.locales.getKey('LANG_ZUM_POTENTIOMETER_PIN'));
                 this.setOutput(true, Number);
                 this.setTooltip(Roboblocks2.locales.getKey('LANG_ZUM_POTENTIOMETER_TOOLTIP'));
