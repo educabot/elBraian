@@ -59,7 +59,7 @@ class Ocula(object):
 		self._turnRightTracker = TurnRightTracker()
 		self._ballTracker = BallTracker()
 		self._shouldDrawDebugRects = True
-		self._redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
+		self._redis_client = redis.StrictRedis(host="192.168.99.100", port=6379, db=0)
 		self._vertical_position = 0
 		self._horizontal_position = 0
 		self._robot = Robot()
@@ -182,7 +182,7 @@ class Ocula(object):
 
 			self._pi_capture.truncate(0)
 
-	def __head_adjustement(self, rect):
+	def _head_adjustement(self, rect):
 		"""
 		Perform the positioning to head
 
@@ -221,7 +221,8 @@ class Ocula(object):
 		""" Send given frame.data property to redis """
 		_, img = cv2.imencode(".jpg", frame)
 		try:
-			self._redis_client.set("vigilante_screenshot", img.data)
+			self._redis_client.set("vigilante_screenshot", img.tostring())
+			#self._captureManager.writeImage("test.jpg")
 		except ConnectionError as e:
 			log.error("Error connecting to redis")
 			sys.exit(0)

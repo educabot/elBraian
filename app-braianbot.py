@@ -161,7 +161,7 @@ class Dashboard(tornado.web.RequestHandler):
 class VisorHandler(tornado.web.RequestHandler):
 	def get(self):
 		home = config.get('web','home')
-		self.render('visor.jade', host_url=home+':8095/?action=stream')
+		self.render('visor.jade', host_url=home+'/stream')
 
 class Bloques101(tornado.web.RequestHandler):
 	def get(self):
@@ -185,31 +185,32 @@ class ScratchConsole(tornado.web.RequestHandler):
 		self.render('scratch.jade', pic_url=pic_url)
 
 class StreamHandler(tornado.web.RequestHandler):
-	def initialize(self, redis_client):
-		self._redis_client = redis_client
+    def initialize(self, redis_client):
+    	self._redis_client = redis_client
 
-	@tornado.web.asynchronous
-	@gen.coroutine
-	def get(self):
-		loop = tornado.ioloop.IOLoop.current()
-		my_boundary = "vigilante"
-		self.set_status(200)
-		self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
-		while True:
-			data = self._redis_client.get("vigilante_screenshot")
-			self.write( '--'+ my_boundary + '\r\n')
-			self.write("Content-type: image/jpeg\r\n")
-			self.write("Content-length: %s\r\n\r\n" % len(str(data)))
-			self.write(data)
-			self.write('\r\n')
-			self.write('--' + my_boundary + '\r\n')
-			sleep(0.2)
-			yield gen.Task(self.flush)
+    @tornado.web.asynchronous
+    @gen.coroutine
+    def get(self):
+        loop = tornado.ioloop.IOLoop.current()
+        my_boundary = "vigilante"
+        self.set_status(200)
+        self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
+        while True:
+            data = self._redis_client.get("vigilante_screenshot")
+            print(data)
+            self.write( '--'+ my_boundary + '\r\n')
+            self.write("Content-type: image/jpeg\r\n")
+            self.write("Content-length: %s\r\n\r\n" % len(str(data)))
+            self.write(data)
+            self.write('\r\n')
+            self.write('--' + my_boundary + '\r\n')
+            sleep(0.2)
+            yield gen.Task(self.flush)
 
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
-	redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
+	redis_client = redis.StrictRedis(host="192.168.99.100", port=6379, db=0)
 	app = tornado.web.Application(
 		handlers=[
 			(r"/",IndexHandler),

@@ -178,7 +178,8 @@ class WindowManager(object):
 		self._isWindowCreated = False
 
 	def processEvents(self):
-		keycode = cv2.waitKey(1)
-		if self.keyPressCallback is not None and keycode != -1:
-			keycode &= 0xFF
-			self.keyPressCallback(keycode)
+		#keycode = cv2.waitKey(1)
+		#if self.keyPressCallback is not None and keycode != -1:
+		#	keycode &= 0xFF
+		#	self.keyPressCallback(keycode)
+		pass
