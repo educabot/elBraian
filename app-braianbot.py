@@ -183,9 +183,13 @@ class FixConsole(tornado.web.RequestHandler):
 		self.render('fix_console.jade')
 
 class ScratchConsole(tornado.web.RequestHandler):
-	def get(self):
-		pic_url = "http://educablocks.bot:8095/?action=stream" if (env=="prod") else "/static/img/bg-video.png"
-		self.render('scratch.jade', pic_url=pic_url)
+    def initialize(self, port):
+        self._port = port
+        
+    def get(self):
+        home = config.get('web','home')
+        pic_url = home+':'+str(self._port)+'/stream'
+        self.render('scratch.jade', pic_url=pic_url)
 
 class StreamHandler(tornado.web.RequestHandler):
     def initialize(self, redis_client):
@@ -221,7 +225,7 @@ if __name__ == '__main__':
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
 			(r"/visor",VisorHandler, dict(port=options.port)),
-			(r"/scratch",ScratchConsole),
+			(r"/scratch",ScratchConsole, dict(port=options.port)),
 			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
