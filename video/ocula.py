@@ -222,7 +222,6 @@ class Ocula(object):
 		_, img = cv2.imencode(".jpg", frame)
 		try:
 			self._redis_client.set("vigilante_screenshot", img.tostring())
-			#self._captureManager.writeImage("test.jpg")
 		except ConnectionError as e:
 			log.error("Error connecting to redis")
 			sys.exit(0)

@@ -159,9 +159,12 @@ class Dashboard(tornado.web.RequestHandler):
 		self.render('dashboard.jade')
 
 class VisorHandler(tornado.web.RequestHandler):
-	def get(self):
-		home = config.get('web','home')
-		self.render('visor.jade', host_url=home+'/stream')
+    def initialize(self, port):
+        self._port = port
+
+    def get(self):
+        home = config.get('web','home')
+        self.render('visor.jade', host_url=home+':'+str(self._port)+'/stream', port_url=self._port)
 
 class Bloques101(tornado.web.RequestHandler):
 	def get(self):
@@ -197,7 +200,6 @@ class StreamHandler(tornado.web.RequestHandler):
         self.set_header('Content-type','multipart/x-mixed-replace; boundary=' + my_boundary)
         while True:
             data = self._redis_client.get("vigilante_screenshot")
-            print(data)
             self.write( '--'+ my_boundary + '\r\n')
             self.write("Content-type: image/jpeg\r\n")
             self.write("Content-length: %s\r\n\r\n" % len(str(data)))
@@ -218,7 +220,7 @@ if __name__ == '__main__':
 			(r"/flechasrobot",FlechasRobotHandler),
 			(r"/robot",RobotHandler),
 			(r"/console",ConsoleHandler),
-			(r"/visor",VisorHandler),
+			(r"/visor",VisorHandler, dict(port=options.port)),
 			(r"/scratch",ScratchConsole),
 			(r"/bloques",Bloques101),
 			(r"/dashboard",Dashboard),
