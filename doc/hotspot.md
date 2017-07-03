@@ -52,7 +52,17 @@ DAEMON_CONF="/etc/hostapd/hostapd.conf"
 
 /etc/network/interfaces
 
+auto lo
+iface lo inet loopback
+
+iface eth0 inet manual
+
+allow-hotplug wlan0
 iface wlan0 inet static
    address 10.5.5.1
    netmask 255.255.255.0
+#    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+#allow-hotplug wlan1
+#iface wlan1 inet manual
 #    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf

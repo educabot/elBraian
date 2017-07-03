@@ -5,7 +5,7 @@ from .trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker,
 import sys, time, numpy as np, redis, sys
 from redis.exceptions import ConnectionError
 from datetime import datetime
-import logging, math
+import logging, math, os, psutil
 import configparser
 from time import sleep
 from braianDriver.robot import Robot
@@ -36,6 +36,13 @@ class Ocula(object):
 	def __init__(self, type):
 		self._windowManager = WindowManager('Braian', self.onKeyPress)
 		self._type = type
+		self._write_stats = config.get('ocula', 'write_stats') == 'yes'
+		if self._write_stats:
+			self._proc = psutil.Process(os.getpid())
+
+		self._frame_counter = 0
+		self._stats = (0, 0)
+
 		if self._type == "pi":
 			self._pi_camera = PiCamera()
 			self._pi_camera.resolution = (320, 240)
@@ -66,6 +73,18 @@ class Ocula(object):
 		self._forward_counter = 0
 		self._turn_right_counter = 0
 		self._turn_left_counter = 0
+
+	def _get_stats(self):
+		if self._frame_counter > 5:
+			cpu_per = psutil.cpu_percent()
+			mem_per = round(self._proc.memory_percent()*100,2)
+			self._stats = (cpu_per, mem_per)
+			self._frame_counter = 0
+		else:
+			self._frame_counter += 1
+
+		return self._stats
+
 
 	def run(self):
 		"""
@@ -170,16 +189,10 @@ class Ocula(object):
 
 	def _proccess_on_pi(self):
 		"""Event loop for actual production environment aka, PI"""
-
-		for image in self._pi_camera.capture_continuous(self._pi_capture, format="jpeg", use_video_port=True, quality=20):
+		for image in self._pi_camera.capture_continuous(self._pi_capture, format="rgb", use_video_port=True):
 			frame = image.array
 			self._track(frame)
 			self._send_to_redis(frame)
-			#if len(faces) > 0:
-				#self.__head_adjustement(faces[0].faceRect)
-				#just to make sure
-			#	time.sleep(0.5)
-
 			self._pi_capture.truncate(0)
 
 	def _head_adjustement(self, rect):
@@ -235,10 +248,14 @@ class Ocula(object):
 		if len(arrows) > 0 :
 			utils.draw_str(frame, (25,80), "Directive [" + str(len(arrows)) + "]")
 
-		#rects.swapRects(frame, frame, [face.faceRect for face in faces])
-
 		if len(circles) > 0 :
 			utils.draw_str(frame, (25, 100), "I saw balls!: " + str(len(circles)))
+
+		# stats
+		if self._write_stats:
+			stats = self._get_stats()
+			utils.draw_str(frame, (40, 430), 'Cpu: ' + str(stats[0]) + '%')
+			utils.draw_str(frame, (500, 430), 'Mem: ' + str(stats[1]) + '%')
 
 		if self._shouldDrawDebugRects:
 			self._faceTracker.drawDebugRects(frame)
