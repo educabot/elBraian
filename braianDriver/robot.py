@@ -58,6 +58,7 @@ class Robot(object):
 	PWM_LEFT_PIN = int(config.get("robot.board.v1","pwm_left_pin"))
 	PWM_RIGHT_PIN = int(config.get("robot.board.v1","pwm_right_pin"))
 
+
 	#Frecuency by hertz
 	FRECUENCY = int(config.get("robot.board.v1","frecuency"))
 
@@ -121,8 +122,8 @@ class Robot(object):
 				self.forward_right_device = DigitalOutputDevice(self.FORWARD_RIGHT_PIN, True, False)
 				self.backward_left_device = DigitalOutputDevice(self.BACKWARD_LEFT_PIN, True, False)
 				self.backward_right_device = DigitalOutputDevice(self.BACKWARD_RIGHT_PIN, True, False)
-				self.pwm_left = PWMOutputDevice(self.PWM_LEFT_PIN, True, False, self.FRECUENCY)
-				self.pwm_right = PWMOutputDevice(self.PWM_RIGHT_PIN, True, False, self.FRECUENCY)
+				self.pwm_left = DigitalOutputDevice(self.PWM_LEFT_PIN, True, False)
+				self.pwm_right = DigitalOutputDevice(self.PWM_RIGHT_PIN, True, False)
 
 
 			if self.CONTROLLER_BOARD == "v2":
@@ -243,12 +244,12 @@ class Robot(object):
 		if (speed):
 			log.debug("moving on " + str(speed))
 			log.debug("aplying fit: left " + str(self.LEFT_CYCLES_FIT) + " right " + str(self.RIGHT_CYCLES_FIT))
-			aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100.00) else 0.00
-			aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100.00) else 0.00
+			#aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100.00) else 0.00
+			#aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100.00) else 0.00
 
 			if env == "prod":
-				self.pwm_left.value = (speed + aditional_left_clycles) / 100.00
-				self.pwm_right.value = (speed + aditional_right_clycles) / 100.00
+				#self.pwm_left.value = (speed + aditional_left_clycles) / 100.00
+				#self.pwm_right.value = (speed + aditional_right_clycles) / 100.00
 
 		if (arc):
 			cycle_left, cycle_right = arc
@@ -294,7 +295,7 @@ class Robot(object):
 		self.head_vertical_current_position = 0
 		if env == "prod":
 			self.SERVO_H.mid()
-			self.SERVO_V.mid()
+			self.SERVO_V.angle=-50
 			sleep(0.2)
 			self.SERVO_H.detach()
 			self.SERVO_V.detach()

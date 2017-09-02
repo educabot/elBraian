@@ -3,6 +3,7 @@ from .managers import WindowManager, CaptureManagerOpenCV, CaptureManagerPiCamer
 from . import filters, rects, utils
 from .trackers import FaceTracker, ArrowTracker, TurnLeftTracker, CircleTracker, TurnRightTracker, BallTracker
 import sys, time, numpy as np, redis, sys
+from optparser import OptionParser
 from redis.exceptions import ConnectionError
 from datetime import datetime
 import logging, math, os, psutil
@@ -30,6 +31,12 @@ console_handler.setFormatter(formatter)
 log.addHandler(file_handler)
 log.addHandler(console_handler)
 
+#parser
+parser = OptionParser()
+parser.add_option("-e", "--environment", dest="env",
+			help="environment could be dev (mac) or prod (pi)")
+parser.add_option("-c", "--camera", dest="camera_index",
+			help="")
 
 class Ocula(object):
 
@@ -194,6 +201,7 @@ class Ocula(object):
 			self._track(frame)
 			self._send_to_redis(frame)
 			self._pi_capture.truncate(0)
+			time.sleep(0.2)
 
 	def _head_adjustement(self, rect):
 		"""
