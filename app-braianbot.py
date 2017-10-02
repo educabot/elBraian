@@ -170,6 +170,10 @@ class Bloques101(tornado.web.RequestHandler):
 	def get(self):
 		self.render('bloques-101.jade')
 
+class BloquesTest(tornado.web.RequestHandler):
+	def get(self):
+		self.render('bloques-test.jade')
+
 class FlechasRobotHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.render('robots.jade')
@@ -185,7 +189,7 @@ class FixConsole(tornado.web.RequestHandler):
 class ScratchConsole(tornado.web.RequestHandler):
     def initialize(self, port):
         self._port = port
-        
+
     def get(self):
         home = config.get('web','home')
         pic_url = home+':'+str(self._port)+'/stream'
@@ -216,7 +220,7 @@ class StreamHandler(tornado.web.RequestHandler):
 
 if __name__ == '__main__':
 	tornado.options.parse_command_line()
-	redis_client = redis.StrictRedis(host="192.168.99.100", port=6379, db=0)
+	redis_client = redis.StrictRedis(host="localhost", port=6379, db=0)
 	app = tornado.web.Application(
 		handlers=[
 			(r"/",IndexHandler),
@@ -227,6 +231,7 @@ if __name__ == '__main__':
 			(r"/visor",VisorHandler, dict(port=options.port)),
 			(r"/scratch",ScratchConsole, dict(port=options.port)),
 			(r"/bloques",Bloques101),
+            (r"/bloquestest",BloquesTest),
 			(r"/dashboard",Dashboard),
 			(r"/consola", WrongConsole),
 			(r"/stream", StreamHandler, dict(redis_client=redis_client)),

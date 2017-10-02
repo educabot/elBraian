@@ -1,0 +1,38 @@
+extends layout
+
+block head
+  title Educablocks
+  link(rel='stylesheet', href='static/bloques-101/src/highlight/styles/default.css')
+  link(rel='stylesheet', href='static/bloques-101/src/bloques/css/educablocks.css')
+
+block content
+  .container-fluid
+    .row
+      .col-md-12
+        h3 code
+    .row
+      .col-md-12
+        pre
+          code
+            |void setup() {
+            | pinMode(13, OUTPUT);
+            |}
+            | 
+            |void loop() {
+            |  digitalWrite(13, HIGH);
+            |  delay(1000);    
+            |  digitalWrite(13, LOW);
+            |  delay(1000);
+            |}
+      .row
+        .col-md-6
+          .input-group
+            span.input-group-addon#basic-addon1 $
+            input.form-control#command(type="text", placeholder="command", aria-label="Username",aria-describedby="basic-addon1")
+        .col-md-6
+          button.btn.btn-warning#send send
+          button.btn.btn-success#upload upload
+
+block final_scripts
+  script(src='static/js/socket.io.js')
+  script(src='static/js/block_helper.js')

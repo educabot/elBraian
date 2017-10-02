@@ -247,7 +247,7 @@ class Robot(object):
 			#aditional_left_clycles = self.LEFT_CYCLES_FIT if ((speed + self.LEFT_CYCLES_FIT) <= 100.00) else 0.00
 			#aditional_right_clycles = self.RIGHT_CYCLES_FIT if ((speed + self.RIGHT_CYCLES_FIT) <= 100.00) else 0.00
 
-			if env == "prod":
+			#if env == "prod":
 				#self.pwm_left.value = (speed + aditional_left_clycles) / 100.00
 				#self.pwm_right.value = (speed + aditional_right_clycles) / 100.00
 
