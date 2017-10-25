@@ -8,7 +8,7 @@ block head
 block content
   .container-fluid
     .row
-      .col-md-12
+      .col-md-3
         h3 code
     .row
       .col-md-12
@@ -29,9 +29,24 @@ block content
           .input-group
             span.input-group-addon#basic-addon1 $
             input.form-control#command(type="text", placeholder="command", aria-label="Username",aria-describedby="basic-addon1")
+          .input-group
+            span.input-group-addon ports
+            select#ports
+          .input-group
+            span.input-group-addon board
+            select#board
+              option uno
+              option leonardo
+              option muhafara duino
+
         .col-md-6
           button.btn.btn-warning#send send
           button.btn.btn-success#upload upload
+          button.btn.btn-info#update update
+          
+      .row
+        .col-md-6
+          .jumbotron#output
 
 block final_scripts
   script(src='static/js/socket.io.js')
